@@ -27,6 +27,4 @@ jobs:
     trigger: true
   - task: run-build
     file: royzding/SB-Eureka-Server/ci/build.yml
-  - put: snapshot-repository
-    params: {file: "artifacts/*.jar"}
 
