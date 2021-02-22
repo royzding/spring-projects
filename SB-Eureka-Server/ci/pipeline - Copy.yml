@@ -1,0 +1,499 @@
+resource_types:
+- name: concourse-git-semver-tag
+  type: docker-image
+  source:
+    repository: laurentverbruggen/concourse-git-semver-tag-resource
+
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+
+- name: artifactory
+  type: docker-image
+  source:
+    repository: pivotalservices/artifactory-resource
+
+resources:
+- name: acceptance-tests
+  type: git
+  source: {uri: "https://github.com/ONSdigital/concourse-demo-acceptance-tests"}
+
+- name: python-service
+  type: git
+  source: {uri: "https://github.com/ONSdigital/concourse-demo-python-service"}
+
+- name: java-service
+  type: git
+  source:
+    uri: git@github.com:ONSdigital/concourse-demo-java-service.git
+    private_key: ((github_key))
+    branch: master
+
+- name: notifications
+  type: git
+  source: {uri: "https://github.com/ONSdigital/concourse-demo-notifications"}
+
+- name: preprod-deploy-trigger
+  type: git
+  source:
+    uri: "git@github.com:ONSdigital/concourse-demo-deploy-trigger"
+    paths: ["preprod/*"]
+    private_key: ((github_key))
+
+- name: prod-deploy-trigger
+  type: git
+  source:
+    uri: "git@github.com:ONSdigital/concourse-demo-deploy-trigger"
+    paths: ["prod/*"]
+    private_key: ((github_key))
+
+- name: python-tag
+  type: concourse-git-semver-tag
+  source:
+    uri: git@github.com:ONSdigital/concourse-demo-python-service.git
+    private_key: ((github_key))
+    branch: master
+
+- name: java-tag
+  type: concourse-git-semver-tag
+  source:
+    uri: git@github.com:ONSdigital/concourse-demo-java-service.git
+    private_key: ((github_key))
+    branch: master
+
+- name: cf-resource-ci
+  type: cf
+  source:
+    api: ((cloudfoundry_api))
+    username: ((cloudfoundry_email))
+    password: ((cloudfoundry_password))
+    organization: rmras
+    space: ci
+    skip_cert_check: true
+
+- name: cf-resource-latest
+  type: cf
+  source:
+    api: ((cloudfoundry_api))
+    username: ((cloudfoundry_email))
+    password: ((cloudfoundry_password))
+    organization: rmras
+    space: int
+    skip_cert_check: true
+
+- name: cf-resource-sit
+  type: cf
+  source:
+    api: ((cloudfoundry_api))
+    username: ((cloudfoundry_email))
+    password: ((cloudfoundry_password))
+    organization: rmras
+    space: sit
+    skip_cert_check: true
+
+- name: cf-resource-cat
+  type: cf
+  source:
+    api: ((cloudfoundry_api))
+    username: ((cloudfoundry_email))
+    password: ((cloudfoundry_password))
+    organization: rmras
+    space: cat
+    skip_cert_check: true
+
+- name: notify
+  type: slack-notification
+  source:
+    url: ((slack_webhook))
+
+- name: release-repository
+  type: artifactory
+  source:
+    endpoint: http://artifactory.rmdev.onsdigital.uk/artifactory
+    repository: "/libs-release-local/uk/gov/ons/ctp/product/concourse-demo/releases/"
+    regex: ".*-(?<version>.*).jar"
+    username: ((artifactory_username))
+    password: ((artifactory_password))
+    skip_ssl_verification: true
+
+- name: snapshot-repository
+  type: artifactory
+  source:
+    endpoint: http://artifactory.rmdev.onsdigital.uk/artifactory
+    repository: "/libs-release-local/uk/gov/ons/ctp/product/concourse-demo/snapshots/"
+    regex: ".*-(?<version>.*).jar"
+    username: ((artifactory_username))
+    password: ((artifactory_password))
+    skip_ssl_verification: true
+
+jobs:
+- name: python-unit-tests
+  plan: 
+  - get: python-service
+    trigger: true
+  - task: run-unit-tests
+    file: python-service/ci/task.yml
+
+- name: java-build
+  plan:
+  - get: java-service
+    trigger: true
+  - task: run-build
+    file: java-service/ci/build.yml
+  - put: snapshot-repository
+    params: {file: "artifacts/*.jar"}
+
+- name: deploy-python-demo-ci
+  serial_groups: [deploy-python-demo-ci]
+  plan:
+  - get: python-service
+    trigger: true
+    passed: [python-unit-tests]
+  - put: cf-resource-ci
+    params:
+      environment_variables:
+        ANIMAL_SERVICE: "https://concourse-demo-java-service-ci.apps.devtest.onsclofo.uk"
+      manifest: python-service/manifest.yml
+      path: python-service
+      current_app_name: concourse-demo-python-service-ci
+
+- name: deploy-java-demo-ci
+  serial_groups: [deploy-java-demo-ci]
+  plan:
+  - get: java-service
+    trigger: true
+    passed: [java-build]
+  - get: snapshot-repository
+    passed: [java-build]
+  - put: cf-resource-ci
+    params:
+      manifest: java-service/manifest.yml
+      path: snapshot-repository/*.jar
+      current_app_name: concourse-demo-java-service-ci
+
+- name: acceptance-tests
+  serial_groups: [deploy-python-demo-ci, deploy-java-demo-ci]
+  plan:
+  - get: acceptance-tests
+    trigger: true
+  - get: python-service
+    passed: [deploy-python-demo-ci]
+    trigger: true
+  - get: java-service
+    passed: [deploy-java-demo-ci]
+    trigger: true
+  - get: snapshot-repository
+    passed: [deploy-java-demo-ci]
+  - task: run-acceptance-tests
+    on_failure:
+      put: notify
+      params:
+        text: "Acceptance test failed"
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: kennethreitz/pipenv
+      inputs:
+        - name: acceptance-tests
+      params:
+        ENDPOINT: 'https://concourse-demo-python-service-ci.apps.devtest.onsclofo.uk'
+      run:
+        path: sh
+        dir: acceptance-tests
+        args:
+        - -exc
+        - |
+          pipenv install
+          pipenv run behave
+- name: deploy-python-demo-latest
+  serial_groups: [deploy-python-demo-latest]
+  plan:
+  - get: python-service
+    passed: [acceptance-tests]
+    trigger: true
+  - put: cf-resource-latest
+    params:
+      environment_variables:
+        ANIMAL_SERVICE: "https://concourse-demo-java-service-latest.apps.devtest.onsclofo.uk"
+      manifest: python-service/manifest.yml
+      path: python-service
+      current_app_name: concourse-demo-python-service-latest
+
+- name: deploy-java-demo-latest
+  serial_groups: [deploy-java-demo-latest]
+  plan:
+  - get: java-service
+    trigger: true
+    passed: [acceptance-tests]
+  - get: snapshot-repository
+    passed: [acceptance-tests]
+  - put: cf-resource-latest
+    params:
+      manifest: java-service/manifest.yml
+      path: snapshot-repository/*.jar
+      current_app_name: concourse-demo-java-service-latest
+
+- name: latest-smoke-tests
+  serial_groups: [deploy-python-demo-latest, deploy-java-demo-latest]
+  plan:
+  - get: acceptance-tests
+    trigger: true
+    passed: [acceptance-tests]
+  - get: python-service
+    passed: [deploy-python-demo-latest]
+    trigger: true
+  - get: java-service
+    passed: [deploy-java-demo-latest]
+    trigger: true
+  - get: snapshot-repository
+    passed: [deploy-java-demo-latest]
+  - task: run-latest-smoke-tests
+    on_failure:
+      put: notify
+      params:
+        text: "Latest smoke test failed"
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: kennethreitz/pipenv
+      inputs:
+        - name: acceptance-tests
+      params:
+        ENDPOINT: 'https://concourse-demo-python-service-latest.apps.devtest.onsclofo.uk'
+      run:
+        path: sh
+        dir: acceptance-tests
+        args:
+        - -exc
+        - |
+          pipenv install
+          pipenv run behave
+- name: preprod-trigger
+  disable_manual_trigger: true
+  plan:
+  - get: python-service
+    passed: [latest-smoke-tests]
+  - get: java-service
+    passed: [latest-smoke-tests]
+  - get: preprod-deploy-trigger
+    trigger: true
+  - get: snapshot-repository
+    passed: [latest-smoke-tests]
+
+- name: deploy-python-demo-preprod
+  disable_manual_trigger: true
+  serial_groups: [deploy-python-demo-preprod]
+  plan:
+  - get: python-service
+    trigger: true
+    passed: [preprod-trigger]
+  - get: notifications
+  - task: run-build
+    file: python-service/ci/task.yml
+  - put: python-tag
+    params: {bump: minor}
+  - task: release-notes
+    file: notifications/ci/task.yml
+    params:
+      SLACK_HOOK: ((slack_webhook))
+      REPO_NAME: concourse-demo-python-service
+  - put: cf-resource-sit
+    params:
+      environment_variables:
+        ANIMAL_SERVICE: "https://concourse-demo-java-service-sit.apps.devtest.onsclofo.uk"
+      manifest: python-service/manifest.yml
+      path: python-service
+      current_app_name: concourse-demo-python-service-preprod
+
+- name: release-java-demo
+  disable_manual_trigger: true
+  serial_groups: [deploy-java-demo-preprod]
+  plan:
+  - get: java-service
+    trigger: true
+    passed: [preprod-trigger]
+  - get: snapshot-repository
+    passed: [preprod-trigger]
+  - get: java-tag
+    params: {bump: minor}
+  - task: promote-release
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: alpine/git
+      inputs:
+      - name: snapshot-repository
+      - name: java-tag
+      - name: java-service
+      outputs:
+      - name: release-repository
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          export GIT_REPOSITORY=java-service
+          export ARTIFACT_ID=concourse_demo_service
+          export SEMVER=java-tag
+          cd "$GIT_REPOSITORY"
+          current_commit_hash=$(git rev-parse HEAD)
+          cd ..
+   
+          version=$(cat "$SEMVER/number")
+   
+          snapshot_name="${ARTIFACT_ID}-${current_commit_hash}.jar"
+          release_name="${ARTIFACT_ID}-${version}.jar"
+   
+          cp -a "snapshot-repository/${snapshot_name}" "release-repository/${release_name}"
+  - put: java-service
+    params:
+      tag: java-tag/number
+      only_tag: true
+      repository: java-service
+  - put: release-repository
+    params: {file: "release-repository/*.jar"}
+  - get: notifications
+  - task: release-notes
+    file: notifications/ci/task.yml
+    params:
+      SLACK_HOOK: ((slack_webhook))
+      REPO_NAME: concourse-demo-java-service
+
+- name: deploy-java-demo-preprod
+  disable_manual_trigger: true
+  serial_groups: [deploy-java-demo-preprod]
+  plan:
+  - get: java-service
+    trigger: true
+    passed: [release-java-demo]
+  - get: release-repository
+    passed: [release-java-demo]
+  - put: cf-resource-sit
+    params:
+      manifest: java-service/manifest.yml
+      path: release-repository/*.jar
+      current_app_name: concourse-demo-java-service-sit
+
+- name: preprod-smoke-tests
+  serial_groups: [deploy-python-demo-preprod, deploy-java-demo-preprod]
+  plan:
+  - get: acceptance-tests
+    trigger: true
+    passed: [latest-smoke-tests]
+  - get: python-service
+    passed: [deploy-python-demo-preprod]
+    trigger: true
+  - get: java-service
+    passed: [deploy-java-demo-preprod]
+    trigger: true
+  - get: release-repository
+    passed: [deploy-java-demo-preprod]
+  - task: run-preprod-smoke-tests
+    on_failure:
+      put: notify
+      params:
+        text: "Preprod smoke test failed"
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: kennethreitz/pipenv
+      inputs:
+        - name: acceptance-tests
+      params:
+        ENDPOINT: 'https://concourse-demo-python-service-preprod.apps.devtest.onsclofo.uk'
+      run:
+        path: sh
+        dir: acceptance-tests
+        args:
+        - -exc
+        - |
+          pipenv install
+          pipenv run behave
+- name: prod-trigger
+  disable_manual_trigger: true
+  plan:
+  - get: python-service
+    passed: [preprod-smoke-tests]
+  - get: java-service
+    passed: [preprod-smoke-tests]
+  - get: release-repository
+    passed: [preprod-smoke-tests]
+  - get: prod-deploy-trigger
+    trigger: true
+
+- name: deploy-python-demo-prod
+  disable_manual_trigger: true
+  serial_groups: [deploy-python-demo-prod]
+  plan:
+  - get: python-service
+    trigger: true
+    passed: [prod-trigger]
+  - put: cf-resource-cat
+    params:
+      environment_variables:
+        ANIMAL_SERVICE: "https://concourse-demo-java-service-prod.apps.devtest.onsclofo.uk"
+      manifest: python-service/manifest.yml
+      path: python-service
+      current_app_name: concourse-demo-python-service-prod
+
+- name: deploy-java-demo-prod
+  disable_manual_trigger: true
+  serial_groups: [deploy-java-demo-prod]
+  plan:
+  - get: java-service
+    trigger: true
+    passed: [prod-trigger]
+  - get: release-repository
+    passed: [prod-trigger]
+  - get: prod-deploy-trigger
+    trigger: true
+  - put: cf-resource-cat
+    params:
+      manifest: java-service/manifest.yml
+      path: release-repository/*.jar
+      current_app_name: concourse-demo-java-service-prod
+
+- name: prod-smoke-tests
+  serial_groups: [deploy-python-demo-prod, deploy-java-demo-prod]
+  plan:
+  - get: acceptance-tests
+    trigger: true
+    passed: [preprod-smoke-tests]
+  - get: python-service
+    passed: [deploy-python-demo-prod]
+    trigger: true
+  - get: java-service
+    passed: [deploy-java-demo-prod]
+    trigger: true
+  - task: run-prod-smoke-tests
+    on_failure:
+      put: notify
+      params:
+        text: "Prod smoke test failed"
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: kennethreitz/pipenv
+      inputs:
+        - name: acceptance-tests
+      params:
+        ENDPOINT: 'https://concourse-demo-python-service-prod.apps.devtest.onsclofo.uk'
+      run:
+        path: sh
+        dir: acceptance-tests
+        args:
+        - -exc
+        - |
+          pipenv install
+          pipenv run behave
