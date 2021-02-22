@@ -1,0 +1,17 @@
+---
+resources:
+  - name: royzding
+    type: git
+    source:
+      uri: https://github.com/royzding/royzding.git
+      branch: master
+
+jobs:
+  - name: java-build
+    public: true
+    plan:
+      - get: royzding
+      - task: run-build
+        file: royzding/SB-Eureka-Server/ci/build.yml
+    
+
