@@ -1,4 +1,4 @@
-package com.devglan.gatewayservice;
+package com.sb.gateway.service;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;

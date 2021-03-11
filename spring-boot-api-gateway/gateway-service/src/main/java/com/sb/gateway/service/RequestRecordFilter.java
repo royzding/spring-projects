@@ -1,4 +1,4 @@
-package com.devglan.gatewayservice;
+package com.sb.gateway.service;
 
 import io.netty.buffer.ByteBufAllocator;
 import org.slf4j.Logger;

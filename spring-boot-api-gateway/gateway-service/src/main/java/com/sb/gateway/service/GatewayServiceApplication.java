@@ -1,4 +1,4 @@
-package com.devglan.gatewayservice;
+package com.sb.gateway.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
