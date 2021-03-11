@@ -1,20 +1,9 @@
 spring:
   application:
-    name: api-gateway
-  cloud:
-    gateway:
-      routes:
-      - id: studentService
-        uri: lb://STUDENT-SERVICE
-        predicates:
-        - Path=/student/**
-      - id: courseService
-        uri: lb://COURSE-SERVICE
-        predicates:
-        - Path=/course/**
+    name: api-gateway-2
         
 server:
-  port: 8081
+  port: 8082
 
 eureka:
   client:
