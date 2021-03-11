@@ -1,0 +1,35 @@
+#Zuul routes. Here for /student path, we are routing to localhost:8090 with extra path after that.
+#zuul.routes.student.url=http://localhost:8090
+#Riban is auto integrated with Zuul and for this exercise we are not using that.
+#ribbon.eureka.enabled=false
+#Will start the gateway server @8080
+#server.port=8080
+
+
+spring:
+  application:
+    name: zuul-api-gateway
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server-url:
+      default-zone: http://localhost:8761/eureka/
+
+# Disable accessing services using service name (i.e. gallery-service).
+# They should be only accessed through the path defined below.
+zuul:
+  routes:
+    student:
+      path: /student-api/**
+      serviceId: STUDENT-SERVICE
+    
+    course:
+      path: /course-api/**
+      serviceId: COURSE-SERVICE
+      
+#      url: http://localhost:8090

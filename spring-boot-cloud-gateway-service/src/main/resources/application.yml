@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: studentService
+        uri: lb://STUDENT-SERVICE
+        predicates:
+        - Path=/student/**
+      - id: courseService
+        uri: lb://COURSE-SERVICE
+        predicates:
+        - Path=/course/**
+        
+server:
+  port: 8081
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server-url:
+      default-zone: http://localhost:8761/eureka/
