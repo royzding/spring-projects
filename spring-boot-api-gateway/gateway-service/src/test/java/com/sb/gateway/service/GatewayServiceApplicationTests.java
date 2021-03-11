@@ -1,4 +1,4 @@
-package com.devglan.gatewayservice;
+package com.sb.gateway.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

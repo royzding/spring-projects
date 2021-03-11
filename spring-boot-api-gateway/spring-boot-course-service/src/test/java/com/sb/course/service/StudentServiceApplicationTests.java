@@ -1,4 +1,4 @@
-package com.example.springbootzuulgatwayproxystudentservice;
+package com.sb.course.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
