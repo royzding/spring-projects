@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @SpringBootApplication
 @EnableEurekaClient
+@RequestMapping("/course")
 public class CourseServiceApplication {
 
 	@RequestMapping(value = "/courseName/{name}")
