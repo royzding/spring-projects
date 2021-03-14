@@ -1,4 +1,4 @@
-package com.sb.gateway.service;
+package com.sb.api.gateway.service;
 
 import io.netty.buffer.ByteBufAllocator;
 import org.slf4j.Logger;
@@ -25,52 +25,25 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 
 @Component
-public class RequestRecordFilter implements GatewayFilter, Ordered {
+public class CoursePreFilter implements GatewayFilter, Ordered {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestRecordFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(CoursePreFilter.class);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-    	
-        logger.info("GatewayFilter Pre Filter executed");
-
+        logger.info("***********************Student Pre Filter executed");
+        
         ServerHttpRequest request = exchange.getRequest();
         URI requestUri = request.getURI();
         String schema = requestUri.getScheme();
-        if ((!"http".equals(schema) && !"https".equals(schema))){
-            return chain.filter(exchange);
-        }
+
         String method = request.getMethodValue();
-        String contentType = request.getHeaders().getFirst("Content-Type");
-        if ("POST".equals(method) && !contentType.startsWith("multipart/form-data")){
-            String bodyStr = resolveBodyFromRequest(exchange);
-            DataBuffer bodyDataBuffer = stringBuffer(bodyStr);
-            int len = bodyDataBuffer.readableByteCount();
-            URI ex = UriComponentsBuilder.fromUri(requestUri).build(true).toUri();
-            ServerHttpRequest newRequest = request.mutate().uri(ex).build();
-            //Next, the request body is encapsulated and written back to the request and passed to the next level.
-            HttpHeaders myHeaders = new HttpHeaders();
-            copyMultiValueMap(request.getHeaders(), myHeaders);
-            myHeaders.remove(HttpHeaders.CONTENT_LENGTH);
-            myHeaders.set(HttpHeaders.CONTENT_LENGTH, String.valueOf(len));
-
-            Flux<DataBuffer> bodyFlux = Flux.just(bodyDataBuffer);
-            newRequest = new ServerHttpRequestDecorator(newRequest) {
-                @Override
-                public Flux<DataBuffer> getBody() {
-                    return bodyFlux;
-                }
-
-                @Override
-                public HttpHeaders getHeaders() {
-                    return myHeaders;
-                }
-            };
-            ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
-            return chain.filter(newExchange);
-        } else {
-            return chain.filter(exchange);
-        }
+        String myHeader = request.getHeaders().getFirst("myHeader");
+        
+        logger.info("=====" + requestUri);
+        logger.info("=====" + myHeader);
+               	
+        return chain.filter(exchange);       	
     }
 
     private static <K, V> void copyMultiValueMap(MultiValueMap<K,V> source, MultiValueMap<K,V> target) {

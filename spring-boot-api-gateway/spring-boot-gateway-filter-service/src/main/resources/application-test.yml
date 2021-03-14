@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: studentService
+          uri: lb://STUDENT-SERVICE
+          predicates:
+            - Path=/student/**
+          filters:
+            - name: Hystrix
+              args:
+                name: student-service
+                fallbackUri: forward:/fallback/studentFallback
+            - name: StudentPreFilter
+        - id: courseService
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path=/course/**
+          filters:
+            - name: Hystrix
+              args:
+                name: course-service
+                fallbackUri: forward:/fallback/courseFallback
+            - name: CoursePreFilter
+            

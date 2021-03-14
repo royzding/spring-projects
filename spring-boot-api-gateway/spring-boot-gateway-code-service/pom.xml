@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>spring-boot-gateway-code-service</groupId>
-	<artifactId>gateway-service</artifactId>
+	<artifactId>spring-boot-gateway-code-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-gateway-code-service</name>
 	<description>Demo project for Spring Boot</description>
