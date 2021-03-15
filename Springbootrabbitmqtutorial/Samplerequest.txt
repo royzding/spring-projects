@@ -1,0 +1,5 @@
+HTTP GET url - http://localhost:9091/api/send/hello-world
+
+Response -
+Status code - 200 ok
+Text - Message sent successfully to the queue.

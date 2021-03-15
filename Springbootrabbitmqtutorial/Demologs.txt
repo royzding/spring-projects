@@ -1,0 +1,10 @@
+---- Publisher
+
+2020-07-27 22:24:03.566  INFO 8228 --- [nio-9091-exec-1] c.j.s.rabbitmq.controller.Publisher      : Sending message to the queue.
+2020-07-27 22:24:03.577  INFO 8228 --- [nio-9091-exec-1] c.j.s.rabbitmq.controller.Publisher      : Message sent successfully to the queue, sending back the response to the user.
+
+---- Subscriber
+
+2020-07-27 22:13:46.116  INFO 1604 --- [ntContainer#0-1] c.j.s.rabbitmq.listen.Subscriber         : Listening messages from the queue!!
+2020-07-27 22:13:46.117  INFO 1604 --- [ntContainer#0-1] c.j.s.rabbitmq.listen.Subscriber         : Received the following message from the queue= hello-world
+2020-07-27 22:13:46.117  INFO 1604 --- [ntContainer#0-1] c.j.s.rabbitmq.listen.Subscriber         : Message received successfully from the queue.
