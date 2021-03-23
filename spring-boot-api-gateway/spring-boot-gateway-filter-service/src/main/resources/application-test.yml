@@ -22,4 +22,6 @@ spring:
                 name: course-service
                 fallbackUri: forward:/fallback/courseFallback
             - name: CoursePreFilter
+              args:
+                course: computer
             

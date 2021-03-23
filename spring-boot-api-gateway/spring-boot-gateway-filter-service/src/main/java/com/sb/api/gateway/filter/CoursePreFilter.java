@@ -29,7 +29,7 @@ public class CoursePreFilter extends AbstractGatewayFilterFactory<CoursePreFilte
             ServerHttpRequest request = exchange.getRequest();
             String myHeader = request.getHeaders().getFirst("myHeader");
             
-            log.info(myHeader);
+            log.info(myHeader + " course:" + config.getCourse());
             
             if(!myHeader.contains("COURSE")) {
                 request = request.mutate().path("forward:/fallback/courseFallback").build();            	
@@ -42,6 +42,6 @@ public class CoursePreFilter extends AbstractGatewayFilterFactory<CoursePreFilte
     @Getter
     @Setter
     public static class Config {
-        private String name;
+        private String course;
     }
 }
