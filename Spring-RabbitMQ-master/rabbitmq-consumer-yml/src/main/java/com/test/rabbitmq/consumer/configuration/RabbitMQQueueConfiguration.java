@@ -20,8 +20,11 @@ public class RabbitMQQueueConfiguration {
     @Value("${spring.rabbitmq.queue-listener-service.routing-name}")
     private String routingName;
 
+    @Value("${spring.rabbitmq.queue-listener-service.routingx-name}")
+    private String routingxName;
+
     @Bean
-    public Queue queueB() {
+    public Queue queue() {
         return new Queue(queueName);
     }
 
@@ -29,10 +32,15 @@ public class RabbitMQQueueConfiguration {
     public DirectExchange directExchange() {
         return new DirectExchange(exchangeName);
     }
-    
+/*    
     @Bean
-    public Binding bindingDirectExchangeQueueADirect1(DirectExchange directExchange, Queue queueA) {
+    public Binding bindingDirectExchangeQueueA(DirectExchange directExchange, Queue queueA) {
         return BindingBuilder.bind(queueA).to(directExchange).with(routingName);
+    }
+*/    
+    @Bean
+    public Binding bindingDirectExchangeQueueB(DirectExchange directExchange, Queue queue) {
+        return BindingBuilder.bind(queue).to(directExchange).with(routingxName);
     }
     
 }

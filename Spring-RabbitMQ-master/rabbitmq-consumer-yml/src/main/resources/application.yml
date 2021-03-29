@@ -12,3 +12,4 @@ spring:
    queue-name: queue-A
    exchange-name: direct-exchange
    routing-name: direct1
+   routingx-name: my key
