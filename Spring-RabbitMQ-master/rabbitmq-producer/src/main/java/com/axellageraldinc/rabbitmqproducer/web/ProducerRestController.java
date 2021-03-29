@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class ProducerRestController {
     @Autowired
     private ProducerService producerService;
+    
+    @GetMapping
+    public String welcome() {
+    	return "Welcome";
+    }
 
     @PostMapping(
             value = "/direct/{routingKey}",
