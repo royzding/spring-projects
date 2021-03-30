@@ -3,6 +3,8 @@ package com.test.rabbitmq.consumer.configuration;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQQueueConfiguration {
 	
-    @Value("${spring.rabbitmq.queue-listener-service.queue-name}")
-    private String queueName;
+    @Value("${spring.rabbitmq.queue-listener-service.queue-a-name}")
+    private String queueAName;
+
+    @Value("${spring.rabbitmq.queue-listener-service.queue-b-name}")
+    private String queueBName;
 
     @Value("${spring.rabbitmq.queue-listener-service.exchange-name}")
     private String exchangeName;
@@ -24,13 +29,18 @@ public class RabbitMQQueueConfiguration {
     private String routingxName;
 
     @Bean
-    public Queue queue() {
-        return new Queue(queueName);
+    public Queue queueA() {
+        return new Queue(queueAName,true);
     }
 
     @Bean
-    public DirectExchange directExchange() {
-        return new DirectExchange(exchangeName);
+    public Queue queueB() {
+        return new Queue(queueBName,true);
+    }
+
+    @Bean
+    public Exchange directExchange() {
+        return ExchangeBuilder.directExchange(exchangeName).durable(true).build();
     }
 /*    
     @Bean
@@ -39,8 +49,13 @@ public class RabbitMQQueueConfiguration {
     }
 */    
     @Bean
-    public Binding bindingDirectExchangeQueueB(DirectExchange directExchange, Queue queue) {
-        return BindingBuilder.bind(queue).to(directExchange).with(routingxName);
+    public Binding bindingDirectExchangeQueueA() {
+        return BindingBuilder.bind(queueA()).to(directExchange()).with(routingxName).noargs();
+    }
+    
+    @Bean
+    public Binding bindingDirectExchangeQueueB(DirectExchange directExchange, Queue queueB) {
+        return BindingBuilder.bind(queueB).to(directExchange).with(routingxName);
     }
     
 }
