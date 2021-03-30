@@ -5,6 +5,7 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,20 +14,50 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQQueueConfiguration {
 	
-    @Value("${spring.rabbitmq.queue-listener-service.queue-a-name}")
+    @Value("${spring.rabbitmq.queue-consumer-service.direct-exchange-name}")
+    private String directExchangeName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.queue-a-name}")
     private String queueAName;
 
-    @Value("${spring.rabbitmq.queue-listener-service.queue-b-name}")
+    @Value("${spring.rabbitmq.queue-consumer-service.queue-b-name}")
     private String queueBName;
 
-    @Value("${spring.rabbitmq.queue-listener-service.exchange-name}")
-    private String exchangeName;
+    @Value("${spring.rabbitmq.queue-consumer-service.routing-a-name}")
+    private String routingAName;
 
-    @Value("${spring.rabbitmq.queue-listener-service.routing-name}")
-    private String routingName;
+    @Value("${spring.rabbitmq.queue-consumer-service.routing-b-name}")
+    private String routingBName;
+    
 
-    @Value("${spring.rabbitmq.queue-listener-service.routingx-name}")
-    private String routingxName;
+    @Value("${spring.rabbitmq.queue-consumer-service.topic-exchange-name}")
+    private String topicExchangeName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.queue-c-name}")
+    private String queueCName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.queue-d-name}")
+    private String queueDName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.routing-c-name}")
+    private String routingCName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.routing-d-name}")
+    private String routingDName;
+    
+    @Value("${spring.rabbitmq.queue-consumer-service.fanout-exchange-name}")
+    private String fanoutExchangeName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.queue-e-name}")
+    private String queueEName;
+
+    @Value("${spring.rabbitmq.queue-consumer-service.queue-f-name}")
+    private String queueFName;
+
+    @Bean
+    public Exchange directExchange() {
+        return ExchangeBuilder.directExchange(directExchangeName).durable(true).build();
+    }
 
     @Bean
     public Queue queueA() {
@@ -39,23 +70,65 @@ public class RabbitMQQueueConfiguration {
     }
 
     @Bean
-    public Exchange directExchange() {
-        return ExchangeBuilder.directExchange(exchangeName).durable(true).build();
-    }
-/*    
-    @Bean
-    public Binding bindingDirectExchangeQueueA(DirectExchange directExchange, Queue queueA) {
-        return BindingBuilder.bind(queueA).to(directExchange).with(routingName);
-    }
-*/    
-    @Bean
     public Binding bindingDirectExchangeQueueA() {
-        return BindingBuilder.bind(queueA()).to(directExchange()).with(routingxName).noargs();
+        return BindingBuilder.bind(queueA()).to(directExchange()).with(routingAName).noargs();
     }
     
     @Bean
     public Binding bindingDirectExchangeQueueB(DirectExchange directExchange, Queue queueB) {
-        return BindingBuilder.bind(queueB).to(directExchange).with(routingxName);
+        return BindingBuilder.bind(queueB).to(directExchange).with(routingBName);
+    }
+    
+    //topic exchange
+    @Bean
+    public Exchange topicExchange() {
+        return ExchangeBuilder.topicExchange(topicExchangeName).durable(true).build();
+    }
+
+    @Bean
+    public Queue queueC() {
+        return new Queue(queueCName,true);
+    }
+
+    @Bean
+    public Queue queueD() {
+        return new Queue(queueDName,true);
+    }
+
+    @Bean
+    public Binding bindingTopicExchangeQueueA() {
+        return BindingBuilder.bind(queueC()).to(topicExchange()).with(routingCName).noargs();
+    }
+    
+    @Bean
+    public Binding bindingTopicExchangeQueueB(DirectExchange topicExchange, Queue queueD) {
+        return BindingBuilder.bind(queueD).to(topicExchange).with(routingDName);
+    }
+    
+    //fanout exchange
+    @Bean
+    public Exchange fanoutExchange() {
+        return ExchangeBuilder.fanoutExchange(fanoutExchangeName).durable(true).build();
+    }
+
+    @Bean
+    public Queue queueE() {
+        return new Queue(queueEName,true);
+    }
+
+    @Bean
+    public Queue queueF() {
+        return new Queue(queueFName,true);
+    }
+
+    @Bean
+    public Binding bindingFanoutExchangeQueueA() {
+        return BindingBuilder.bind(queueE()).to(fanoutExchange()).with("").noargs();
+    }
+    
+    @Bean
+    public Binding bindingFanoutExchangeQueueB(FanoutExchange fanoutExchange, Queue queueF) {
+        return BindingBuilder.bind(queueF).to(fanoutExchange);
     }
     
 }

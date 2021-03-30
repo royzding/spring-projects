@@ -1,5 +1,5 @@
 server:
- port: 8082
+ port: 8081
 
 spring:
  rabbitmq:
@@ -8,7 +8,7 @@ spring:
   username: guest
   password: guest
 
-  queue-consumer-service:
+  queue-producer-service:
    direct-exchange-name: direct-exchange
    queue-a-name: queue-A
    queue-b-name: queue-B

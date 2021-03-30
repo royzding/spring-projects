@@ -1,7 +1,8 @@
-package com.axellageraldinc.rabbitmqproducer.web;
+package com.test.rabbitmq.producer.controller;
 
-import com.axellageraldinc.rabbitmqproducer.model.Payload;
-import com.axellageraldinc.rabbitmqproducer.service.ProducerService;
+import com.test.rabbitmq.producer.model.Payload;
+import com.test.rabbitmq.producer.service.ProducerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

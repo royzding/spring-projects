@@ -1,7 +1,8 @@
-package com.axellageraldinc.rabbitmqproducer.service;
+package com.test.rabbitmq.producer.service;
 
-import com.axellageraldinc.rabbitmqproducer.configuration.RabbitMQProducerTestConfiguration;
-import com.axellageraldinc.rabbitmqproducer.model.Payload;
+import com.test.rabbitmq.producer.configuration.RabbitMQProducerTestConfiguration;
+import com.test.rabbitmq.producer.model.Payload;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.test.TestRabbitTemplate;
@@ -22,8 +23,8 @@ public class ProducerServiceImplIntegrationTest {
 
     @Test
     public void sendToDirectExchange_Success() {
-        testRabbitTemplate.convertAndSend("directExchange", "testQueue", new Payload("test"));
-
-        assertThat(rabbitMQTestListener.payload.getMessage(), equalTo("test"));
+    	
+        testRabbitTemplate.convertAndSend("directExchange", "testQueue", new Payload());
+        assertThat(rabbitMQTestListener.payload.getMessage1(), equalTo("test"));
     }
 }

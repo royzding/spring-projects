@@ -1,4 +1,4 @@
-package com.axellageraldinc.rabbitmqproducer;
+package com.test.rabbitmq.producer;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

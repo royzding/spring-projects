@@ -1,4 +1,4 @@
-package com.axellageraldinc.rabbitmqproducer.configuration;
+package com.test.rabbitmq.producer.configuration;
 
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.FanoutExchange;
@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQExchangeConfiguration {
 
-    @Value("${exchange.direct}")
+    @Value("${spring.rabbitmq.queue-producer-service.direct-exchange-name}")
     private String directExchange;
 
-    @Value("${exchange.topic}")
+    @Value("${spring.rabbitmq.queue-producer-service.topic-exchange-name}")
     private String topicExchange;
 
-    @Value("${exchange.fanout}")
+    @Value("${spring.rabbitmq.queue-producer-service.fanout-exchange-name}")
     private String fanoutExchange;
 
     @Bean

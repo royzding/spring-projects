@@ -1,6 +1,6 @@
-package com.axellageraldinc.rabbitmqproducer.service;
+package com.test.rabbitmq.producer.service;
 
-import com.axellageraldinc.rabbitmqproducer.model.Payload;
+import com.test.rabbitmq.producer.model.Payload;
 
 public interface ProducerService {
     void sendToDirectExchange(Payload payload, String routingKey);

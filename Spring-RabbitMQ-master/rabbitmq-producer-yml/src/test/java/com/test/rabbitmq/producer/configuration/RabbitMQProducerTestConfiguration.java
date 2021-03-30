@@ -1,4 +1,4 @@
-package com.axellageraldinc.rabbitmqproducer.configuration;
+package com.test.rabbitmq.producer.configuration;
 
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Binding;

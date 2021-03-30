@@ -1,4 +1,4 @@
-package com.axellageraldinc.rabbitmqproducer.configuration;
+package com.test.rabbitmq.producer.configuration;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,22 +7,23 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQQueueConfiguration {
-    @Value("${queue.A}")
+	
+    @Value("${spring.rabbitmq.queue-producer-service.queue-a-name}")
     private String queueA;
 
-    @Value("${queue.B}")
+    @Value("${spring.rabbitmq.queue-producer-service.queue-b-name}")
     private String queueB;
 
-    @Value("${queue.C}")
+    @Value("${spring.rabbitmq.queue-producer-service.queue-c-name}")
     private String queueC;
 
-    @Value("${queue.D}")
+    @Value("${spring.rabbitmq.queue-producer-service.queue-d-name}")
     private String queueD;
 
-    @Value("${queue.E}")
+    @Value("${spring.rabbitmq.queue-producer-service.queue-e-name}")
     private String queueE;
 
-    @Value("${queue.F}")
+    @Value("${spring.rabbitmq.queue-producer-service.queue-f-name}")
     private String queueF;
 
     @Bean

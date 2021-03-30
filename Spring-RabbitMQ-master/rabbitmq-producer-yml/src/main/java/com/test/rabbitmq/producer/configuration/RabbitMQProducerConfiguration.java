@@ -1,4 +1,4 @@
-package com.axellageraldinc.rabbitmqproducer.configuration;
+package com.test.rabbitmq.producer.configuration;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;

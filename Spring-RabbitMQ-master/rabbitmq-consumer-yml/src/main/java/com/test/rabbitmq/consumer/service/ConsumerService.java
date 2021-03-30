@@ -12,14 +12,34 @@ public class ConsumerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerService.class);
 
-    @RabbitListener(queues = "${spring.rabbitmq.queue-listener-service.queue-a-name}")
+    @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-a-name}")
     public void receiveQueueAMessage(Payload payLoad) {
         LOGGER.info("Message received in Queue A : " + payLoad);
     }
 
-    @RabbitListener(queues = "${spring.rabbitmq.queue-listener-service.queue-b-name}")
+    @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-b-name}")
     public void receiveQueueBMessage(Payload payLoad) {
         LOGGER.info("Message received in Queue B : " + payLoad);
+    }
+
+    @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-c-name}")
+    public void receiveQueueCMessage(Payload payLoad) {
+        LOGGER.info("Message received in Queue C : " + payLoad);
+    }
+
+    @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-d-name}")
+    public void receiveQueueDMessage(Payload payLoad) {
+        LOGGER.info("Message received in Queue D : " + payLoad);
+    }
+
+    @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-e-name}")
+    public void receiveQueueEMessage(Payload payLoad) {
+        LOGGER.info("Message received in Queue E : " + payLoad);
+    }
+
+    @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-f-name}")
+    public void receiveQueueFMessage(Payload payLoad) {
+        LOGGER.info("Message received in Queue F : " + payLoad);
     }
 
 }

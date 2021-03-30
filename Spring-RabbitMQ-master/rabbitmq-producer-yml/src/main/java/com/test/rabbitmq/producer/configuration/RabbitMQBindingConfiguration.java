@@ -1,4 +1,4 @@
-package com.axellageraldinc.rabbitmqproducer.configuration;
+package com.test.rabbitmq.producer.configuration;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQBindingConfiguration {
 
-    @Value("${routing.direct.1}")
+    @Value("${spring.rabbitmq.queue-producer-service.routing-a-name}")
     private String direct1RoutingKey;
 
-    @Value("${routing.direct.2}")
+    @Value("${spring.rabbitmq.queue-producer-service.routing-b-name}")
     private String direct2RoutingKey;
 
-    @Value("${routing.topic.rabbitmq.#}")
+    @Value("${spring.rabbitmq.queue-producer-service.routing-c-name}")
     private String topicRabbitMQRoutingKey;
 
-    @Value("${routing.topic.rabbitmq.spring.#}")
+    @Value("${spring.rabbitmq.queue-producer-service.routing-d-name}")
     private String topicRabbitMQSpringRoutingKey;
 
     @Bean

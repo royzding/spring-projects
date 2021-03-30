@@ -1,21 +1,22 @@
-package com.axellageraldinc.rabbitmqproducer.service;
+package com.test.rabbitmq.producer.service;
 
-import com.axellageraldinc.rabbitmqproducer.model.Payload;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.test.rabbitmq.producer.model.Payload;
+
 @Service
 public class ProducerServiceImpl implements ProducerService {
 
-    @Value("${exchange.direct}")
+    @Value("${spring.rabbitmq.queue-producer-service.direct-exchange-name}")
     private String directExchange;
 
-    @Value("${exchange.topic}")
+    @Value("${spring.rabbitmq.queue-producer-service.topic-exchange-name}")
     private String topicExchange;
 
-    @Value("${exchange.fanout}")
+    @Value("${spring.rabbitmq.queue-producer-service.fanout-exchange-name}")
     private String fanoutExchange;
 
     @Autowired
