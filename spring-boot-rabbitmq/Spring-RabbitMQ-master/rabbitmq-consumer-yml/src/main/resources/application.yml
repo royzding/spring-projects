@@ -28,3 +28,7 @@ spring:
 rest:
  template:
   url: http://localhost:8081/api/producer/
+  
+threadpool:
+ corepoolsize: 6
+ maxpoolsize: 12  

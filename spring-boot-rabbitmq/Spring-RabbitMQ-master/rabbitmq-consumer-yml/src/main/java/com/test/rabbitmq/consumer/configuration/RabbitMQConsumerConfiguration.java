@@ -10,13 +10,21 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
+	
     @Value("${rest.template.url}")
     private String URL;
     
+    @Value("${threadpool.corepoolsize}")
+    int corePoolSize;
+     
+    @Value("${threadpool.maxpoolsize}")
+    int maxPoolSize;
+   
     @Bean
     public String url() {
     	return this.URL;
@@ -37,6 +45,15 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
     	return builder.build();
+    }
+     
+    @Bean
+    public ThreadPoolTaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
+        pool.setCorePoolSize(corePoolSize);
+        pool.setMaxPoolSize(maxPoolSize);
+        pool.setWaitForTasksToCompleteOnShutdown(true);
+        return pool;
     }
     
     @Override
