@@ -17,7 +17,7 @@ public class ProducerRestController {
     
     @GetMapping
     public String welcome() {
-    	return "Welcome";
+    	return "Welcome from producer";
     }
 
     @PostMapping(
