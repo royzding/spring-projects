@@ -1,19 +1,13 @@
 package com.test.rabbitmq.consumer.configuration;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.ExchangeBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQQueueConfiguration {
 	
+// no need to create queues since it is listening on existing queues.	
+	
+/*	
     @Value("${spring.rabbitmq.queue-consumer-service.direct-exchange-name}")
     private String directExchangeName;
 
@@ -130,5 +124,5 @@ public class RabbitMQQueueConfiguration {
     public Binding bindingFanoutExchangeQueueB(FanoutExchange fanoutExchange, Queue queueF) {
         return BindingBuilder.bind(queueF).to(fanoutExchange);
     }
-    
+*/    
 }

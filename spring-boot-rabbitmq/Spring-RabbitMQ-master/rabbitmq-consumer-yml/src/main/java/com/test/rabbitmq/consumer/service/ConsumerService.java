@@ -13,9 +13,12 @@ public class ConsumerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerService.class);
     
-    @Autowired
-    RestTemplateService restTemplateService;
-
+    private final RestTemplateService restTemplateService;
+    
+    public ConsumerService(RestTemplateService restTemplateService) {
+    	this.restTemplateService = restTemplateService;
+    }
+ 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-a-name}")
     public void receiveQueueAMessage(Payload payLoad) {
         LOGGER.info("Message received in Queue A : " + payLoad);

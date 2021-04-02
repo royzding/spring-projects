@@ -13,12 +13,11 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
 	
-    @Value("${rest.template.url}")
-    private String URL;
-    
     @Value("${threadpool.corepoolsize}")
     int corePoolSize;
      
@@ -26,8 +25,9 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
     int maxPoolSize;
    
     @Bean
-    public String url() {
-    	return this.URL;
+    public ObjectMapper objectMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+    	return mapper;
     }
 
     @Bean
