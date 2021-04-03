@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.test.jpa</groupId>
-    <artifactId>jpa-many-to-many</artifactId>
+    <artifactId>jpa-many-to-many-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>jpa-many-to-many</name>
+    <name>jpa-many-to-many-starter</name>
     <description>Demo project for JPA</description>
 
     <properties>
