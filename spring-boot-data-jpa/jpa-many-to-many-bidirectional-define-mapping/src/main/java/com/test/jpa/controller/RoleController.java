@@ -11,35 +11,45 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/role")
 public class RoleController {
 
-    private RoleService roleService;
-    private RoleRepository roleRepository;
+    private final RoleService roleService;
+    private final RoleRepository roleRepository;
 
     public RoleController(RoleService roleService, RoleRepository roleRepository) {
         this.roleService = roleService;
         this.roleRepository = roleRepository;
     }
 
-    @PostMapping("/role/create")
-    public ResponseEntity<Object> createRole(@RequestBody Role role) {
-        return  roleService.addRole(role);
+    @GetMapping("/all")
+    public List<Role> getRoles() {
+        return roleRepository.findAll();
     }
-    @DeleteMapping("/role/delete/{id}")
-    public ResponseEntity<Object> deleteRole(@PathVariable Long id) {
-        return roleService.deleteRole(id);
-    }
-    @GetMapping("/role/details/{id}")
-    public Role getRole(@PathVariable Long id) {
+    
+    @GetMapping("/{id}")
+    public Role getRoleById(@PathVariable Long id) {
         if(roleRepository.findById(id).isPresent())
             return roleRepository.findById(id).get();
         else return null;
     }
-    @GetMapping("/role/all")
-    public List<Role> getRoles() {
-        return roleRepository.findAll();
+
+    @PostMapping("/create")
+    public ResponseEntity<Object> createRole(@RequestBody Role role) {
+        return  roleService.addRole(role);
     }
-    @PutMapping("/role/update/{id}")
+    
+    @DeleteMapping("delete/all")
+    public List<ResponseEntity<Object>> deleteAllRoles() {
+        return roleService.deleteAllRoles();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteRole(@PathVariable Long id) {
+        return roleService.deleteRole(id);
+    }
+    
+    @PutMapping("/update/{id}")
     public ResponseEntity<Object> updateRole(@PathVariable Long id, @RequestBody Role role) {
         return roleService.updateRole(id, role);
     }
