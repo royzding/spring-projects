@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +46,13 @@ public class RoleServiceImpl implements RoleService{
              else  return   ResponseEntity.unprocessableEntity().body("User with email Id is already Present");
         }
         return ResponseEntity.ok("Successfully created Role");
+    }
+
+    @Override
+    public Role createRole(Role role)  {
+    	
+    	return roleRepository.save(role);
+
     }
 
 
@@ -83,6 +91,20 @@ public class RoleServiceImpl implements RoleService{
     public List<ResponseEntity<Object>> deleteAllRoles() {
     	
     	return roleRepository.findAll().stream().map(r->deleteRole(r.getId())).collect(Collectors.toList());
+    }
+    
+    @Override
+    public Role checkRoles(Role role) {
+    	
+    	Optional<Role> r = roleRepository.findByName(role.getName());
+    	
+    	if(!r.isEmpty()) {
+    		role.setId(r.get().getId());  
+    		return role;    		
+    	} else {
+    		return createRole(role);
+    	}
+
     }
 }
 

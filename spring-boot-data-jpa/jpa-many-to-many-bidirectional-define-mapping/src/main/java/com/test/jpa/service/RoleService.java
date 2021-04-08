@@ -15,14 +15,16 @@ public interface RoleService {
      *@param role
      */
     @Transactional
-    public ResponseEntity<Object> addRole(Role role);
+    ResponseEntity<Object> addRole(Role role);
+    
+    Role createRole(Role role);
     
     /** 
      * Delete a specified role given the id 
      * 
      * @param id
      */
-    public ResponseEntity<Object> deleteRole(Long id);
+    ResponseEntity<Object> deleteRole(Long id);
     
     /** 
      * Update a Role 
@@ -31,7 +33,7 @@ public interface RoleService {
      * @param role
      * 
      */
-    public ResponseEntity<Object> updateRole(Long id, Role role);
+    ResponseEntity<Object> updateRole(Long id, Role role);
     
     /** 
      * Delete All the Roles
@@ -39,7 +41,17 @@ public interface RoleService {
      * @return
      * 
      */
-    public List<ResponseEntity<Object>> deleteAllRoles();
+    List<ResponseEntity<Object>> deleteAllRoles();
+    
+    /** 
+     * Check if the role exists
+     * 
+     * @param role
+     * 
+     * @return
+     * 
+     */
+    Role checkRoles(Role role);
 }
 
 

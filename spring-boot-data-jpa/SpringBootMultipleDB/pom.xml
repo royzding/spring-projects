@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sb.orcl</groupId>
-	<artifactId>Student</artifactId>
+	<artifactId>jpa-multiple-db</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Student</name>
+	<name>jpa-multiple-db</name>
 	<description>Demo project for Spring Boot JPA Oracle</description>
 
 	<properties>

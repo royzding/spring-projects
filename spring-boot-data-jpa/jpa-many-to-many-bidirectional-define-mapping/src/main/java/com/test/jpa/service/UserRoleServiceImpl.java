@@ -1,20 +1,22 @@
 package com.test.jpa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.test.jpa.entity.Role;
+import com.test.jpa.entity.User;
 import com.test.jpa.entity.UserRole;
-import com.test.jpa.entity.UserRole;
-import com.test.jpa.repository.RoleRepository;
 import com.test.jpa.repository.UserRoleRepository;
 
+@Service
 public class UserRoleServiceImpl implements UserRoleService {
 
     private UserRoleRepository userRoleRepository;
-    private RoleRepository roleRepository;
 
     public UserRoleServiceImpl(UserRoleRepository userRoleRepository) {
         this.userRoleRepository = userRoleRepository;
@@ -64,7 +66,24 @@ public class UserRoleServiceImpl implements UserRoleService {
     	
     	return userRoleRepository.findAll().stream().map(u->deleteUserRole(u.getId())).collect(Collectors.toList());
     }
+    
+    @Override
+    public List<ResponseEntity<Object>> saveUserRoles(User user, List<Role> roles) {
+    	
+    	List<ResponseEntity<Object>> list = new ArrayList<>();
+    	
+    	roles.forEach(p->
+    	{
+    		UserRole ur = new UserRole();
+    		ur.setUser(user);
+    		ur.setRole(p);
+    		
+        	list.add(createUserRole(ur));
 
+    	});
+    	
+    	return list;
+    }
 }
 
 

@@ -1,29 +1,34 @@
 package com.test.jpa.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.test.jpa.entity.Role;
 import com.test.jpa.entity.User;
-import com.test.jpa.repository.RoleRepository;
 import com.test.jpa.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    private final UserRoleService userRoleService;
+    private final RoleService roleService;
+    
+    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService,
+    		RoleService roleService) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.userRoleService = userRoleService;
+        this.roleService = roleService;
     }
     
     /** Create a new User */
     @Override
+    @Transactional
     public ResponseEntity<Object> createUser(User model) {
         User user = new User();
         if (userRepository.findByEmail(model.getEmail()).isPresent()) {
@@ -34,16 +39,24 @@ public class UserServiceImpl implements UserService {
             user.setMobile(model.getMobile());
             user.setEmail(model.getEmail());
             
-            //List<Role> roles = model.getRoles();
+            List<Role> roles = model.getRoles();
             
             //roles.forEach(r->r=roleRepository.findByName(r.getName()).orElse(r));
             
             user.setRoles(null);
 
-            User savedUser = userRepository.save(user);
-            if (userRepository.findById(savedUser.getId()).isPresent())
-                return ResponseEntity.ok("User Created Successfully");
-            else return ResponseEntity.unprocessableEntity().body("Failed Creating User as Specified");
+            User savedUser = userRepository.save(user);         
+            
+            Optional<User> newUser = userRepository.findById(savedUser.getId());
+            if (newUser.isPresent()) {
+            	
+            	roles.forEach(r->roleService.checkRoles(r));
+            	
+            	userRoleService.saveUserRoles(newUser.get(), roles);
+            	return ResponseEntity.ok("User Created Successfully");
+            } else {
+            	return ResponseEntity.unprocessableEntity().body("Failed Creating User as Specified");
+            }
         }
     }
 

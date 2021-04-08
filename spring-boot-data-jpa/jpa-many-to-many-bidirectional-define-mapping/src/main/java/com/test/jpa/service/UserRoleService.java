@@ -4,22 +4,26 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.test.jpa.entity.Role;
 import com.test.jpa.entity.User;
 import com.test.jpa.entity.UserRole;
 
 public interface UserRoleService {
 
     /** Create a new UserRole */
-    public ResponseEntity<Object> createUserRole(UserRole userRole);
+    ResponseEntity<Object> createUserRole(UserRole userRole);
     
     /** Update an Existing UserRole */
-    public ResponseEntity<Object> updateUserRole(UserRole userRole, Long id);
+    ResponseEntity<Object> updateUserRole(UserRole userRole, Long id);
     
     /** Delete an UserRole*/
-    public ResponseEntity<Object> deleteUserRole(Long id);
+    ResponseEntity<Object> deleteUserRole(Long id);
     
     /** Delete All the UserRoles*/
-    public List<ResponseEntity<Object>> deleteAllUserRoles();
+    List<ResponseEntity<Object>> deleteAllUserRoles();
+    
+    /** Delete All the UserRoles*/
+    List<ResponseEntity<Object>> saveUserRoles(User user, List<Role> roles);
     
 }
 
