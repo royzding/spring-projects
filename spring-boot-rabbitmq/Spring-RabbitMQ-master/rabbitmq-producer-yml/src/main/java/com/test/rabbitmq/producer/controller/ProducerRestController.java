@@ -36,9 +36,9 @@ public class ProducerRestController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity sendToTopicExchange(@PathVariable(value = "topic") String topic,
+    public ResponseEntity sendToTopicExchange(@PathVariable(value = "routingKey") String routingKey,
                                               @RequestBody Payload payload) {
-        producerService.sendToTopicExchange(payload, topic);
+        producerService.sendToTopicExchange(payload, routingKey);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
