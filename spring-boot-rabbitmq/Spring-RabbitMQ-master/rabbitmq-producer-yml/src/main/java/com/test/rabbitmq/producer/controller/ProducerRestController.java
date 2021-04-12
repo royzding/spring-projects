@@ -32,7 +32,7 @@ public class ProducerRestController {
     }
 
     @PostMapping(
-            value = "/topic/{topic}",
+            value = "/topic/{routingKey}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
