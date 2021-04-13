@@ -1,7 +1,12 @@
 package com.test.rabbitmq.consumer.configuration;
 
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +28,18 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
      
     @Value("${threadpool.maxpoolsize}")
     int maxPoolSize;
+   
+    @Value("${spring.rabbitmq.host}")
+    String host;
+   
+    @Value("${spring.rabbitmq.port}")
+    int port;
+   
+    @Value("${spring.rabbitmq.username}")
+    String username;
+   
+    @Value("${spring.rabbitmq.password}")
+    String password;
    
     @Bean
     public ObjectMapper objectMapper() {
@@ -55,8 +72,29 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
         pool.setWaitForTasksToCompleteOnShutdown(true);
         return pool;
     }
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.setHost(host);
+        connectionFactory.setPort(port);
+        connectionFactory.setUsername(username);
+        connectionFactory.setPassword(password);
+        return connectionFactory;
+    }
+
+   @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+        factory.setPrefetchCount(50);
+        factory.setConcurrentConsumers(5);
+        factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
+        return factory;
+    }
     
-    @Override
+	@Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
     }
