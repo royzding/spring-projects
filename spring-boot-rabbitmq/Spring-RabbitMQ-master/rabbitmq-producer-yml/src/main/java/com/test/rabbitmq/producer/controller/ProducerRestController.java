@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/producer")
 public class ProducerRestController {
-    @Autowired
-    private ProducerService producerService;
+
+    private final ProducerService producerService;    
+    public ProducerRestController(ProducerService producerService) {
+    	this.producerService = producerService;
+    }
     
     @GetMapping
     public String welcome() {
