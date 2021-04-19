@@ -12,11 +12,9 @@ spring:
         uri: lb://COURSE-SERVICE
         predicates:
         - Path=/course/**
-        filters:
-        - name: StudentPreFilter
             
 server:
-  port: 8081
+  port: 8088
 
 eureka:
   client:

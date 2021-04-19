@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: DIGI-API-GATEWAY
+    name: CLOUD-API-GATEWAY
   profiles:
     active: test
   eureka:
