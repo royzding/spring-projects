@@ -12,7 +12,11 @@ spring:
         uri: lb://COURSE-SERVICE
         predicates:
         - Path=/course/**
-            
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: helloworldCircuitBreaker
+            fallbackUri: forward:/fallback/accountFallback            
 server:
   port: 8088
 
