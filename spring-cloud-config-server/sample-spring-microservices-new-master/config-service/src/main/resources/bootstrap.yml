@@ -1,0 +1,12 @@
+server:
+  port: 8088
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        native:
+          search-locations: file:///C:/workspace/royzding/sample-spring-microservices-new-master/config-service/src/main/resources/config
+     
