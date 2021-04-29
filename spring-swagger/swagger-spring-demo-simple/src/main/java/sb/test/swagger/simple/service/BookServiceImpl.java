@@ -25,9 +25,11 @@ public class BookServiceImpl implements BookService {
      public ResponseEntity<List<Book>> getBooks() {
          List<Book> bookList = new ArrayList<>();
          Book a = new Book();
+         a.setId(1l);
          a.setAuthor("Patrick");
          a.setTitle("Name of the Wind");
          Book b = new Book();
+         b.setId(2l);
          b.setAuthor("Brandon");
          b.setTitle("Name of the Water");
          bookList.add(a);
@@ -38,6 +40,7 @@ public class BookServiceImpl implements BookService {
      
      public ResponseEntity<Book> getBookById(long id) {
          Book a = new Book();
+         a.setId(id);
          a.setAuthor("Patrick");
          a.setTitle("Name of the Wind");
          return ResponseEntity.ok(a);
