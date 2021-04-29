@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,5 +58,20 @@ public class BookController {
         method = RequestMethod.GET)
     public ResponseEntity<List<Book>> getBooks() {
         return bookService.getBooks();
+    }
+    
+    /**
+     * GET /book : Get Books
+     *
+     * @return successful operation (status code 200)
+     */
+    @ApiOperation(value = "Get Book", nickname = "getBook", notes = "", response = Book.class, responseContainer = "Book", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Book.class, responseContainer = "Book") })
+    @RequestMapping(value = "/book/{id}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    public ResponseEntity<Book> getBookById(@PathVariable("id") long id) {
+        return bookService.getBookById(id);
     }
 }

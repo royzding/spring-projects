@@ -9,4 +9,5 @@ import sb.test.swagger.simple.model.Book;
 public interface BookService {
     ResponseEntity<String> addBook(Book book);
     ResponseEntity<List<Book>> getBooks();
+    ResponseEntity<Book> getBookById(long id);
 }

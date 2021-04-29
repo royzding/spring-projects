@@ -22,18 +22,26 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    public ResponseEntity<List<Book>> getBooks() {
-        List<Book> bookList = new ArrayList<>();
-        Book a = new Book();
-        a.setAuthor("Patrick");
-        a.setTitle("Name of the Wind");
-        Book b = new Book();
-        b.setAuthor("Brandon");
-        b.setTitle("Name of the Water");
-        bookList.add(a);
-        bookList.add(b);
-        return ResponseEntity.ok(bookList);
+     public ResponseEntity<List<Book>> getBooks() {
+         List<Book> bookList = new ArrayList<>();
+         Book a = new Book();
+         a.setAuthor("Patrick");
+         a.setTitle("Name of the Wind");
+         Book b = new Book();
+         b.setAuthor("Brandon");
+         b.setTitle("Name of the Water");
+         bookList.add(a);
+         bookList.add(b);
+         return ResponseEntity.ok(bookList);
 
-    }
-    
+     }
+     
+     public ResponseEntity<Book> getBookById(long id) {
+         Book a = new Book();
+         a.setAuthor("Patrick");
+         a.setTitle("Name of the Wind");
+         return ResponseEntity.ok(a);
+
+     }
+     
 }
