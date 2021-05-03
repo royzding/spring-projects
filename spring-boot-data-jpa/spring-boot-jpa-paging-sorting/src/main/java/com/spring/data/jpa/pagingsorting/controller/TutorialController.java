@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.data.jpa.pagingsorting.model.Tutorial;
 import com.spring.data.jpa.pagingsorting.repository.TutorialRepository;
+
+import io.swagger.v3.oas.annotations.Parameter;
 
 //@CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -99,21 +102,60 @@ public class TutorialController {
 
   @GetMapping("/listin1")
   public List<Tutorial> listinTutorials1(
-      @RequestParam(required = false) String title) {
+	  @Parameter(name="titles", description="In: titles such as t1,t2,... ...")
+      @RequestParam(required = false) List<String> titles) {
 	  
-	  String[] titles = title.split(",");
-	  
-	  return tutorialRepository.findByTitles1(Arrays.asList(titles));
+	  return titles!=null ? tutorialRepository.findByTitles1(titles) : tutorialRepository.findAll();
 
   }
 
+  //http://localhost:8081/tutor/listin3?x=1,3,5&y=2,4,6,8
+  //[x:[1,3,5]],[y:[2,4,6,8]],
+  String values = "";
+  @GetMapping("/listin3")
+  public String listinTutorials3(@RequestParam MultiValueMap<String, String> queryMap) {
+	  
+	  values = "";
+	  queryMap.forEach((k,v)->values += "[" + k + ":" + v + "],");
+	  
+	  return values;
+
+  }
+
+  @GetMapping("/items")
+  public String handleRequest(@RequestParam("id") String[] itemIds) {
+      String response = "";
+      for (String itemId : itemIds) {
+          response += "item with string id " + itemId + "<br/>";
+      }
+      return response;
+  }
+
+  @GetMapping("/items2")
+  public String handleRequest2(@RequestParam("id") int[] itemIds) {
+      String response = "";
+      for (int itemId : itemIds) {
+          response += "item with int id " + itemId + "<br/>";
+      }
+      return response;
+  }
+
+  @GetMapping("/items3")
+  public String handleRequest3(@RequestParam MultiValueMap<String, String> queryMap) {
+      String response = "";
+      List<String> itemIds = queryMap.get("id");
+      for (String itemId : itemIds) {
+          response += "item from map with String id " + itemId + "<br/>";
+      }
+      return response;
+  }
+  
   @GetMapping("/listin2")
   public List<Tutorial> listinTutorials2(
-      @RequestParam(required = false) String title) {
+	  @Parameter(name="titles", description="In: titles such as t1,t2,... ...")
+      @RequestParam(required = false) List<String> titles) {
 	  
-	  String[] titles = title.split(",");
-	  
-	  return tutorialRepository.findByTitles2(Arrays.asList(titles));
+	  return titles!=null ? tutorialRepository.findByTitles2(titles) : tutorialRepository.findAll();
 
   }
 
