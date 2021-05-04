@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -89,4 +92,36 @@ public class BookController {
     public ResponseEntity<Book> getBookById(@PathVariable("id") long id) {
         return bookService.getBookById(id);
     }
+    
+    /**
+     * GET /book : Get Books
+     *
+     * @return successful operation (status code 200)
+     */
+    @Operation(summary = "Get Book by id")
+    @ApiResponses(value = { 
+            @ApiResponse(responseCode = "204", description = "Success. No Content"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error. The server could not process the request, content=@Content")
+    })
+    @PutMapping("/book/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> updateBookById(@PathVariable("id") long id) {
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    /**
+     * GET /book : Get Books
+     *
+     * @return successful operation (status code 200)
+     */
+    @Operation(summary = "Get Book by id")
+    @ApiResponses(value = { 
+            @ApiResponse(responseCode = "204", description = "Success. No Content"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error. The server could not process the request, content=@Content")
+    })
+    @PutMapping("/books/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateBookByIds(@PathVariable("id") long id) {
+    }
+    
 }
