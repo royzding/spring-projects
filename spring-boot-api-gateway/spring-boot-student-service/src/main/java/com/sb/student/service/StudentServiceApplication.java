@@ -11,18 +11,28 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @SpringBootApplication
 @EnableEurekaClient
 @RequestMapping("/student")
 public class StudentServiceApplication {
 
-	@RequestMapping(value = "/studentName/{name}")
+    @Operation(summary = "Get Student name")
+    @ApiResponses(value = { 
+    	     @ApiResponse(responseCode = "200", description = "successful operation", content = @Content), 
+    	     @ApiResponse(responseCode = "500", description = "internal server error", content = @Content) 
+    })
+	@GetMapping("/studentName/{name}")
 	public String echoStudentName(@PathVariable(name = "name") String name) {
 		return "Hello  " + name + " Responsed on : " + new Date();
 	}
 
-	@RequestMapping(value = "/getStudentDetails/{name}")
+    @GetMapping("/getStudentDetails/{name}")
 	public Student getStudentDetails(@PathVariable(name = "name") String name) {
 		return new Student(name, "Pune", "MCA");
 	}
