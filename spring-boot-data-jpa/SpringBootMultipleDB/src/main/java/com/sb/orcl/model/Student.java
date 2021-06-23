@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.WhereJoinTable;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity  
@@ -33,6 +35,7 @@ public class Student {
             inverseJoinColumns = {
                     @JoinColumn(name = "course_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
+    @WhereJoinTable(clause = " student_id = 12 ")
     private Set<Course> course = new HashSet<>();
 
 	public Student() {
