@@ -25,6 +25,12 @@ public class DepartmentController {
 	@Autowired
 	EmployeeClient employeeClient;
 	
+	@GetMapping("/hi")
+	public String getHi() {
+		LOGGER.info("Department find");
+		return "HI";
+	}
+	
 	@PostMapping("/")
 	public Department add(@RequestBody Department department) {
 		LOGGER.info("Department add: {}", department);
