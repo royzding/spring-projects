@@ -1,12 +1,11 @@
-#spring.application.name=student
-#server.port=8090
+server:
+  port: 8090
+  servlet:
+    context-path: /student
 
 spring:
   application:
     name: student-service
-
-server:
-  port: 8090
 
 eureka:
   client:

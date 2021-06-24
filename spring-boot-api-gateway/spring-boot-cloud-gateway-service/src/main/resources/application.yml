@@ -4,11 +4,12 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: studentService
+      - id: student-service
         uri: lb://STUDENT-SERVICE
         predicates:
         - Path=/student/**
-      - id: courseService
+        
+      - id: course-service
         uri: lb://COURSE-SERVICE
         predicates:
         - Path=/course/**
@@ -16,9 +17,24 @@ spring:
         - name: CircuitBreaker
           args:
             name: helloworldCircuitBreaker
-            fallbackUri: forward:/fallback/accountFallback            
+            fallbackUri: forward:/fallback/accountFallback    
+                  
+      - id: student-swagger
+        uri: lb://STUDENT-SERVICE
+        predicates:
+        - Path=/v1/api-docs/student/**
+        filters:
+        - RewritePath=/v1/api-docs/(?<path>.*), /$\{path}/v1/api-docs
+                       
+      - id: course-swagger
+        uri: lb://COURSE-SERVICE
+        predicates:
+        - Path=/v1/api-docs/course/**
+        filters:
+        - RewritePath=/v1/api-docs/(?<path>.*), /$\{path}/v1/api-docs
+                       
 server:
-  port: 8088
+  port: 8082
 
 eureka:
   client:
@@ -26,3 +42,8 @@ eureka:
     fetchRegistry: true
     server-url:
       default-zone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+      
+springdoc:  api-docs:    path: /v1/api-docs
+  swagger-ui:    path: /
