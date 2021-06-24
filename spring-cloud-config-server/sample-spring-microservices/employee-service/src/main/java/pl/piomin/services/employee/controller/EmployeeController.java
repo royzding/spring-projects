@@ -22,6 +22,12 @@ public class EmployeeController {
 	@Autowired
 	EmployeeRepository repository;
 	
+	@GetMapping("/hi")
+	public String hi() {
+		LOGGER.info("Employee find");
+		return "Hi Employee";
+	}
+
 	@PostMapping("/")
 	public Employee add(@RequestBody Employee employee) {
 		LOGGER.info("Employee add: {}", employee);

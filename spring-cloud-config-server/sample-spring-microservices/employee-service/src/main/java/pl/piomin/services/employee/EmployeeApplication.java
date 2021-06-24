@@ -9,16 +9,9 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import pl.piomin.services.employee.model.Employee;
 import pl.piomin.services.employee.repository.EmployeeRepository;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableSwagger2
 @OpenAPIDefinition(info =
 	@Info(title = "Employee API", version = "1.0", description = "Documentation Employee API v1.0")
 )
@@ -28,16 +21,7 @@ public class EmployeeApplication {
 		SpringApplication.run(EmployeeApplication.class, args);
 	}
 
-	@Bean
-	public Docket swaggerPersonApi10() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-					.apis(RequestHandlerSelectors.basePackage("pl.piomin.services.employee.controller"))
-					.paths(PathSelectors.any())
-				.build()
-				.apiInfo(new ApiInfoBuilder().version("1.0").title("Employee API").description("Documentation Employee API v1.0").build());
-	}
-	
+
 	@Bean
 	EmployeeRepository repository() {
 		EmployeeRepository repository = new EmployeeRepository();
