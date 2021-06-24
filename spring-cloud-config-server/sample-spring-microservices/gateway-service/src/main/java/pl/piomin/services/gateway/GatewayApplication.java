@@ -28,15 +28,16 @@ public class GatewayApplication {
 	RouteDefinitionLocator locator;
 
 	//http://localhost:8889/swagger-ui.html
+	//https://piotrminkowski.com/2020/02/20/microservices-api-documentation-with-springdoc-openapi/
 	@Bean
 	public List<GroupedOpenApi> apis() {
-		List<GroupedOpenApi> groups = new ArrayList<>();
-		List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();
-		definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches(".*-service")).forEach(routeDefinition -> {
-			String name = routeDefinition.getId().replaceAll("-service", "");
-			groups.add(GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").setGroup(name).build());
-		});
-		return groups;
-	}
+	   List<GroupedOpenApi> groups = new ArrayList<>();
+	   List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();
+	   definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches(".*-service")).forEach(routeDefinition -> {
+	      String name = routeDefinition.getId().replaceAll("-service", "");
+	      groups.add(GroupedOpenApi.builder().pathsToMatch("/").setGroup(name).build());
+	   });
+	   return groups;
+	}	
 
 }
