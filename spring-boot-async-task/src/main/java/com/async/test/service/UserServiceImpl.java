@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.async.test.model.User;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 @Service
@@ -18,6 +19,18 @@ public class UserServiceImpl implements UserService {
         System.out.println("createUserWithDefaultExecutor: Currently Executing thread name - " + Thread.currentThread().getName());
     }
 
+    @Override
+    @Async("threadPoolTaskExecutor")
+    public void createUserWithThreadPoolTaskExecutor(){
+        System.out.println("createUserWithThreadPoolTaskExecutor: Currently Executing thread name - " + Thread.currentThread().getName());
+    }
+
+    @Override
+    @Async("ConcurrentTaskExecutor")
+    public void createUserWithConcurrentTaskExecutor(){
+        System.out.println("createUserWithConcurrentTaskExecutor: Currently Executing thread name - " + Thread.currentThread().getName());
+    }
+    
     @Override
     @Async
     public Future<User> createAndReturnUser() {
@@ -36,15 +49,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Async("threadPoolExecutor")
-    public void createUserWithThreadPoolExecutor(){
-        System.out.println("createUserWithThreadPoolExecutor: Currently Executing thread name - " + Thread.currentThread().getName());
-    }
-
-    @Override
-    @Async("ConcurrentTaskExecutor")
-    public void createUserWithConcurrentExecutor(){
-        System.out.println("createUserWithConcurrentExecutor: Currently Executing thread name - " + Thread.currentThread().getName());
-    }
+    @Async("threadPoolTaskExecutor")
+    public CompletableFuture <User> findUser(String user) throws InterruptedException {
+        System.out.println("findUser: Currently Executing thread name - " + Thread.currentThread().getName());
+        
+        User userx = new User();
+        userx.setFirstName(user + "-fn");
+        userx.setLastName(user + "-ln");
+        userx.setGender(user + "-g");
+        
+        // Artificial delay of 1s for demonstration purposes
+        Thread.sleep(1000L);
+        
+        return CompletableFuture.completedFuture(userx);
+    }    
 
 }

@@ -14,13 +14,14 @@ import java.util.concurrent.Executors;
 @EnableAsync
 public class ExecutorConfig {
 
-   @Bean(name = "threadPoolExecutor")
+   @Bean(name = "threadPoolTaskExecutor")
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(7);
         executor.setMaxPoolSize(42);
         executor.setQueueCapacity(11);
-        executor.setThreadNamePrefix("threadPoolExecutor-");
+        executor.setThreadNamePrefix("threadPoolTaskExecutor-");
+        executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.initialize();
         return executor;
     }

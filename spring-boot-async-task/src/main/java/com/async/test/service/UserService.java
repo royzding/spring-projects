@@ -1,5 +1,6 @@
 package com.async.test.service;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import com.async.test.model.User;
@@ -10,7 +11,9 @@ public interface UserService {
 
     Future<User> createAndReturnUser();
 
-    void createUserWithThreadPoolExecutor();
+    void createUserWithThreadPoolTaskExecutor();
 
-    void createUserWithConcurrentExecutor();
+    void createUserWithConcurrentTaskExecutor();
+    
+    CompletableFuture <User> findUser(String user) throws InterruptedException;
 }
