@@ -1,14 +1,21 @@
 server:
-  port: 0
+  port: 8081
+  servlet:
+    context-path: /department
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8061/eureka/
-      
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+          
 logging:
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
 springdoc:
-  packagesToScan: pl.piomin.services.department
+  api-docs:
+   path: /v3/api-docs
+  swagger-ui:
+   path: /v3/swagger-ui.html
