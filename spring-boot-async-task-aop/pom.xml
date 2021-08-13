@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.async.test</groupId>
-    <artifactId>spring-boot-asynch-task</artifactId>
+    <artifactId>spring-boot-asynch-task-aop</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
