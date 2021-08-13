@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /service
+
+spring:
+  application:
+    name: services
+
+springdoc:
+  api-docs:
+   path: /api-docs
+  swagger-ui:
+   path: /swagger-ui.html  
