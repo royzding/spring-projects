@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.async.test.model.Employee;
+import com.async.test.model.dto.EmployeeDto;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -28,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee createEmployee(Employee employee) {
+	public Employee createEmployee(EmployeeDto employee) {
 		Employee emp = new Employee();
 		emp.setId(employee.getId() + 1L);
 		emp.setFirstName(employee.getFirstName()+"-new");
@@ -36,5 +37,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return emp;
 	}
 
+	@Override
+	public void deleteEmployee(Long id) {
+        System.out.println("Method deleteEmployee() called");
+	}
 
+	@Override
+	public void updateEmployee(Long id, EmployeeDto employee) {
+        System.out.println("Method updateEmployee() called");
+	}
 }
