@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.async.test.data.model.EmployeeEntity;
 import com.async.test.model.Employee;
 import com.async.test.model.dto.EmployeeDto;
 import com.async.test.service.EmployeeService;

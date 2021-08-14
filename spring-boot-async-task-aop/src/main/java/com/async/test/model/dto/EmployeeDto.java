@@ -12,5 +12,7 @@ public class EmployeeDto {
     private long id;
     private String firstName;
     private String lastName;
+    
+    private Boolean isActive;
 
 }

@@ -2,30 +2,44 @@ package com.async.test.service;
 
 import java.util.List;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import com.async.test.data.model.EmployeeEntity;
+import com.async.test.map.EmployeeMapper;
 import com.async.test.model.Employee;
 import com.async.test.model.dto.EmployeeDto;
+import com.async.test.repository.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	List<Employee> list = List.of(
-			new Employee(1, "ef1", "el1"), 
-			new Employee(2, "ef2", "el2"), 
-			new Employee(3, "ef3", "el3")
+			new Employee(1, "ef1", "el1", true), 
+			new Employee(2, "ef2", "el2", true), 
+			new Employee(3, "ef3", "el3", true)
 			);
 
+	private final EmployeeMapper mapper;
+	private final EmployeeRepository repository;
+	
+	EmployeeServiceImpl(EmployeeMapper mapper, EmployeeRepository repository) {
+		this.mapper = Mappers.getMapper(EmployeeMapper.class);
+		this.repository = repository;
+	}
+	
 	@Override
 	public List<Employee> getAllEmployees() {
 		
-		return this.list;
+		List<EmployeeEntity> entities = this.repository.findAll();
+		
+		
+		return this.mapper.employeeEntityToEmployee(entities);
 	}
 
 	@Override
 	public Employee getEmployee(Long id) {
-		// TODO Auto-generated method stub
-		return this.list.get(id.intValue()-1);
+		return this.mapper.employeeEntityToEmployee(this.repository.findById(id).get());
 	}
 
 	@Override
