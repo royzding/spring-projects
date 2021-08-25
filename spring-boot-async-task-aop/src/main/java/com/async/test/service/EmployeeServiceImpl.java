@@ -3,7 +3,9 @@ package com.async.test.service;
 import java.util.List;
 
 import org.mapstruct.factory.Mappers;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import com.async.test.data.model.EmployeeEntity;
 import com.async.test.map.EmployeeMapper;
@@ -59,5 +61,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void updateEmployee(Long id, EmployeeDto employee) {
         System.out.println("Method updateEmployee() called");
+	}
+
+	@Override
+	@Cacheable("cacheable-time")
+	public Long getCacheableTime() {
+		
+		StopWatch sw = new StopWatch();
+		
+		sw.start();
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sw.stop();
+		
+		System.out.println("time taking in getCacheableTime:" + sw.getTotalTimeMillis());
+		
+		return sw.getTotalTimeMillis();
 	}
 }

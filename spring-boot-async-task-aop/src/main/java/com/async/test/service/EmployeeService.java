@@ -12,4 +12,6 @@ public interface EmployeeService {
     Employee createEmployee(final EmployeeDto employee);
     void deleteEmployee(final Long id);
     void updateEmployee(final Long id, final EmployeeDto employee);
+    
+    Long getCacheableTime();
 }

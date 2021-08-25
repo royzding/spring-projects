@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,23 @@ public class EmployeeController {
 	
 	EmployeeController(EmployeeService EmployeeService) {
 		this.EmployeeService = EmployeeService;		
+	}
+	
+	@GetMapping("/cacheable-time")
+	public Long getCacheableTime() {
+		LOGGER.info("getCacheableTime Methods.");
+
+		StopWatch sw = new StopWatch();
+		
+		sw.start();
+		
+		Long time = this.EmployeeService.getCacheableTime();
+		
+		sw.stop();
+		
+		System.out.println("time taking in controller:" + sw.getTotalTimeMillis());
+
+		return time;
 	}
 		
 	@Operation(summary="get a list of employee")
