@@ -70,7 +70,17 @@ public class EmployeeController {
 	public List<Employee> getAllEmployees() {
 		LOGGER.info("getAllEmployees Methods.");
 				
-		return this.EmployeeService.getAllEmployees();
+		StopWatch sw = new StopWatch();
+		
+		sw.start();
+		
+		 List<Employee> employees = this.EmployeeService.getAllEmployees();
+		
+		sw.stop();
+		
+		System.out.println("time taking in controller getAllEmployees:" + sw.getTotalTimeMillis());
+
+		return employees;
 	}
 	
 	@GetMapping("/{id}")

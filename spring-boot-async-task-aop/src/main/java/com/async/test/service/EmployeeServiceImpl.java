@@ -31,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
+	@Cacheable("all-employees")
 	public List<Employee> getAllEmployees() {
 		
 		List<EmployeeEntity> entities = this.repository.findAll();
