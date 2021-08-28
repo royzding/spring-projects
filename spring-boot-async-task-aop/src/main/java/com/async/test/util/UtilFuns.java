@@ -8,7 +8,7 @@ public class UtilFuns {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(hasPredicate(Arrays.asList("Plus","Minus")).test("plus"));
+		System.out.println(hasPredicate(Arrays.asList("Plus","Minus")).test("plusx"));
 	}
 	
 	public static Predicate<String> hasPredicate(Collection<String> c) {
