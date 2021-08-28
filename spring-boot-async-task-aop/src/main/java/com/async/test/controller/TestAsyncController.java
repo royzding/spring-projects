@@ -23,6 +23,11 @@ public class TestAsyncController {
 		this.userService = userService;		
 	}
 		
+	@GetMapping
+	public String hello() { 
+		return "hello";
+	}
+
 	@GetMapping("/hi")
 	public String hi() throws InterruptedException, ExecutionException {
 		LOGGER.info("Test Async Methods.");
