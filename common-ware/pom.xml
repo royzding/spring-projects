@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.async.test</groupId>
-    <artifactId>spring-boot-asynch-task-aop</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.2</version>
-    </parent>
-    
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.common.ware</groupId>
+	<artifactId>common-ware</artifactId>
+	<version>1.0</version>
+	<name>common-ware</name>
+	<description>common-ware project for Spring Boot</description>
+	
     <properties>
-    	<project.basedir>C:/workspace/spring-projects</project.basedir>
     	<org.projectlombok.version>1.18.16</org.projectlombok.version>
     	<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>    	
     </properties>
@@ -90,24 +89,10 @@
 	        <scope>test</scope>
 	    </dependency>
     		    
-	    <dependency>
-	        <groupId>org.springframework.kafka</groupId>
-	        <artifactId>spring-kafka-test</artifactId>
-	        <scope>test</scope>
-	    </dependency>
-    		    
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.common.ware</groupId>
-            <artifactId>common-ware</artifactId>
-			<version>1.0</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/roy/.m2/repository/com/common/ware/common-ware/1.0/common-ware-1.0.jar</systemPath>
         </dependency>
         
     </dependencies>

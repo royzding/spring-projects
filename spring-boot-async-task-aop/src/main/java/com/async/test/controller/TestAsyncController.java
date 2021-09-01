@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.async.test.model.User;
 import com.async.test.service.UserService;
+import com.common.ware.model.UserInfo;
 
 
 @RestController
@@ -19,12 +20,20 @@ public class TestAsyncController {
 	
 	private final UserService userService;
 	
+	private UserInfo userInfo;
+	
 	TestAsyncController(UserService userService) {
 		this.userService = userService;		
 	}
 		
 	@GetMapping
 	public String hello() { 
+		
+		UserInfo ui = new UserInfo();
+		ui.setAge(20);
+		ui.setFirstName("fn");
+		ui.setLastName("ln");
+		
 		return "hello";
 	}
 
