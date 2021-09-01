@@ -12,6 +12,19 @@ spring:
     username: c##ding
     password: peardoor807x
     
+  kafka:
+    topic-name: quickstart-events
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group-id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer    
+    
 jpa:
   hibernate:
     database-platform: org.hibernate.dialect.Oracle12cDialect
