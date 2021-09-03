@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<EmployeeEntity> entities = this.repository.findAll();
 		
 		
-		return this.mapper.employeeEntityToEmployee(entities);
+		return this.mapper.entityToEmployee(entities);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		entities = this.repository.saveAll(entities);
 
-		return this.mapper.employeeEntityToEmployee(entities);
+		return this.mapper.entityToEmployee(entities);
 	}
 	
 	@Override
@@ -102,5 +102,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return sw.getTotalTimeMillis();
 	}
 
-	
+	@Override
+	public List<Employee> getEmployeesByDepartmentId(Long id) {		
+		return this.mapper.entityToEmployee(this.repository.findByDepId(id));
+	}
+
 }

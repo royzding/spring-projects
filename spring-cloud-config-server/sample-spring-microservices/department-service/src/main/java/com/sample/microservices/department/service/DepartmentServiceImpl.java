@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
 import com.sample.microservices.department.data.model.DepartmentEntity;
+import com.sample.microservices.department.employee.EmployeeService;
 import com.sample.microservices.department.map.DepartmentMapper;
 import com.sample.microservices.department.model.Department;
+import com.sample.microservices.department.model.Employee;
 import com.sample.microservices.department.model.dto.DepartmentDto;
 import com.sample.microservices.department.repository.DepartmentRepository;
 
@@ -18,10 +20,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 	
 	private final DepartmentMapper mapper;
 	private final DepartmentRepository repository;
-	
-	DepartmentServiceImpl(DepartmentMapper mapper, DepartmentRepository repository) {
+	private final EmployeeService employeeService;
+		
+	DepartmentServiceImpl(DepartmentMapper mapper, DepartmentRepository repository, EmployeeService employeeService) {
 		this.mapper = Mappers.getMapper(DepartmentMapper.class);
 		this.repository = repository;
+		this.employeeService = employeeService;
 	}
 	
 	@Override
@@ -100,6 +104,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 		entity = this.mapper.departmentDtoToEntity(departmentDto);
 		
 		this.repository.save(entity);
+	}
+
+	@Override
+	public List<Employee> getEmployeesByDepartmentId(Long id) {
+		return this.employeeService.getEmployeesByDepartmentId(id);
 	}
 	
 }

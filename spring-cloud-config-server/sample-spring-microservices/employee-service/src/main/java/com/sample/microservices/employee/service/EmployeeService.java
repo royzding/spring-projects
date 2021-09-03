@@ -12,6 +12,8 @@ public interface EmployeeService {
     
     List<Employee> getAllEmployees();
     
+    List<Employee> getEmployeesByDepartmentId(final Long id);
+    
     Employee createEmployee(final EmployeeDto employeeDto);
     
     List<Employee> createEmployees(final List<EmployeeDto> employeeDto);

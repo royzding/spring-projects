@@ -64,6 +64,17 @@ public class EmployeeController {
 		return this.employeeService.getAllEmployees();
 	}
 
+	@Operation(summary="get employees by depId")
+	@ApiResponses(value= {
+		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
+					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Employee.class))) }),
+		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
+	})
+	@GetMapping("/employees/{depId}")
+	public List<Employee> getEmployeesByDepartmentId(@PathVariable("depId") Long depId) {
+		return this.employeeService.getEmployeesByDepartmentId(depId);
+	}
+
 	@Operation(summary="Create an employee")
 	@ApiResponses(value= {
 			@ApiResponse(responseCode="201",description="Employee created",

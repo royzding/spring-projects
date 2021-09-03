@@ -22,7 +22,7 @@ public interface EmployeeMapper {
 	
 	Employee entityToEmployee(EmployeeEntity source);
 
-	List<Employee> employeeEntityToEmployee(List<EmployeeEntity> source);
+	List<Employee> entityToEmployee(List<EmployeeEntity> source);
 
 	@Mappings({
 		@Mapping(target="id", source="id")		

@@ -3,6 +3,7 @@ package com.sample.microservices.department.service;
 import java.util.List;
 
 import com.sample.microservices.department.model.Department;
+import com.sample.microservices.department.model.Employee;
 import com.sample.microservices.department.model.dto.DepartmentDto;
 
 public interface DepartmentService {
@@ -22,4 +23,6 @@ public interface DepartmentService {
     void updateDepartment(final Long id, final DepartmentDto departmentDto)  throws Exception;
     
     Long getCacheableTime();
+    
+    List<Employee> getEmployeesByDepartmentId(final Long id);    
 }

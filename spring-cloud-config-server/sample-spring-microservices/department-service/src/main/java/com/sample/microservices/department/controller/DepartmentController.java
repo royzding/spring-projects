@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.department.model.Department;
+import com.sample.microservices.department.model.Employee;
 import com.sample.microservices.department.model.dto.DepartmentDto;
 import com.sample.microservices.department.service.DepartmentService;
 
@@ -134,6 +135,18 @@ public class DepartmentController {
 
 		this.departmentService.deleteAllDepartments();
 	}
+
+	@Operation(summary="get employees by depId")
+	@ApiResponses(value= {
+		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
+					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Employee.class))) }),
+		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
+	})
+	@GetMapping("/employees/{depId}")
+	public List<Employee> getEmployeesByDepartmentId(@PathVariable("depId") Long depId) {
+		return this.departmentService.getEmployeesByDepartmentId(depId);
+	}
+
 	
 /*	
 	@Operation(summary="get a list of department of the department")
