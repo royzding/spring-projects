@@ -1,40 +1,17 @@
 package com.sample.microservices.employee.repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import com.sample.microservices.employee.model.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class EmployeeRepository {
+import com.sample.microservices.employee.data.model.EmployeeEntity;
 
-	private List<Employee> employees = new ArrayList<>();
+@Repository
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long>{
 	
-	public Employee add(Employee employee) {
-		employee.setId((long) (employees.size()+1));
-		employees.add(employee);
-		return employee;
-	}
-	
-	public Employee findById(Long id) {
-		Optional<Employee> employee = employees.stream().filter(a -> a.getId().equals(id)).findFirst();
-		if (employee.isPresent())
-			return employee.get();
-		else
-			return null;
-	}
-	
-	public List<Employee> findAll() {
-		return employees;
-	}
-	
-	public List<Employee> findByDepartment(Long departmentId) {
-		return employees.stream().filter(a -> a.getDepartmentId().equals(departmentId)).collect(Collectors.toList());
-	}
-	
-	public List<Employee> findByOrganization(Long organizationId) {
-		return employees.stream().filter(a -> a.getOrganizationId().equals(organizationId)).collect(Collectors.toList());
-	}
-	
+	List<EmployeeEntity> findByFirstName(String firstName);
+	List<EmployeeEntity> findByFirstNameAndLastName(String firstName, String lastName);
+	List<EmployeeEntity> findByFirstNameIn(List<String> firstName);
+
 }
