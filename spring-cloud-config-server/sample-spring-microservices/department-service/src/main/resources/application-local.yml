@@ -1,11 +1,11 @@
 server:
-  port: 8083
+  port: 8082
   servlet:
-    context-path: /employee-service
+    context-path: /department-service
 
 spring:
   application:
-    name: employee-service
+    name: department-service
     
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
@@ -39,5 +39,5 @@ springdoc:
    path: /v3/swagger-ui.html  
    
 auth:
-  svcKey: employee-1234-5678   
+  svcKey: department-1234-5678   
    

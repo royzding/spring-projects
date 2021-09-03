@@ -1,4 +1,4 @@
-package com.sample.microservices.employee.data.model;
+package com.sample.microservices.department.data.model;
 
 import java.io.Serializable;
 
@@ -14,37 +14,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="employee")
+@Table(name="Department")
 
 @Getter
 @Setter
-public class EmployeeEntity implements Serializable {
+public class DepartmentEntity implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8436014022103292703L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotNull
-	@Column(name="firstname")
-	private String firstName;
-	
-	@NotNull
-	@Column(name="lastname")
-	private String lastName;
-	
-	@Column(name="salary")
-	private Double salary;
-	
-	@Column(name="dep_id")
-	private Long depId;
-	
-	@Column(name="manager_id")
-	private Long managerId;
-	
+	@Column(name="name")
+	private String name;
 	
 }
