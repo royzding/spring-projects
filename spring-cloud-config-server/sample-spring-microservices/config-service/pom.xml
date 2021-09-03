@@ -6,7 +6,7 @@
 		<version>2.4.2</version>
 	</parent>
 	<artifactId>config-service</artifactId>
-	<groupId>pl.piomin.services</groupId>
+	<groupId>com.sample.microservices</groupId>
 	<version>1.0-SNAPSHOT</version>
 
 	<properties>
