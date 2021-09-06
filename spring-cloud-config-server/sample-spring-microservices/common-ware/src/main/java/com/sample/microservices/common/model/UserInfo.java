@@ -1,4 +1,4 @@
-package com.sample.microservices.common.ware.model;
+package com.sample.microservices.common.model;
 
 import lombok.Data;
 

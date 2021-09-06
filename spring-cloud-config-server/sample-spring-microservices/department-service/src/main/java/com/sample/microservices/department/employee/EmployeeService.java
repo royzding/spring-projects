@@ -2,7 +2,7 @@ package com.sample.microservices.department.employee;
 
 import java.util.List;
 
-import com.sample.microservices.department.model.Employee;
+import com.sample.microservices.common.model.Employee;
 
 public interface EmployeeService {
 

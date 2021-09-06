@@ -6,8 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
+import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.employee.data.model.ManagerEntity;
-import com.sample.microservices.employee.model.Manager;
 import com.sample.microservices.model.dto.ManagerDto;
 
 @Component

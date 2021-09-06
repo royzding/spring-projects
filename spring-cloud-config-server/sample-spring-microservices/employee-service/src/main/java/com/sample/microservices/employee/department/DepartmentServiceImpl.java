@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.sample.microservices.employee.model.Department;
+import com.sample.microservices.common.model.Department;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {

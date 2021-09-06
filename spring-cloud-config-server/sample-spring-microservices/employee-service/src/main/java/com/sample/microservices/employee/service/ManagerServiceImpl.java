@@ -5,12 +5,11 @@ import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 
+import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.employee.data.model.ManagerEntity;
-import com.sample.microservices.employee.repository.ManagerEntityRepository;
 import com.sample.microservices.employee.map.ManagerMapper;
-import com.sample.microservices.employee.model.Manager;
+import com.sample.microservices.employee.repository.ManagerEntityRepository;
 import com.sample.microservices.model.dto.ManagerDto;
 
 @Service

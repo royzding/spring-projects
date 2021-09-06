@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sample.microservices.employee.model.Employee;
+import com.sample.microservices.common.model.Employee;
 import com.sample.microservices.employee.service.EmployeeService;
 import com.sample.microservices.model.dto.EmployeeDto;
 

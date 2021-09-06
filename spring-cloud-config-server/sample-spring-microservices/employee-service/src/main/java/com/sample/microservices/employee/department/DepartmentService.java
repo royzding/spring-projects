@@ -3,7 +3,7 @@ package com.sample.microservices.employee.department;
 import java.util.List;
 import java.util.Map;
 
-import com.sample.microservices.employee.model.Department;
+import com.sample.microservices.common.model.Department;
 
 public interface DepartmentService {
 

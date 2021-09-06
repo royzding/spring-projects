@@ -7,10 +7,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
+import com.sample.microservices.common.model.Employee;
 import com.sample.microservices.employee.data.model.EmployeeEntity;
 import com.sample.microservices.employee.department.DepartmentService;
 import com.sample.microservices.employee.map.EmployeeMapper;
-import com.sample.microservices.employee.model.Employee;
 import com.sample.microservices.employee.repository.EmployeeEntiyRepository;
 import com.sample.microservices.model.dto.EmployeeDto;
 
@@ -114,7 +114,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<Employee> getEmployeesByDepartmentId(Long id) {		
-		return this.mapper.entityToEmployee(this.repository.findByDepId(id));
+		
+		List<Employee> employees = this.mapper.entityToEmployee(this.repository.findByDepId(id));
+		
+		employees.forEach(e->{
+			e.setDepName(this.departmentService.getDepartmentMap().get(id).getName());
+		});
+		
+		return employees;
 	}
 
 }

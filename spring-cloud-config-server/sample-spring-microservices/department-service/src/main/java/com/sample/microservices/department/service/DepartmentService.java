@@ -2,8 +2,8 @@ package com.sample.microservices.department.service;
 
 import java.util.List;
 
-import com.sample.microservices.department.model.Department;
-import com.sample.microservices.department.model.Employee;
+import com.sample.microservices.common.model.Department;
+import com.sample.microservices.common.model.Employee;
 import com.sample.microservices.department.model.dto.DepartmentDto;
 
 public interface DepartmentService {

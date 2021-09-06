@@ -7,11 +7,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
+import com.sample.microservices.common.model.Department;
+import com.sample.microservices.common.model.Employee;
+import com.sample.microservices.common.util.UtilFuns;
 import com.sample.microservices.department.data.model.DepartmentEntity;
 import com.sample.microservices.department.employee.EmployeeService;
 import com.sample.microservices.department.map.DepartmentMapper;
-import com.sample.microservices.department.model.Department;
-import com.sample.microservices.department.model.Employee;
 import com.sample.microservices.department.model.dto.DepartmentDto;
 import com.sample.microservices.department.repository.DepartmentRepository;
 
@@ -30,6 +31,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 	
 	@Override
 	public Department getDepartmentById(final Long id) {
+		
+		UtilFuns.test();
+		
 		return this.mapper.entityToDepartment(this.repository.findById(id).get());
 	}
 
@@ -67,7 +71,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+				
 		sw.stop();
 		
 		System.out.println("time taking in getCacheableTime:" + sw.getTotalTimeMillis());
