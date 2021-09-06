@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CommonWareApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CommonWareApplication.class, args);
+		SpringApplication.run(CommonWareApplication.class, args); 
 	}
 
 }
