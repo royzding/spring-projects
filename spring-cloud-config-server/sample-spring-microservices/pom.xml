@@ -21,6 +21,7 @@
 		<module>gateway-service</module>
 		<module>proxy-service</module>
 		<module>asyncaop-service</module>
+		<module>common-ware</module>		
 	</modules>
 	
 </project>
