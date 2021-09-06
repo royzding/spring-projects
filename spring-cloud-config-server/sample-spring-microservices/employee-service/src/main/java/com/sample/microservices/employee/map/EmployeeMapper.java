@@ -16,10 +16,13 @@ import com.sample.microservices.model.dto.EmployeeDto;
 @Mapper(componentModel="spring", nullValuePropertyMappingStrategy=NullValuePropertyMappingStrategy.IGNORE)
 public interface EmployeeMapper {
 	
+	@Mapping(target="managerEntity.id", source="managerId")		
 	EmployeeEntity employeeDtoToEntity(EmployeeDto source);
 	
 	List<EmployeeEntity> employeeDtoToEntity(List<EmployeeDto> source);
 	
+	@Mapping(target="managerId", source="managerEntity.id")		
+	@Mapping(target="managerName", source="managerEntity.name")		
 	Employee entityToEmployee(EmployeeEntity source);
 
 	List<Employee> entityToEmployee(List<EmployeeEntity> source);

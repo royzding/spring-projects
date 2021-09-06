@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sample.microservices.employee.data.model.EmployeeEntity;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long>{
+public interface EmployeeEntiyRepository extends JpaRepository<EmployeeEntity, Long>{
 	
 	List<EmployeeEntity> findByFirstName(String firstName);
 	List<EmployeeEntity> findByFirstNameAndLastName(String firstName, String lastName);

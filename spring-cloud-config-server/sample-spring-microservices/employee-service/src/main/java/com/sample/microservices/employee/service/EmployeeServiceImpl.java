@@ -8,25 +8,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
 import com.sample.microservices.employee.data.model.EmployeeEntity;
+import com.sample.microservices.employee.department.DepartmentService;
 import com.sample.microservices.employee.map.EmployeeMapper;
 import com.sample.microservices.employee.model.Employee;
-import com.sample.microservices.employee.repository.EmployeeRepository;
+import com.sample.microservices.employee.repository.EmployeeEntiyRepository;
 import com.sample.microservices.model.dto.EmployeeDto;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	private final EmployeeMapper mapper;
-	private final EmployeeRepository repository;
+	private final EmployeeEntiyRepository repository;
+	private final DepartmentService departmentService;
 	
-	EmployeeServiceImpl(EmployeeMapper mapper, EmployeeRepository repository) {
+	EmployeeServiceImpl(EmployeeMapper mapper, EmployeeEntiyRepository repository, DepartmentService departmentService) {
 		this.mapper = Mappers.getMapper(EmployeeMapper.class);
 		this.repository = repository;
+		this.departmentService = departmentService;
 	}
 	
 	@Override
 	public Employee getEmployeeById(final Long id) {
-		return this.mapper.entityToEmployee(this.repository.findById(id).get());
+		Employee employee = this.mapper.entityToEmployee(this.repository.findById(id).get());
+		employee.setDepName(this.departmentService.getDepartmentMap().get(employee.getDepId()).getName());
+		return employee;
 	}
 
 	@Override
@@ -35,8 +40,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		List<EmployeeEntity> entities = this.repository.findAll();
 		
+		List<Employee> employees = this.mapper.entityToEmployee(entities);
 		
-		return this.mapper.entityToEmployee(entities);
+		employees.forEach(e->{
+			e.setDepName(this.departmentService.getDepartmentMap().get(e.getDepId()).getName());
+		});
+				
+		return employees;
 	}
 
 	@Override
