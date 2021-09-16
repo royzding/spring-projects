@@ -7,6 +7,6 @@ public class UtilFuns {
 	}
 	
 	public static void test() {
-		System.out.println("From UtilFuns");
+		System.out.println("From UtilFuns X");
 	}
 }

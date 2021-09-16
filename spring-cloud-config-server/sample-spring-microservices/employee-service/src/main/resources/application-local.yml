@@ -39,5 +39,5 @@ springdoc:
    path: /v3/swagger-ui.html  
    
 auth:
-  svcKey: employee-1234-5678   
+  svcKey: emp-1234-5678   
    

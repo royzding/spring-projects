@@ -17,6 +17,8 @@ spring:
         uri: lb://DEPARTMENT-SERVICE
         predicates:
         - Path=/department/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, dep-1234-5678
       
       - id: employee-service
         uri: lb://employee-service

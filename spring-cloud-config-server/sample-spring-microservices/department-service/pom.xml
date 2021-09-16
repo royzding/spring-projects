@@ -104,8 +104,6 @@
             <groupId>com.sample.microservices</groupId>
             <artifactId>common-ware</artifactId>
 			<version>1.0</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/roy/.m2/repository/com/sample/microservices/common-ware/1.0/common-ware-1.0.jar</systemPath>
         </dependency>
 
 	</dependencies>

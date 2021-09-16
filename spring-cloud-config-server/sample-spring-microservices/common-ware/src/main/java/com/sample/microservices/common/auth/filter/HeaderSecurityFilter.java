@@ -1,4 +1,4 @@
-package com.sample.microservices.employee.configuration;
+package com.sample.microservices.common.auth.filter;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class HeaderSecurityFilter extends OncePerRequestFilter {
 	private String svcKey;
 	private static final String HEADER_SVC_KEY = "X-SVC-KEY";
 	
-	HeaderSecurityFilter(String svcKey) {
+	public HeaderSecurityFilter(String svcKey) {
 		this.svcKey = svcKey;
 	}
  
@@ -29,11 +29,11 @@ public class HeaderSecurityFilter extends OncePerRequestFilter {
     	
     	System.out.println("=============" + request.getRequestURI());
     	System.out.println("=============" + svcHeader);
- /*
+    	 
         if(svcHeader == null || !svcHeader.equals(this.svcKey)) {
         	throw new BadCredentialsException("The Service Key was not found!");
         }
-*/        
+
         filterChain.doFilter(request, response);
 
     }
