@@ -3,9 +3,12 @@ package com.sample.microservices.test.aop;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +59,67 @@ public class EmployeeServiceAspect {
         return result;
     }	
 	
+    @Pointcut("execution(public * *(..)")
+    public void allPublicMethodsExecution() {}
+    
+    @Pointcut("@annotation(org.springframework.transaction.annotation.GetMapping)")
+    public void anyJoinPointWithGetMappingAnnotation() {}
+    
+    @Pointcut("@annotation(org.springframework.transaction.annotation.Transactional)")
+    public void anyJoinPointWithTransactionalAnnotation() {}
+    
+        
+    @Before("allPublicMethodsExecution() && anyJoinPointWithTransactionalAnnotation()")
+    public void logBeforeAllMethods(JoinPoint joinPoint) 
+    {
+        System.out.println("****LoggingAspect.logBeforeAllMethods() : " + joinPoint.getSignature().getName());
+    }
+    
+	
+/*
+ 
+The execution of any public method:
+
+    @Pointcut("execution(public * *(..)")
+    public void allPublicMethodsExecution() {}
+    
+Any join point (method execution only in Spring AOP) where the executing method has an @Transactional annotation:
+
+    @Pointcut("@annotation(org.springframework.transaction.annotation.GetMapping)")
+    public void anyJoinPointWithGetMappingAnnotation() {}
+    
+    @Pointcut("@annotation(org.springframework.transaction.annotation.Transactional)")
+    public void anyJoinPointWithTransactionalAnnotation() {}
+    
+        
+    @Before("allPublicMethodsExecution() && anyJoinPointWithTransactionalAnnotation()")
+    public void logBeforeAllMethods(JoinPoint joinPoint) 
+    {
+        System.out.println("****LoggingAspect.logBeforeAllMethods() : " + joinPoint.getSignature().getName());
+    }
+    
+    
+The execution of any method with a name that begins with set:
+
+    execution(* set*(..))
+The execution of any method defined by the AccountService interface:
+
+    execution(* com.xyz.service.AccountService.*(..))
+The execution of any method defined in the service package:
+
+    execution(* com.xyz.service.*.*(..))
+The execution of any method defined in the service package or one of its sub-packages:
+
+    execution(* com.xyz.service..*.*(..))
+Any join point (method execution only in Spring AOP) within the service package:
+
+    within(com.xyz.service.*)
+Any join point (method execution only in Spring AOP) within the service package or one of its sub-packages:
+
+    within(com.xyz.service..*) 	
+    
+	
+ */
 
 /*	
  ////////////////Before Advice methods/////////////////////////////

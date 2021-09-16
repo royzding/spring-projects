@@ -106,7 +106,7 @@
             <artifactId>spring-boot-starter-cache</artifactId>
             <scope>test</scope>
         </dependency>
-
+        
         <dependency>
             <groupId>com.sample.microservices</groupId>
             <artifactId>common-ware</artifactId>
