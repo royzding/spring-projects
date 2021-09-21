@@ -21,7 +21,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		
-    	System.out.println("================== get into" + SecurityConfiguration.class);
+    	System.out.println("$$$$$$$$$$$$$$$$$$$$$ get into svcKey==" + svcKey);
+    	System.out.println("$$$$$$$$$$$$$$$$$$$$$ get into" + SecurityConfiguration.class);
 
 		http
 		.addFilterBefore(new HeaderSecurityFilter(svcKey), BasicAuthenticationFilter.class)
