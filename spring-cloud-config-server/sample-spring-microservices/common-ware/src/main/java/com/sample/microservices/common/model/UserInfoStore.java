@@ -14,4 +14,11 @@ public class UserInfoStore {
 	public void clear() {
 		this.setUserName(null);
 	}
+
+	@Override
+	public String toString() {
+		return "UserInfoStore [userName=" + userName + "]";
+	}
+	
+	
 }

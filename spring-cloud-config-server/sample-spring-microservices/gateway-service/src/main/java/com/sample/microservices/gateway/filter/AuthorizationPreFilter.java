@@ -22,6 +22,9 @@ public class AuthorizationPreFilter extends AbstractGatewayFilterFactory<Authori
     
     private static final String USER_INFO_HEADER = "X-USER-INFO";
 
+    @Value("${auth.check-auth}")
+	private boolean checkAuth;
+	
     @Value("${auth.token.header}")
 	private String authTokenHeader;
 	
@@ -41,33 +44,39 @@ public class AuthorizationPreFilter extends AbstractGatewayFilterFactory<Authori
         return (exchange, chain) -> {
         	
             final ServerHttpRequest request = exchange.getRequest();
-            final HttpHeaders headers = request.getHeaders();           
+            final HttpHeaders headers = request.getHeaders();    
+            
+            if(checkAuth) {
+            	
+                if (!headers.containsKey(authTokenHeader)) {
 
-            if (!headers.containsKey("Authorization")) {
+                	String cause = "Authorization header not found!";
+            		
+            		logger.error("{} {} {}", cause, " [URI]:", request.getURI());
+            		
+            		return AuthorizationFilterUtil.unauthorizedAccess(exchange,cause);	        		
+                }
 
-            	String cause = "Authorization header not found!";
-        		
-        		logger.error("{} {} {}", cause, " [URI]:", request.getURI());
-        		
-        		return AuthorizationFilterUtil.unauthorizedAccess(exchange,cause);	        		
+                String groups = config.getGroups();
+                
+                String authorizationHeader = headers.get(authTokenHeader).get(0);
+
+                if (!AuthorizationFilterUtil.isAuthorizedAccess(groups, authorizationHeader)) {
+
+                	String cause = "Authorization header not found!";
+            		
+            		logger.error("{} {} {}", cause, " [URI]:", request.getURI());
+            		
+            		return AuthorizationFilterUtil.unauthorizedAccess(exchange,cause);	        		
+                }
+                          	
             }
 
-            String groups = config.getGroups();
-            
-            String authorizationHeader = headers.get(authTokenHeader).get(0);
-
-            if (!AuthorizationFilterUtil.isAuthorizedAccess(groups, authorizationHeader)) {
-
-            	String cause = "Authorization header not found!";
-        		
-        		logger.error("{} {} {}", cause, " [URI]:", request.getURI());
-        		
-        		return AuthorizationFilterUtil.unauthorizedAccess(exchange,cause);	        		
-            }
-            
             UserInfoStore userInfoStore = new UserInfoStore();
             
             userInfoStore.setUserName(headers.get(userInfoHeader).get(0));
+            
+            System.out.println("===============UserInfoStore=========" + userInfoStore);
 
             request.mutate().header("secret", "123").build();
             request.mutate().header(USER_INFO_HEADER, userInfoStore.getUserName());

@@ -19,6 +19,11 @@ spring:
         uri: lb://DEPARTMENT-SERVICE
         predicates:
         - Path=/department/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, dep-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
       
       - id: employee-service
         uri: lb://EMPLOYEE-SERVICE
@@ -26,6 +31,9 @@ spring:
         - Path=/employee/**
         filters:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
 
       - id: organization-service
         uri: lb://organization-service
@@ -39,7 +47,11 @@ spring:
         predicates:
         - Path=/v3/api-docs/department/**
         filters:
+        - AddRequestHeader=X-SVC-KEY, dep-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
                        
       - id: employee-swagger
         uri: lb://EMPLOYEE-SERVICE
@@ -55,6 +67,9 @@ spring:
         - Path=/v3/api-docs/organization/**
         filters:
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
         
 server:
   port: 8082
@@ -75,6 +90,7 @@ springdoc:
     path: /    
 auth:
   check-url: false
+  check-auth: false
   token:
     header: authorization
     header-url: URL

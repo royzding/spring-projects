@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sample.microservices.common.model.Department;
 
-@FeignClient(name = "department-service", url="http://localhost:8084/department-service")
+@FeignClient(name = "department-service")//, url="http://localhost:8084/department-service")
 public interface DepartmentApiFeignClient {
 
 	@GetMapping("/department/{id}")
