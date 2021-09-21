@@ -2,6 +2,7 @@ package com.sample.microservices.common.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,6 +12,7 @@ import com.sample.microservices.common.auth.filter.HeaderSecurityFilter;
 
 @Configuration
 @EnableWebSecurity
+@Profile("api-security")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Value("${auth.svcKey}")
