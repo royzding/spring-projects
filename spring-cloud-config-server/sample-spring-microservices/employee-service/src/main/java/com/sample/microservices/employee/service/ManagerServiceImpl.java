@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.employee.data.model.ManagerEntity;
@@ -39,6 +40,7 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
+	@Transactional
 	public Manager createManager(final ManagerDto managerDto) {
 		ManagerEntity entity = this.mapper.managerDtoToEntity(managerDto);
 		entity.setId(null);

@@ -5,8 +5,10 @@ import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 
+import com.sample.microservices.common.model.Department;
 import com.sample.microservices.common.model.Employee;
 import com.sample.microservices.employee.data.model.EmployeeEntity;
 import com.sample.microservices.employee.department.DepartmentService;
@@ -35,6 +37,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public List<Department> getAllDepartments() {
+		// TODO Auto-generated method stub
+		return this.departmentService.getAllDepartments();
+	}
+
+	@Override
 	@Cacheable("all-employees")
 	public List<Employee> getAllEmployees() {
 		
@@ -50,6 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	public Employee createEmployee(final EmployeeDto employeeDto) {
 		EmployeeEntity entity = this.mapper.employeeDtoToEntity(employeeDto);
 		entity.setId(null);

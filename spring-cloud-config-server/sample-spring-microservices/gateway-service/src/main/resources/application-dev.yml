@@ -16,7 +16,7 @@ spring:
       routes:
       
       - id: department-service
-        uri: lb://DEPARTMENT-SERVICE
+        uri: lb://department-service
         predicates:
         - Path=/department/**
         filters:
@@ -26,7 +26,7 @@ spring:
            groups: Admin, Roy2
       
       - id: employee-service
-        uri: lb://EMPLOYEE-SERVICE
+        uri: lb://department-service
         predicates:
         - Path=/employee/**
         filters:
@@ -43,18 +43,15 @@ spring:
         - RewritePath=/organization/(?<path>.*), /$\{path}
         
       - id: department-swagger
-        uri: lb://DEPARTMENT-SERVICE
+        uri: lb://department-service
         predicates:
         - Path=/v3/api-docs/department/**
         filters:
         - AddRequestHeader=X-SVC-KEY, dep-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-        - name: AuthorizationPreFilter
-          args:
-           groups: Admin, Roy2
                        
       - id: employee-swagger
-        uri: lb://EMPLOYEE-SERVICE
+        uri: lb://department-service
         predicates:
         - Path=/v3/api-docs/employee/**
         filters:
@@ -67,9 +64,6 @@ spring:
         - Path=/v3/api-docs/organization/**
         filters:
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-        - name: AuthorizationPreFilter
-          args:
-           groups: Admin, Roy2
         
 server:
   port: 8082
@@ -78,8 +72,8 @@ eureka:
   client:
     registerWithEureka: true
     fetchRegistry: true
-    server-url:
-      default-zone: http://localhost:8761/eureka/
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
       
