@@ -6,27 +6,38 @@ DROP TABLE department;
 DROP TABLE user_table;
 
 CREATE TABLE user_table (
-  user_id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  user_name 		varchar(255) NULL,
-  created_by 		VARCHAR (255) NOT NULL,
-  created_date 		DATE NOT NULL  
+  	 user_id 		INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  	 user_name 		VARCHAR2(50) NOT NULL,
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
 );
 
 CREATE TABLE person (
      id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
      name  			VARCHAR2(50) NOT NULL,
-     country    	VARCHAR2(50)
+     country    	VARCHAR2(50),     
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
+     
 );
 
 CREATE TABLE manager (
      id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
      name  			VARCHAR2(50) NOT NULL,
      salary 		NUMBER(10,2)
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
 );
 
 CREATE TABLE department (
      id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
      name  			VARCHAR2(50) NOT NULL
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
 );
 
 CREATE TABLE employee (
@@ -37,6 +48,9 @@ CREATE TABLE employee (
      manager_id 			NUMBER,
      salary 				NUMBER(10,2),
      designation    		VARCHAR2(50),
+     modified_by			VARCHAR2(50),
+     created_date   		TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  		TIMESTAMP(0),
 	 CONSTRAINT fk_dep_id FOREIGN KEY (dep_id) REFERENCES department(id),
 	 CONSTRAINT fk_manager_id FOREIGN KEY (manager_id) REFERENCES manager(id)
 );
