@@ -6,8 +6,8 @@ DROP TABLE department;
 DROP TABLE user_table;
 
 CREATE TABLE user_table (
-  	 user_id 		INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  	 user_name 		VARCHAR2(50) NOT NULL,
+  	 id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  	 name 			VARCHAR2(50) NOT NULL,
      modified_by	VARCHAR2(50),
      created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
      modified_date  TIMESTAMP(0)
@@ -42,8 +42,7 @@ CREATE TABLE department (
 
 CREATE TABLE employee (
      id 					INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-     firstname  			VARCHAR2(50) NOT NULL,
-	 lastname				VARCHAR2(50) NOT NULL,
+     name  					VARCHAR2(50) NOT NULL,
      dep_id 				NUMBER,
      manager_id 			NUMBER,
      salary 				NUMBER(10,2),
@@ -55,8 +54,11 @@ CREATE TABLE employee (
 	 CONSTRAINT fk_manager_id FOREIGN KEY (manager_id) REFERENCES manager(id)
 );
 
+//get all departments:
+//http://localhost:8082/department/department/all
 
 ////create department:
+//http://localhost:8082/department/department/list
 [
   {
     "name": "dep-1"

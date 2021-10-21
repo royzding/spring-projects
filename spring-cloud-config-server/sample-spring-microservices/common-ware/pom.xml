@@ -58,6 +58,18 @@
 			<scope>provided</scope>
 		</dependency>
         
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<scope>1.1.0.Final</scope>
+		</dependency>
+        
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<scope>2.2</scope>
+		</dependency>
+        
     </dependencies>
  
  	<dependencyManagement>

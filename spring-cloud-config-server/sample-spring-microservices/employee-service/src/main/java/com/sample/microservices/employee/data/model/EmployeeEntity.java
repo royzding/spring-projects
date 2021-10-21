@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.sample.microservices.common.data.model.BaseEntity;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,24 +22,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EmployeeEntity implements Serializable {
+public class EmployeeEntity extends BaseEntity {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	
-	@NotNull
-	@Column(name="firstname")
-	private String firstName;
-	
-	@NotNull
-	@Column(name="lastname")
-	private String lastName;
+	private static final long serialVersionUID = 2L;
 	
 	@Column(name="salary")
 	private Double salary;

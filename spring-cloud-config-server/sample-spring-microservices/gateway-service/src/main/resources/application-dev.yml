@@ -26,7 +26,7 @@ spring:
            groups: Admin, Roy2
       
       - id: employee-service
-        uri: lb://department-service
+        uri: lb://employee-service
         predicates:
         - Path=/employee/**
         filters:
@@ -51,7 +51,7 @@ spring:
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
                        
       - id: employee-swagger
-        uri: lb://department-service
+        uri: lb://employee-service
         predicates:
         - Path=/v3/api-docs/employee/**
         filters:

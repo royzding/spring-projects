@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 public class Employee {
 
 	private Long id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private Double salary;
 
 	private Long depId;

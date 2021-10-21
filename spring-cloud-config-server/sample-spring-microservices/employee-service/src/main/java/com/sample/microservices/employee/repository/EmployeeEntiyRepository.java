@@ -10,9 +10,8 @@ import com.sample.microservices.employee.data.model.EmployeeEntity;
 @Repository
 public interface EmployeeEntiyRepository extends JpaRepository<EmployeeEntity, Long>{
 	
-	List<EmployeeEntity> findByFirstName(String firstName);
-	List<EmployeeEntity> findByFirstNameAndLastName(String firstName, String lastName);
-	List<EmployeeEntity> findByFirstNameIn(List<String> firstName);
+	List<EmployeeEntity> findByName(String name);
+	List<EmployeeEntity> findByNameIn(List<String> name);
 
 	List<EmployeeEntity> findByDepId(Long depId);
 }
