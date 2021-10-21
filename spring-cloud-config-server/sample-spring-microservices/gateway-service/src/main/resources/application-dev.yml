@@ -20,6 +20,7 @@ spring:
         predicates:
         - Path=/department/**
         filters:
+        - RewritePath=/department/(?<path>.*), /$\{path}
         - AddRequestHeader=X-SVC-KEY, dep-1234-5678
         - name: AuthorizationPreFilter
           args:
@@ -30,6 +31,7 @@ spring:
         predicates:
         - Path=/employee/**
         filters:
+        - RewritePath=/employee/(?<path>.*), /$\{path}
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
         - name: AuthorizationPreFilter
           args:

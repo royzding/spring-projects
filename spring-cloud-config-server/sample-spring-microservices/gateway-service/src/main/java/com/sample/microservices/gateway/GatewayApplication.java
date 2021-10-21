@@ -44,7 +44,7 @@ public class GatewayApplication {
 	   List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();
 	   definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches(".*-service")).forEach(routeDefinition -> {
 	      String name = routeDefinition.getId().replaceAll("-service", "");
-	      groups.add(GroupedOpenApi.builder().pathsToMatch("/").setGroup(name).build());
+	      groups.add(GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").setGroup(name).build());
 	   });
 	   return groups;
 	}	

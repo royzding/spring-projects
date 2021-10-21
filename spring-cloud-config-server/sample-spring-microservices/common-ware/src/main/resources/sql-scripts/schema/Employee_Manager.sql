@@ -54,6 +54,11 @@ CREATE TABLE employee (
 	 CONSTRAINT fk_manager_id FOREIGN KEY (manager_id) REFERENCES manager(id)
 );
 
+
+http://localhost:8083/employee/v3/swagger-ui.html
+http://localhost:8084/department/v3/swagger-ui.html
+
+
 //get all departments:
 //http://localhost:8082/department/department/all
 

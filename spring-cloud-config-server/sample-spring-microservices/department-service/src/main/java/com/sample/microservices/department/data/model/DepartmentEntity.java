@@ -19,8 +19,4 @@ public class DepartmentEntity extends BaseEntity {
 	
 	private static final long serialVersionUID = 8436014022103292703L;
 	
-	@NotNull
-	@Column(name="name")
-	private String name;
-	
 }

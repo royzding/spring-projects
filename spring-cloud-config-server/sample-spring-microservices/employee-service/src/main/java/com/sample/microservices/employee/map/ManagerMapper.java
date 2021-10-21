@@ -3,6 +3,7 @@ package com.sample.microservices.employee.map;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import com.sample.microservices.model.dto.ManagerDto;
 @Mapper(componentModel="spring", nullValuePropertyMappingStrategy=NullValuePropertyMappingStrategy.IGNORE)
 public interface ManagerMapper {
 	
+	@Mapping(target="name", source="name")		
 	ManagerEntity managerDtoToEntity(ManagerDto source);
 	
 	List<ManagerEntity> managerDtoToEntity(List<ManagerDto> source);
