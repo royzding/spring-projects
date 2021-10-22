@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: gateway-service
@@ -20,7 +23,6 @@ spring:
         predicates:
         - Path=/department/**
         filters:
-        - RewritePath=/department/(?<path>.*), /$\{path}
         - AddRequestHeader=X-SVC-KEY, dep-1234-5678
         - name: AuthorizationPreFilter
           args:
@@ -31,19 +33,11 @@ spring:
         predicates:
         - Path=/employee/**
         filters:
-        - RewritePath=/employee/(?<path>.*), /$\{path}
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
         - name: AuthorizationPreFilter
           args:
            groups: Admin, Roy2
 
-      - id: organization-service
-        uri: lb://organization-service
-        predicates:
-        - Path=/organization/**
-        filters:
-        - RewritePath=/organization/(?<path>.*), /$\{path}
-        
       - id: department-swagger
         uri: lb://department-service
         predicates:
@@ -60,16 +54,6 @@ spring:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
         
-      - id: organization-swagger
-        uri: lb://ORGANIZATION-SERVICE
-        predicates:
-        - Path=/v3/api-docs/organization/**
-        filters:
-        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-        
-server:
-  port: 8082
-
 eureka:
   client:
     registerWithEureka: true
