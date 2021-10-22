@@ -40,4 +40,15 @@ springdoc:
    
 auth:
   svcKey: dep-1234-5678   
+  
+feign:
+  client:
+    config:
+      employee-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        defaultRequestHeaders:
+          X-SVC-KEY: emp-1234-5678
+  
    

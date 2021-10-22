@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/manager-controller")
 public class ManagerController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ManagerController.class);

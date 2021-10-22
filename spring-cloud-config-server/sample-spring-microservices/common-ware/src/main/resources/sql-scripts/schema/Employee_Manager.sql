@@ -96,49 +96,43 @@ http://localhost:8084/department/v3/swagger-ui.html
 [
 	{
 	  "id": 0,
-	  "firstName": "fn1",
-	  "lastName": "ln1",
+	  "name": "name1",
 	  "salary": 10,
 	  "depId": 1,
 	  "managerId": 4
 	},
 	{
 	  "id": 0,
-	  "firstName": "fn2",
-	  "lastName": "ln2",
+	  "name": "name2",
 	  "salary": 20,
 	  "depId": 2,
 	  "managerId": 4
 	},
 	{
 	  "id": 0,
-	  "firstName": "fn3",
-	  "lastName": "ln3",
+	  "name": "name3",
 	  "salary": 30,
 	  "depId": 2,
 	  "managerId": 5
 	},
 	{
 	  "id": 0,
-	  "firstName": "fn4",
-	  "lastName": "ln4",
-	  "salary": 20,
+	  "name": "name4",
+	  "salary": 40,
 	  "depId": 3,
 	  "managerId": 6
 	},
 	{
 	  "id": 0,
-	  "firstName": "fn5",
-	  "lastName": "ln5",
-	  "salary": 20,
+	  "name": "name5",
+	  "salary": 50,
 	  "depId": 3,
 	  "managerId": 6
 	},
 	{
 	  "id": 0,
-	  "firstName": "fn6",
-	  "lastName": "ln6",
-	  "salary": 20,
+	  "name": "name6",
+	  "salary": 60,
 	  "depId": 3,
 	  "managerId": 6
 	}
@@ -153,16 +147,16 @@ insert into person (id,name,country) values (5, 'Lina', 	'JAPAN');
 insert into person (id,name,country) values (6, 'Wang', 	'CHINA');
 
 
-insert into employee (id,firstname,lastname,dep_id,salary) values (1, 'John', 'l1', 2, 1200);
-insert into employee (id,firstname,lastname,dep_id,salary) values (2, 'Jane', 'l2', 2, 2200);
-insert into employee (id,firstname,lastname,dep_id,salary) values (3, 'Steve', 'l3', 2, 1800);
-insert into employee (id,firstname,lastname,dep_id,salary) values (4, 'Bruce', 'l4', 2, 3200);
-insert into employee (id,firstname,lastname,dep_id,salary) values (5, 'Lina', 'l5', 2, 5200);
-insert into employee (id,firstname,lastname,dep_id,salary) values (6, 'Wang', 'l6',	3, 6900);
-insert into employee (id,firstname,lastname,dep_id,salary) values (7, 'Zhan', 'l7', 2, 1500);
-insert into employee (id,firstname,lastname,dep_id,salary) values (8, 'Liu',   'l8',	5, 6900);
-insert into employee (id,firstname,lastname,dep_id,salary) values (9, 'Chen', 'l9', 2, 3400);
-insert into employee (id,firstname,lastname,dep_id,salary) values (10, 'Ding', 'l10', 2, 4200);
+insert into employee (id,name,lastname,dep_id,salary) values (1, 'John', 'l1', 2, 1200);
+insert into employee (id,name,lastname,dep_id,salary) values (2, 'Jane', 'l2', 2, 2200);
+insert into employee (id,name,lastname,dep_id,salary) values (3, 'Steve', 'l3', 2, 1800);
+insert into employee (id,name,lastname,dep_id,salary) values (4, 'Bruce', 'l4', 2, 3200);
+insert into employee (id,name,lastname,dep_id,salary) values (5, 'Lina', 'l5', 2, 5200);
+insert into employee (id,name,lastname,dep_id,salary) values (6, 'Wang', 'l6',	3, 6900);
+insert into employee (id,name,lastname,dep_id,salary) values (7, 'Zhan', 'l7', 2, 1500);
+insert into employee (id,name,lastname,dep_id,salary) values (8, 'Liu',   'l8',	5, 6900);
+insert into employee (id,name,lastname,dep_id,salary) values (9, 'Chen', 'l9', 2, 3400);
+insert into employee (id,name,lastname,dep_id,salary) values (10, 'Ding', 'l10', 2, 4200);
 
 insert into manager (id,name,salary) values (1, 'Marc', 1200);
 insert into manager (id,name,salary) values (2, 'Luke', 2200);

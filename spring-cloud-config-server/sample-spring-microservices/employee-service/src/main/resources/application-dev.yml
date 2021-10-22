@@ -43,10 +43,11 @@ auth:
   
 feign:
   client:
-    department-service:
-      connectTimeout: 5000
-      readTimeout: 5000
-      loggerLevel: full
-      defaultRequestHeaders:
-       X-SVC-KEY: dep-1234-5678
+    config:
+      DEPARTMENT-SERVICE:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        defaultRequestHeaders:
+          X-SVC-KEY: dep-1234-5678
    
