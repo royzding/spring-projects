@@ -32,11 +32,11 @@ public class HeaderSecurityFilter extends OncePerRequestFilter {
     	System.out.println("====svcKey=========" + svcKey);
     	System.out.println("=============" + request.getRequestURI());
     	System.out.println("=====svcHeader========" + svcHeader);
- /*   	 
+    	 
         if(svcHeader == null || !svcHeader.equals(this.svcKey)) {
         	throw new BadCredentialsException("The Service Key was not found!");
         }
-*/
+
         filterChain.doFilter(request, response);
 
     }
