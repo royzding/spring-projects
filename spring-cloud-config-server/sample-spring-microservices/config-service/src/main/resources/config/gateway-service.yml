@@ -1,4 +1,9 @@
+server:
+  port: 8082
+
 spring:
+  application:
+    name: gateway-service
   cloud:
     gateway:
       globalcors:
@@ -14,9 +19,14 @@ spring:
       routes:
       
       - id: department-service
-        uri: lb://DEPARTMENT-SERVICE
+        uri: lb://department-service
         predicates:
         - Path=/department/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, dep-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
       
       - id: employee-service
         uri: lb://employee-service
@@ -24,45 +34,32 @@ spring:
         - Path=/employee/**
         filters:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
 
-      - id: organization-service
-        uri: lb://organization-service
-        predicates:
-        - Path=/organization/**
-        filters:
-        - RewritePath=/organization/(?<path>.*), /$\{path}
-        
       - id: department-swagger
-        uri: lb://DEPARTMENT-SERVICE
+        uri: lb://department-service
         predicates:
         - Path=/v3/api-docs/department/**
         filters:
+        - AddRequestHeader=X-SVC-KEY, dep-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
                        
       - id: employee-swagger
-        uri: lb://EMPLOYEE-SERVICE
+        uri: lb://employee-service
         predicates:
         - Path=/v3/api-docs/employee/**
         filters:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
         
-      - id: organization-swagger
-        uri: lb://ORGANIZATION-SERVICE
-        predicates:
-        - Path=/v3/api-docs/organization/**
-        filters:
-        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-        
-server:
-  port: 8082
-
 eureka:
   client:
     registerWithEureka: true
     fetchRegistry: true
-    server-url:
-      default-zone: http://localhost:8761/eureka/
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
       
@@ -70,4 +67,13 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
-    path: /
+    path: /    
+auth:
+  check-url: false
+  check-auth: false
+  token:
+    header: authorization
+    header-url: URL
+    header-url-value: http://localhost
+    user-info-header: user-info
+        
