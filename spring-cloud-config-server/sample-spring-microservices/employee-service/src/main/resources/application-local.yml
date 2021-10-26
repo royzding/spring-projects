@@ -40,4 +40,6 @@ springdoc:
    
 auth:
   svcKey: emp-1234-5678   
+  
+environment: local  
    

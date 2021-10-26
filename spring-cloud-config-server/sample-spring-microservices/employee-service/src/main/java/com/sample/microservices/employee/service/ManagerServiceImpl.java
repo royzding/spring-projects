@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sample.microservices.common.model.Manager;
+import com.sample.microservices.common.model.UserInfoStore;
 import com.sample.microservices.employee.data.model.ManagerEntity;
 import com.sample.microservices.employee.map.ManagerMapper;
 import com.sample.microservices.employee.repository.ManagerEntityRepository;
@@ -18,14 +20,29 @@ public class ManagerServiceImpl implements ManagerService {
 	
 	private final ManagerMapper mapper;
 	private final ManagerEntityRepository repository;
+    private final UserInfoStore userInfoStore;
+    private final Environment environment;
+    
 	
-	ManagerServiceImpl(ManagerMapper mapper, ManagerEntityRepository repository) {
+	ManagerServiceImpl(ManagerMapper mapper, ManagerEntityRepository repository, 
+			UserInfoStore userInfoStore, final Environment environment) {
 		this.mapper = Mappers.getMapper(ManagerMapper.class);
 		this.repository = repository;
+    	this.userInfoStore = userInfoStore;
+    	this.environment = environment;
 	}
 	
 	@Override
 	public Manager getManagerById(final Long id) {
+		
+		System.out.println("getAllManagers by " + this.userInfoStore.getUserName());
+		
+		String[] activeProfiles = this.environment.getActiveProfiles();
+		
+		for(String ap:activeProfiles) {
+			System.out.println("activate profile: " + ap);			
+		}
+		
 		return this.mapper.entityToManager(this.repository.findById(id).get());
 	}
 
@@ -35,6 +52,7 @@ public class ManagerServiceImpl implements ManagerService {
 		
 		List<ManagerEntity> entities = this.repository.findAll();
 		
+		System.out.println("getAllManagers by " + this.userInfoStore.getUserName());
 		
 		return this.mapper.entityToManager(entities);
 	}
@@ -44,6 +62,8 @@ public class ManagerServiceImpl implements ManagerService {
 	public Manager createManager(final ManagerDto managerDto) {
 		ManagerEntity entity = this.mapper.managerDtoToEntity(managerDto);
 		entity.setId(null);
+		
+		entity.setName(this.userInfoStore.getUserName());
 		
 		this.repository.save(entity);
 		

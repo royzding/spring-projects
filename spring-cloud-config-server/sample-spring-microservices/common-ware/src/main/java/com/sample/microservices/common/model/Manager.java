@@ -12,4 +12,5 @@ public class Manager {
 	private Long id;
 	private String name;
 	private Double salary;
+	private String modifiedBy;
 }

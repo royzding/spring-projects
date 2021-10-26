@@ -39,5 +39,7 @@ springdoc:
    path: /v3/swagger-ui.html  
    
 auth:
-  svcKey: dep-1234-5678   
+  svcKey: dep-1234-5678  
+  
+environment: local 
    

@@ -28,6 +28,6 @@ public class BaseEntity implements Serializable {
 	private String name;
 
 	@Column(name="modified_by")
-	private String modifiedBy = "bDummy";
+	private String modifiedBy = "Base-Dummy";
 
 }

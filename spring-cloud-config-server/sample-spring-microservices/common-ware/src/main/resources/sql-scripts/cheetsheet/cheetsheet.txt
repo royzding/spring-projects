@@ -1,0 +1,18 @@
+
+//profile
+
+//config
+
+//api-gateway
+-Dspring.profiles.active=dev
+
+//discovery
+-Dspring.profiles.active=dev,api-security
+
+//other services
+-Dspring.profiles.active=local,api-security,user-info
+-Dspring.profiles.active=dev,api-security,user-info
+-Dspring.profiles.active=prod,api-security,user-info
+
+
+X-USER-INFO    {"userName":"roy"}

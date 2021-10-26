@@ -50,4 +50,5 @@ feign:
         loggerLevel: full
         defaultRequestHeaders:
           X-SVC-KEY: dep-1234-5678
-   
+
+environment: prod   
