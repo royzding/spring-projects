@@ -16,15 +16,19 @@ spring:
     bootstrap-servers: localhost:9092
     topic01-name: topic-01
     topic02-name: topic-02
+    topic03-name: topic-03
     topic-name: quickstart-events
     consumer:
-      bootstrap-servers: localhost:9092
       group-id: group-id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'com.sample.microservices.kafka.model'      
     producer:
-      bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer    
     

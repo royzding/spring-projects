@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import com.sample.microservices.kafka.model.User;
+
 @Service
 public class KafKaProducerServiceImpl implements KafKaProducerService {
 
@@ -20,6 +22,9 @@ public class KafKaProducerServiceImpl implements KafKaProducerService {
     @Value("${spring.kafka.topic02-name}")
     private String topic02Name;
  
+    @Value("${spring.kafka.topic03-name}")
+    private String topic03Name;
+ 
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
 
@@ -27,10 +32,14 @@ public class KafKaProducerServiceImpl implements KafKaProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     
-    KafKaProducerServiceImpl(final KafkaTemplate<String, String> kafkaTemplate) {
+    private final KafkaTemplate<String, User> objectKafkaTemplate;
+    
+    KafKaProducerServiceImpl( final KafkaTemplate<String, String> kafkaTemplate,
+    		final KafkaTemplate<String, User> objectKafkaTemplate) {
     	this.kafkaTemplate = kafkaTemplate;
+    	this.objectKafkaTemplate = objectKafkaTemplate;
     }
- 
+
     public void sendMessageToTopic01(String message) 
     {
         System.out.println("----------------->>>>>" + "Message set:" + message);
@@ -76,4 +85,28 @@ public class KafKaProducerServiceImpl implements KafKaProducerService {
         });
     	
     }
+    
+    public void sendMessageToTopic03WithObject(User user) 
+    {
+        System.out.println("----------------->>>>>" + "user set:" + user);
+
+        ListenableFuture<SendResult<String, User>> future = this.objectKafkaTemplate.send(topic03Name, user);
+        		
+        future.addCallback(new ListenableFutureCallback<SendResult<String, User>>() {
+
+        	@Override
+        	public void onSuccess(SendResult<String, User> result) {
+        		System.out.println("Sent user=[" + user + 
+        				"] with offset=[" + result.getRecordMetadata().offset() + "]");
+        	}
+        	
+        	@Override
+        	public void onFailure(Throwable ex) {
+        	    System.out.println("Unable to send user=[" + user + 
+        	    		"] due to : " + ex.getMessage());
+        	}
+        });
+    	
+    }
+    
 }
