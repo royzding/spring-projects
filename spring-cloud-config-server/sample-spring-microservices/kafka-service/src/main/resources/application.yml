@@ -1,0 +1,43 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /service
+
+spring:
+  application:
+    name: services
+    
+  datasource:    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: c##ding
+    password: peardoor807x
+    
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic01-name: topic-01
+    topic02-name: topic-02
+    topic-name: quickstart-events
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group-id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer    
+    
+jpa:
+  hibernate:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    ddl-auto: none
+    
+springdoc:
+  api-docs:
+   path: /api-docs
+  swagger-ui:
+   path: /swagger-ui.html  
+   
+   
+   

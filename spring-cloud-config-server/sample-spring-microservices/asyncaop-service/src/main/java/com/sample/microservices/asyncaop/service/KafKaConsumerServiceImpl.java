@@ -24,5 +24,7 @@ public class KafKaConsumerServiceImpl implements KafKaConsumerService
     public void consume(String message) 
     {
         logger.info(String.format("Message recieved -> %s", message));
+        
+        System.out.println("$$$$$$$$$$$$$$$$$$$" + "Message recieved:" + message);
     }
 }

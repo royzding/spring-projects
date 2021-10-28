@@ -29,5 +29,6 @@ public class KafKaProducerServiceImpl implements KafKaProducerService {
     {
         logger.info(String.format("Message sent -> %s", message));
         this.kafkaTemplate.send(topicName, message);
+        System.out.println("----------------->>>>>" + "Message set:" + message);
     }
 }

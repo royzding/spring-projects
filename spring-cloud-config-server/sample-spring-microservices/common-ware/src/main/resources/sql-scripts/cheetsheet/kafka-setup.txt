@@ -1,0 +1,87 @@
+1. download kafka:
+
+wget https://archive.apache.org/dist/kafka/2.6.0/kafka_2.13-2.6.0.tgz
+tar -xzf kafka_2.13-2.6.0.tgz
+
+---------it works on windows-----------------
+
+C:\Applications\kafka\kafka_2.13-2.8.0
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+.\bin\windows\zookeeper-server-stop.bat .\config\zookeeper.properties
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+.\bin\windows\kafka-server-stop.bat .\config\server.properties
+
+.\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic quickstart-events
+
+.\bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --list
+
+on Windows:
+
+netstat -ano | findstr :<PORT>
+taskkill /PID <PID> /F
+
+netstat -ano | findstr :9092
+
+
+
+---------does not work on windows apps-----------------
+
+2. Start the Kafka cluster on linux (ubuntu)
+
+Run the following command to start ZooKeeper:
+
+$ bin/zookeeper-server-start.sh config/zookeeper.properties
+$ bin/zookeeper-server-stop.sh config/zookeeper.properties
+
+There will be a lot of output, and ZooKeeper will be ready in a short time, typically around a second or two.
+
+Open another terminal session. Change the directory to the kafka directory, and start the Kafka broker:
+
+$ cd kafka_2.13-2.6.0
+$ bin/kafka-server-start.sh config/server.properties
+
+$ bin/kafka-server-stop.sh config/server.properties
+
+
+3. Produce and consume some messages
+Open another terminal session and run the kafka-topics command to create a Kafka topic named quickstart-events:
+
+3.1 create a topic:
+
+$ cd kafka_2.13-2.6.0
+$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic quickstart-events
+$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1  --partitions 1 --topic Hello-Kafka
+
+3.2 list the topics created:
+
+$ bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+$ bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic Hello-Kafka 
+
+3.3 create producer and consumer:
+
+$ bin/kafka-console-producer.sh --topic quckstart-events --bootstrap-server localhost:9092
+
+$ bin/kafka-console-consumer.sh --topic quckstart-events --from-beginning --bootstrap-server localhost:9092
+
+
+
+4. Stop Kafka
+When you’re done experimenting with Kafka, follow these steps to exit the Kafka environment:
+
+Stop the consumer and producer clients with Ctrl+C
+Stop the Kafka broker with Ctrl+C
+Stop the ZooKeeper server with Ctrl+C
+Run the following command to clean up:
+rm -rf /tmp/kafka-logs /tmp/zookeeper
+
+on Linux:
+To list any process listening to the port 8080:
+$ lsof -i:8080
+
+To kill any process listening to the port 8080:
+$ kill $(lsof -t -i:8080)
+$ kill -9 $(lsof -t -i:8080)
+
