@@ -8,7 +8,7 @@
 
 	<properties>
 		<sonar.projectKey>com-sample-spring-microservices</sonar.projectKey>
-		<sonar.organization>piomin</sonar.organization>
+		<sonar.organization>example</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
@@ -17,11 +17,12 @@
 		<module>config-service</module>
 		<module>employee-service</module>
 		<module>department-service</module>
-		<module>organization-service</module>
 		<module>gateway-service</module>
-		<module>proxy-service</module>
+		<module>kafka-service</module>
 		<module>asyncaop-service</module>
 		<module>common-ware</module>		
+		<module>organization-service</module>
+		<module>proxy-service</module>
 	</modules>
 	
 </project>
