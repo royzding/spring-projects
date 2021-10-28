@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.kafka.model.User;
-import com.sample.microservices.kafka.model.User2;
 import com.sample.microservices.kafka.service.KafKaProducerService;
 
 @RestController
@@ -43,7 +42,7 @@ public class KafkaProducerController
    
     //http://localhost:8088/service/kafka/publish?message=Alphabet
     @PostMapping(value = "/user")
-    public void sendMessageToTopic02WithObject(@Valid @RequestBody() User2 user) 
+    public void sendMessageToTopic02WithObject(@Valid @RequestBody() User user) 
     {
     	System.out.println("sendMessageToTopic03WithObject: =======" + user);
         this.producerService.sendMessageToTopic03WithObject(user);

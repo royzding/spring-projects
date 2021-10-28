@@ -21,6 +21,7 @@ public class KafkaProducerConfig {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
+    ////String Producer Factory
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -37,8 +38,9 @@ public class KafkaProducerConfig {
         return new KafkaTemplate<>(producerFactory());
     }
     
+    ////User Producer Factory
     @Bean
-    public ProducerFactory<String, User> objectProducerFactory() {
+    public ProducerFactory<String, User> userProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);       
@@ -49,8 +51,8 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, User> objectKafkaTemplate() {
-        return new KafkaTemplate<>(objectProducerFactory());
+    public KafkaTemplate<String, User> userKafkaTemplate() {
+        return new KafkaTemplate<>(userProducerFactory());
     }
     
 }

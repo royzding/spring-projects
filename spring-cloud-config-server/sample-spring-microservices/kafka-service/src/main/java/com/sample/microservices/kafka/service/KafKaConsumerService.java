@@ -1,7 +1,6 @@
 package com.sample.microservices.kafka.service;
 
 import com.sample.microservices.kafka.model.User;
-import com.sample.microservices.kafka.model.User2;
 
 public interface KafKaConsumerService {
 	void consume01OneTopic(String message);
