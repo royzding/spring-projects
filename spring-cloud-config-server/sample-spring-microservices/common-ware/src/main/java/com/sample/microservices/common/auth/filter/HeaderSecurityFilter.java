@@ -28,7 +28,7 @@ public class HeaderSecurityFilter extends OncePerRequestFilter {
                                     throws ServletException, IOException {
     	
     	String svcHeader = request.getHeader(HEADER_SVC_KEY);
-    	
+/*    	
     	System.out.println("====svcKey=========" + svcKey);
     	System.out.println("=============" + request.getRequestURI());
     	System.out.println("=====svcHeader========" + svcHeader);
@@ -36,7 +36,7 @@ public class HeaderSecurityFilter extends OncePerRequestFilter {
         if(svcHeader == null || !svcHeader.equals(this.svcKey)) {
         	throw new BadCredentialsException("The Service Key was not found!");
         }
-
+*/
         filterChain.doFilter(request, response);
 
     }

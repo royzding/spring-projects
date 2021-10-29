@@ -1,0 +1,60 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /kafka-consumer
+
+spring:
+  application:
+    name: kafka-consumer-service
+    
+  datasource:    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: c##ding
+    password: peardoor807x
+    
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic01-name: topic-01
+    topic02-name: topic-02
+    topic03-name: topic-03
+    topic04-name: topic-04
+    consumer:
+      group00-id: group00-id
+      group01-id: group01-id
+      group02-id: group02-id
+      group03-id: group03-id
+      group04-id: group04-id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'com.sample.microservices.kafka.model'      
+eureka:
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    
+jpa:
+  hibernate:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    ddl-auto: none
+    
+springdoc:
+  api-docs:
+   path: /api-docs
+  swagger-ui:
+   path: /swagger-ui.html  
+
+auth:
+  svcKey: kafka-consumer-1234-5678 
+     
+environment: dev   
+   

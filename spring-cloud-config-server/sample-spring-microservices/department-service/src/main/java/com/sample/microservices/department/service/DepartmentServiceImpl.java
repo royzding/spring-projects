@@ -32,8 +32,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public Department getDepartmentById(final Long id) {
 		
-		UtilFuns.test();
-		
 		return this.mapper.entityToDepartment(this.repository.findById(id).get());
 	}
 
