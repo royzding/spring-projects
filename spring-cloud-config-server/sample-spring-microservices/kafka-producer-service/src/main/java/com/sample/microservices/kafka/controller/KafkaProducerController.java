@@ -36,6 +36,18 @@ public class KafkaProducerController
         return this.producerService.sendMessageToTopic02(message);
     }
     
+    @GetMapping("/topic03/{message}")
+    public String sendMessageToTopic03(@PathVariable("message") String message) 
+    {
+        return this.producerService.sendMessageToTopic03(message);
+    }
+    
+    @GetMapping("/topic04/{message}")
+    public String sendMessageToTopic04(@PathVariable("message") String message) 
+    {
+        return this.producerService.sendMessageToTopic04(message);
+    }
+    
     @PostMapping(value = "/topic03/user")
     public String sendMessageToTopic03(@Valid @RequestBody() User user) 
     {

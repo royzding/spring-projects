@@ -90,6 +90,56 @@ public class KafKaProducerServiceImpl implements KafKaProducerService {
     	
     }
     
+    public String sendMessageToTopic03(String message) 
+    {
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(topic03Name, message);
+        		
+        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+
+        	@Override
+        	public void onSuccess(SendResult<String, String> result) {
+	        	logger.info("Sent message=[" + message + 
+    					"] with offset=[" + result.getRecordMetadata().offset() + 
+    					"] with partition=[" + result.getRecordMetadata().partition() + 
+        				"] to Topic=[" + result.getProducerRecord().topic());
+        	}
+        	
+        	@Override
+        	public void onFailure(Throwable ex) {
+        	    logger.info("Unable to send message=[" + message + 
+        	    		"] due to : " + ex.getMessage());
+        	}
+        });
+        
+        return topic03Name;
+    	
+    }
+    
+    public String sendMessageToTopic04(String message) 
+    {
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(topic04Name, message);
+        		
+        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+
+        	@Override
+        	public void onSuccess(SendResult<String, String> result) {
+	        	logger.info("Sent message=[" + message + 
+    					"] with offset=[" + result.getRecordMetadata().offset() + 
+    					"] with partition=[" + result.getRecordMetadata().partition() + 
+        				"] to Topic=[" + result.getProducerRecord().topic());
+        	}
+        	
+        	@Override
+        	public void onFailure(Throwable ex) {
+        	    logger.info("Unable to send message=[" + message + 
+        	    		"] due to : " + ex.getMessage());
+        	}
+        });
+        
+        return topic04Name;
+    	
+    }
+    
     public String sendMessageToTopic03(User user) 
     {
         ListenableFuture<SendResult<String, User>> future = this.objectKafkaTemplate.send(topic03Name, user);

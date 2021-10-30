@@ -13,13 +13,13 @@ import com.sample.microservices.kafka.data.model.KafkaConsumerMessageEntity;
 import com.sample.microservices.kafka.service.KafKaConsumerService;
  
 @Service
-public class KafkaConsumer
+public class KafkaTopic01Consumer
 {
-    private final Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
+    private final Logger logger = LoggerFactory.getLogger(KafkaTopic01Consumer.class);
     
     private final KafKaConsumerService kcService;
     
-    KafkaConsumer(final KafKaConsumerService kcService) {
+    KafkaTopic01Consumer(final KafKaConsumerService kcService) {
     	this.kcService = kcService;    	
     }
 

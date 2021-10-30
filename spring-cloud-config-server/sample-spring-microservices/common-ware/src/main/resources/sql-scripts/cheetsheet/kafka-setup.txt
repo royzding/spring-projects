@@ -1,9 +1,22 @@
 1. download kafka:
 
-wget https://archive.apache.org/dist/kafka/2.6.0/kafka_2.13-2.6.0.tgz
-tar -xzf kafka_2.13-2.6.0.tgz
+wget https://archive.apache.org/dist/kafka/2.6.0/kafka_2.13-2.8.0.tgz
+tar -xzf kafka_2.13-2.8.0.tgz
 
 ---------it works on windows-----------------
+
+a. installation:
+
+C:\Applications\kafka_2.13-2.8.0\kafka-info\kafka_2.13-2.8.0.tar
+extract above tar files.
+
+then change in zookeeper.properties
+dataDir=C:/Applications/kafka_2.13-2.8.0
+
+then change in server.properties
+log.dirs=C:/Applications/kafka_2.13-2.8.0/kafka-logs
+
+b. start the kafka:
 
 C:\Applications\kafka\kafka_2.13-2.8.0
 
@@ -16,6 +29,8 @@ C:\Applications\kafka\kafka_2.13-2.8.0
 .\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic quickstart-events
 
 .\bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --list
+
+.\bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --delete --topic topic-01
 
 on Windows:
 
