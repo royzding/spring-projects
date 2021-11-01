@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -137,6 +140,37 @@ public class KafKaProducerServiceImpl implements KafKaProducerService {
         });
         
         return topic04Name;
+    	
+    }
+    
+    public String sendMessageToTopic04WithPartitionId2(String message) 
+    {
+        Message<String> msg = MessageBuilder
+        .withPayload(message)
+        .setHeader(KafkaHeaders.TOPIC, topic04Name)
+        .setHeader(KafkaHeaders.PARTITION_ID, 2)
+        .build();
+        
+        ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(msg);
+        		
+        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+
+        	@Override
+        	public void onSuccess(SendResult<String, String> result) {
+	        	logger.info("Sent message=[" + message + 
+    					"] with offset=[" + result.getRecordMetadata().offset() + 
+    					"] with partition=[" + result.getRecordMetadata().partition() + 
+        				"] to Topic=[" + result.getProducerRecord().topic());
+        	}
+        	
+        	@Override
+        	public void onFailure(Throwable ex) {
+        	    logger.info("Unable to send message=[" + message + 
+        	    		"] due to : " + ex.getMessage());
+        	}
+        });
+        
+        return topic04Name + "pid2";
     	
     }
     

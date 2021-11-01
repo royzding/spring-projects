@@ -8,6 +8,7 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaAdmin;
 
 @Configuration
@@ -52,7 +53,10 @@ public class KafkaTopicConfig {
     
     @Bean
     public NewTopic topic04() {
-         return new NewTopic(topic04Name, 4, (short) 1);
+         return TopicBuilder.name(topic04Name)
+        		 .partitions(4)
+        		 .replicas(1)
+        		 .build();
     }
     
 }

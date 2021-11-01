@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.common.model.Manager;
+import com.sample.microservices.employee.enums.ManagerSortType;
+import com.sample.microservices.employee.pagination.PageLayout;
 import com.sample.microservices.employee.service.ManagerService;
 import com.sample.microservices.model.dto.ManagerDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -62,6 +67,24 @@ public class ManagerController {
 	@GetMapping("/all")
 	public List<Manager> getAllManagers() {
 		return this.managerService.getAllManagers();
+	}
+
+	@Operation(summary="get all the managers with pagination and provided search filter-in")
+	@ApiResponses(value= {
+		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
+					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Manager.class))) }),
+		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
+	})
+	@GetMapping("/name-in")
+	public PageLayout<Manager> getAllManagersWithPaginationAndFilter(
+			@Parameter(name="names", description="In: name(s) such as n1,n2, ... ...")
+			@RequestParam(required=false) List<String> names,
+			@RequestParam(value="pageNum", defaultValue = "1") int pageNum,
+			@RequestParam(value="pageSize", defaultValue = "5") int pageSize,
+			@RequestParam(value="sort", defaultValue = "ID") List<ManagerSortType> sort,
+			@RequestParam(value="direction", defaultValue = "ASC") Sort.Direction direction
+			) {
+		return this.managerService.getAllManagersWithPaginationAndFilter(names, pageNum, pageSize, sort, direction);
 	}
 
 	@Operation(summary="Create an manager")

@@ -48,6 +48,14 @@ public class KafkaProducerController
         return this.producerService.sendMessageToTopic04(message);
     }
     
+    @GetMapping("/topic04/pid2/{message}")
+    public String sendMessageToTopic04WithPartitionId2(@PathVariable("message") String message) 
+    {
+        return this.producerService.sendMessageToTopic04WithPartitionId2(message);
+    }
+    
+    
+    
     @PostMapping(value = "/topic03/user")
     public String sendMessageToTopic03(@Valid @RequestBody() User user) 
     {

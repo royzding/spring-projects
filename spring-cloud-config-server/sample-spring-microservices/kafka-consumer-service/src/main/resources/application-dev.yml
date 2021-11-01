@@ -24,6 +24,7 @@ spring:
       group02-id: group02-id
       group03-id: group03-id
       group04-id: group04-id
+      group05-id: group05-id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

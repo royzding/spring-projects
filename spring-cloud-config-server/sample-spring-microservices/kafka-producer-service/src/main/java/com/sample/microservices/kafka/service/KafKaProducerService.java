@@ -8,6 +8,8 @@ public interface KafKaProducerService {
 	String sendMessageToTopic03(String message);
 	String sendMessageToTopic04(String message);
 	
+	String sendMessageToTopic04WithPartitionId2(String message);
+	
 	String sendMessageToTopic03(User user);	
 	String sendMessageToTopic04(User user);	
 }
