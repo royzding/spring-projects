@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.common.model.Manager;
+import com.sample.microservices.common.pagination.PageLayout;
 import com.sample.microservices.employee.enums.ManagerSortType;
-import com.sample.microservices.employee.pagination.PageLayout;
 import com.sample.microservices.employee.service.ManagerService;
 import com.sample.microservices.model.dto.ManagerDto;
 
@@ -67,6 +68,22 @@ public class ManagerController {
 	@GetMapping("/all")
 	public List<Manager> getAllManagers() {
 		return this.managerService.getAllManagers();
+	}
+
+	@Operation(summary="get all the managers with pagination and provided search filter-in")
+	@ApiResponses(value= {
+		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
+					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Manager.class))) }),
+		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
+	})
+	@GetMapping("/all-managers")
+	public PageLayout<Manager> getAllManagersWithPagination(
+			@RequestParam(value="pageNum", defaultValue = "1") int pageNum,
+			@RequestParam(value="pageSize", defaultValue = "5") int pageSize,
+			@RequestParam(value="sort", defaultValue = "ID") List<ManagerSortType> sort,
+			@RequestParam(value="direction", defaultValue = "ASC") Sort.Direction direction
+			) {
+		return this.managerService.getAllManagersWithPagination(pageNum, pageSize, sort, direction);
 	}
 
 	@Operation(summary="get all the managers with pagination and provided search filter-in")

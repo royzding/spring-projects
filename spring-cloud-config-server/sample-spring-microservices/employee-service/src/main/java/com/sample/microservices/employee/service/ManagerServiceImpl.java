@@ -7,6 +7,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,10 +18,11 @@ import org.springframework.util.CollectionUtils;
 
 import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.common.model.UserInfoStore;
+import com.sample.microservices.common.pagination.PageLayout;
+import com.sample.microservices.common.util.UtilFuns;
 import com.sample.microservices.employee.data.model.ManagerEntity;
 import com.sample.microservices.employee.enums.ManagerSortType;
 import com.sample.microservices.employee.map.ManagerMapper;
-import com.sample.microservices.employee.pagination.PageLayout;
 import com.sample.microservices.employee.repository.ManagerEntityRepository;
 import com.sample.microservices.model.dto.ManagerDto;
 
@@ -67,6 +69,17 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
+	public PageLayout<Manager> getAllManagersWithPagination(int pageNum, int pageSize, 
+			List<ManagerSortType> sort, Direction direction) {
+		
+		List<ManagerEntity> entities = this.repository.findAll();
+		
+		List<Manager> list = this.mapper.entityToManager(entities);
+		
+		return PageLayout.getPageFromList(list, pageNum, pageSize, null, direction);
+	}
+
+	@Override
 	public PageLayout<Manager> getAllManagersWithPaginationAndFilter(List<String> names, 
 			int pageNum, int pageSize, List<ManagerSortType> sort, Direction direction) {
 		
@@ -77,7 +90,18 @@ public class ManagerServiceImpl implements ManagerService {
 		Page<ManagerEntity> entities = (names != null) ? this.repository.findByNameIn(names, pageable) :
 														 this.repository.findAll(pageable);
 		
-		return getPage(pageNum, pageSize, entities);
+		final List<Manager> list = new ArrayList<>();
+		
+		if(!CollectionUtils.isEmpty(entities.getContent())) {
+			entities.stream().forEach(e-> {
+				
+				//may do extra stuff				
+				list.add(this.mapper.entityToManager(e));				
+				
+			});
+		}
+
+		return PageLayout.getPage(pageNum, pageSize, list, entities);
 	}
 
 	@Override
@@ -122,31 +146,6 @@ public class ManagerServiceImpl implements ManagerService {
 		entity = this.mapper.managerDtoToEntity(manager);
 		
 		this.repository.save(entity);
-	}
-
-	private PageLayout<Manager> getPage(int pageNum, int pageSize, Page<ManagerEntity> entities) {
-		
-		final List<Manager> list = new ArrayList<>();
-		
-		if(!CollectionUtils.isEmpty(entities.getContent())) {
-			entities.stream().forEach(e-> {
-				
-				//may do extra stuff				
-				list.add(this.mapper.entityToManager(e));				
-				
-			});
-		}
-		
-		final PageLayout<Manager> page = new PageLayout<>();
-		page.setTotalElements(entities.getTotalElements());
-		page.setTotalPages(entities.getTotalPages());
-		
-		int firstElementNum = pageSize * pageNum - pageSize;
-		page.setFirstElementNum(firstElementNum < 0 ? 0 : firstElementNum + 1);
-		page.setData(list);
-				
-		return page;
-		
 	}
 
 }
