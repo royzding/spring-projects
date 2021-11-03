@@ -69,14 +69,18 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
-	public PageLayout<Manager> getAllManagersWithPagination(int pageNum, int pageSize, 
+	public PageLayout<Manager> getAllManagersWithPaginationAndContaining(String name, int pageNum, int pageSize, 
 			List<ManagerSortType> sort, Direction direction) {
 		
-		List<ManagerEntity> entities = this.repository.findAll();
+		String[] sortStr = sort.stream().map(ManagerSortType::getValue).toArray(String[]::new);
+		
+		List<ManagerEntity> entities = (name != null && !name.trim().isEmpty()) ? 
+										this.repository.findByNameContainingIgnoreCase(name, Sort.by(direction, sortStr)) :
+										this.repository.findAll(Sort.by(direction, sortStr));
 		
 		List<Manager> list = this.mapper.entityToManager(entities);
 		
-		return PageLayout.getPageFromList(list, pageNum, pageSize, null, direction);
+		return PageLayout.getPageFromList(list, pageNum, pageSize, sort, direction);
 	}
 
 	@Override

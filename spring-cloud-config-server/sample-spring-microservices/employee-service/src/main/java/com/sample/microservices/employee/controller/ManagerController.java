@@ -76,14 +76,16 @@ public class ManagerController {
 					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Manager.class))) }),
 		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
 	})
-	@GetMapping("/all-managers")
-	public PageLayout<Manager> getAllManagersWithPagination(
+	@GetMapping("/managers-containing")
+	public PageLayout<Manager> getAllManagersWithPaginationAndContaining(
+			@Parameter(name="name", description="Containing: name")
+			@RequestParam(required=false) String name,
 			@RequestParam(value="pageNum", defaultValue = "1") int pageNum,
 			@RequestParam(value="pageSize", defaultValue = "5") int pageSize,
 			@RequestParam(value="sort", defaultValue = "ID") List<ManagerSortType> sort,
 			@RequestParam(value="direction", defaultValue = "ASC") Sort.Direction direction
 			) {
-		return this.managerService.getAllManagersWithPagination(pageNum, pageSize, sort, direction);
+		return this.managerService.getAllManagersWithPaginationAndContaining(name, pageNum, pageSize, sort, direction);
 	}
 
 	@Operation(summary="get all the managers with pagination and provided search filter-in")

@@ -16,7 +16,7 @@ public interface ManagerService {
     
     List<Manager> getAllManagers();
     
-    PageLayout<Manager> getAllManagersWithPagination(int pageNum, int pageSize, 
+    PageLayout<Manager> getAllManagersWithPaginationAndContaining(String name, int pageNum, int pageSize, 
 			List<ManagerSortType> sort, Direction direction);
     
     PageLayout<Manager> getAllManagersWithPaginationAndFilter(List<String> names, 

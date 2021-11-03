@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 import lombok.Data;
@@ -24,10 +25,10 @@ public class PageLayout<E> implements Serializable {
 
 	public static <S, T> PageLayout<T> getPageFromList(List<T> list, int pageNum, int pageSize, List<S> sort, Direction direction) {
 		
-		//String[] sortStr = sort.stream().map(S::getValue).toArray(String[]::new);
+		String[] sortStr = sort.stream().map(S::toString).toArray(String[]::new);
 		
-		//Pageable pageable = PageRequest.of(pageNum-1, pageSize);
-		
+		Pageable pageable = PageRequest.of(pageNum-1, pageSize, Sort.by(direction, sortStr));
+
 		int start = (pageNum-1)*pageSize;
 		int end = pageNum*pageSize;
 		
@@ -36,7 +37,7 @@ public class PageLayout<E> implements Serializable {
 		
 		List<T> subList = list.subList(start, end);
 		
-		Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+		//Pageable pageable = PageRequest.of(pageNum-1, pageSize);
 		
 		Page<T> page = new PageImpl<>(subList, pageable, list.size());
 				
