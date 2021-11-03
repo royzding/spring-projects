@@ -35,17 +35,17 @@ public class PageLayout<E> implements Serializable {
 		start = (start<list.size()) ? start : list.size() -1;
 		end = (end<list.size()) ? end : list.size();
 		
-		List<T> subList = list.subList(start, end);
+		List<T> data = list.subList(start, end);
 		
 		//Pageable pageable = PageRequest.of(pageNum-1, pageSize);
 		
-		Page<T> page = new PageImpl<>(subList, pageable, list.size());
+		Page<T> page = new PageImpl<>(data, pageable, list.size());
 				
-		return getPage(pageNum, pageSize, subList, page);
+		return getPage(pageNum, pageSize, page, data);
 	}
 	
 	
-	public static <U, V> PageLayout<U> getPage(int pageNum, int pageSize, List<U> list, Page<V> varPage) {
+	public static <U, V> PageLayout<U> getPage(int pageNum, int pageSize, Page<V> varPage, List<U> data) {
 		
 		final PageLayout<U> page = new PageLayout<>();
 		
@@ -54,7 +54,7 @@ public class PageLayout<E> implements Serializable {
 		
 		int firstElementNum = pageSize * pageNum - pageSize;
 		page.setFirstElementNum(firstElementNum < 0 ? 0 : firstElementNum + 1);		
-		page.setData(list);
+		page.setData(data);
 				
 		return page;
 

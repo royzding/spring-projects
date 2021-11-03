@@ -105,7 +105,7 @@ public class ManagerServiceImpl implements ManagerService {
 			});
 		}
 
-		return PageLayout.getPage(pageNum, pageSize, list, entities);
+		return PageLayout.getPage(pageNum, pageSize, entities, list);
 	}
 
 	@Override

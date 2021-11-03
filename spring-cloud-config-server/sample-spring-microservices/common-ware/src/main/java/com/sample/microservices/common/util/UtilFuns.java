@@ -26,22 +26,4 @@ public class UtilFuns {
 		
 	}
 	
-	public static <E> PageLayout<E> getPage(int pageNum, int pageSize, List<E> list) {
-		
-		
-		Page<E> varPage = new PageImpl<>(list);
-		
-		final PageLayout<E> page = new PageLayout<>();
-		
-		page.setTotalElements(varPage.getTotalElements());
-		page.setTotalPages(varPage.getTotalPages());
-		
-		int firstElementNum = pageSize * pageNum - pageSize;
-		page.setFirstElementNum(firstElementNum < 0 ? 0 : firstElementNum + 1);		
-		page.setData(list);
-				
-		return page;
-		
-	}
-	
 }
