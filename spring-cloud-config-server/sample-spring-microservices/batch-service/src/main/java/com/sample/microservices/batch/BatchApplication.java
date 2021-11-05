@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableBatchProcessing
 @SpringBootApplication(scanBasePackages= {"com.sample.microservices.batch","com.sample.microservices.common"})
-public class SpringBatchApplication {
+public class BatchApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBatchApplication.class, args);
+		SpringApplication.run(BatchApplication.class, args);
 	}
 }
