@@ -20,6 +20,7 @@
 		<module>gateway-service</module>
 		<module>kafka-producer-service</module>
 		<module>kafka-consumer-service</module>
+		<module>batch-service</module>
 		<module>asyncaop-service</module>
 		<module>common-ware</module>		
 		<module>organization-service</module>

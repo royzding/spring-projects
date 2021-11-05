@@ -1,4 +1,5 @@
 
+DROP TABLE account;
 DROP TABLE person;
 DROP TABLE employee;
 DROP TABLE manager;
@@ -11,6 +12,16 @@ CREATE TABLE user_table (
      modified_by	VARCHAR2(50),
      created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
      modified_date  TIMESTAMP(0)
+);
+
+CREATE TABLE account (
+     id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+     name  			VARCHAR2(50) NOT NULL,
+     country    	VARCHAR2(50),     
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
+     
 );
 
 CREATE TABLE person (
