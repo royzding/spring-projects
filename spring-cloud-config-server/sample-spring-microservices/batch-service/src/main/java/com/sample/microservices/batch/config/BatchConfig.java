@@ -77,10 +77,18 @@ public class BatchConfig {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	@Lazy
+	private ManagerEntityRepository meRepo;
+
+	@Autowired
+	@Lazy
+	private PersonRepository pRepo;
+
 	@Bean
     public Step stepOne(){
         return steps.get("stepOne")
-                .tasklet(new MyTaskOne())
+                .tasklet(new MyTaskOne(pRepo))
                 .build();
     }
      
@@ -285,14 +293,6 @@ public class BatchConfig {
 
 ////////////////////////////////////////////////////////////////////
     
-	@Autowired
-	@Lazy
-	private ManagerEntityRepository meRepo;
-
-	@Autowired
-	@Lazy
-	private PersonRepository pRepo;
-
     @Bean
     public RepositoryItemReader<ManagerEntity> reader5() {
         RepositoryItemReader<ManagerEntity> reader = new RepositoryItemReader<>();

@@ -1,5 +1,7 @@
 package com.sample.microservices.batch.controller;
  
+import java.util.List;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -9,8 +11,14 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sample.microservices.batch.data.model.Person;
+import com.sample.microservices.batch.repository.PersonRepository;
 
 @RestController
 public class JobInvokerController {
@@ -21,8 +29,12 @@ public class JobInvokerController {
     @Autowired
     Job job;
     
-    @PostMapping("/invokejob")
-    public void handle() throws Exception {
+	@Autowired
+	@Lazy
+	private PersonRepository pRepo;
+
+	@PostMapping("/invokejob")
+    public void handle() {
     	
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString("JobID", String.valueOf(System.currentTimeMillis()))
@@ -36,5 +48,17 @@ public class JobInvokerController {
             e.printStackTrace();
         }
         
+    }
+    
+    @DeleteMapping("/person/all")
+    public void deleteAllPersons() {
+    	
+    	this.pRepo.deleteAll();
+    }
+    
+    @GetMapping("/person/all")
+    public List<Person> getAllPersons() {
+    	
+    	return this.pRepo.findAll();
     }
 }
