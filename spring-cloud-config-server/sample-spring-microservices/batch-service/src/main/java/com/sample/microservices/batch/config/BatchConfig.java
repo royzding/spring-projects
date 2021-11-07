@@ -1,5 +1,9 @@
 package com.sample.microservices.batch.config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -12,6 +16,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.data.RepositoryItemReader;
+import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JpaItemWriter;
@@ -25,7 +31,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -34,9 +43,14 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.sample.microservices.batch.data.model.Account;
 import com.sample.microservices.batch.data.model.Coffee;
+import com.sample.microservices.batch.data.model.ManagerEntity;
 import com.sample.microservices.batch.data.model.Person;
+import com.sample.microservices.batch.listener.JobCompletionNotificationListener;
 import com.sample.microservices.batch.processor.CoffeeItemProcessor;
 import com.sample.microservices.batch.processor.MyItemProcessor;
+import com.sample.microservices.batch.processor.MyJpaItemProcessor;
+import com.sample.microservices.batch.repository.ManagerEntityRepository;
+import com.sample.microservices.batch.repository.PersonRepository;
 import com.sample.microservices.batch.task.MyTaskOne;
 import com.sample.microservices.batch.task.MyTaskTwo;
 
@@ -60,7 +74,10 @@ public class BatchConfig {
     @Autowired
     private StepBuilderFactory steps;
      
-    @Bean
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+	@Bean
     public Step stepOne(){
         return steps.get("stepOne")
                 .tasklet(new MyTaskOne())
@@ -93,10 +110,12 @@ public class BatchConfig {
     				  ){
         return jobs.get("demoJob")
                 .incrementer(new RunIdIncrementer())
+                .listener(new JobCompletionNotificationListener(jdbcTemplate, meRepo))
                 .start(stepOne)
                 .next(stepTwo)
                 .next(stepThree)
                 .next(stepFour())
+                .next(stepFive())
                 .build();
     }
 
@@ -230,7 +249,7 @@ public class BatchConfig {
     private String fileInput;
 
     @Bean
-    public FlatFileItemReader<Coffee> reader2() {
+    public FlatFileItemReader<Coffee> reader4() {
         return new FlatFileItemReaderBuilder<Coffee>().name("coffeeItemReader")
             .resource(new ClassPathResource(fileInput))
             .delimited()
@@ -242,12 +261,12 @@ public class BatchConfig {
     }
 
     @Bean
-    public CoffeeItemProcessor processor2() {
+    public CoffeeItemProcessor processor4() {
         return new CoffeeItemProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Coffee> writer2(DataSource dataSource) {
+    public JdbcBatchItemWriter<Coffee> writer4(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Coffee>().itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
             .sql("INSERT INTO coffee (brand, origin, characteristics) VALUES (:brand, :origin, :characteristics)")
             .dataSource(dataSource)
@@ -258,12 +277,55 @@ public class BatchConfig {
     public Step stepFour() {
         return steps.get("step4")
             .<Coffee, Coffee>chunk(10)
-            .reader(reader2())
-            .processor(processor2())
-            .writer(writer2(dataSource()))
+            .reader(reader4())
+            .processor(processor4())
+            .writer(writer4(dataSource()))
             .build();
     }
 
+////////////////////////////////////////////////////////////////////
     
+	@Autowired
+	@Lazy
+	private ManagerEntityRepository meRepo;
 
+	@Autowired
+	@Lazy
+	private PersonRepository pRepo;
+
+    @Bean
+    public RepositoryItemReader<ManagerEntity> reader5() {
+        RepositoryItemReader<ManagerEntity> reader = new RepositoryItemReader<>();
+        reader.setRepository(meRepo);
+        reader.setMethodName("findAll");
+        
+        Map<String, Direction> sorts = new HashMap<>();
+        sorts.put("id", Direction.ASC);
+        reader.setSort(sorts);
+
+        return reader;
+    }
+    
+    @Bean
+    public RepositoryItemWriter<Person> writer5() {
+        RepositoryItemWriter<Person> writer = new RepositoryItemWriter<>();
+        writer.setRepository(pRepo);
+        writer.setMethodName("save");
+        return writer;
+    }    
+    
+    @Bean
+    public MyJpaItemProcessor processor5() {
+        return new MyJpaItemProcessor();
+    }    
+    
+    @Bean
+    public Step stepFive() {
+        return steps.get("stepFive")
+            .<ManagerEntity, Person>chunk(10)
+            .reader(reader5())
+            .processor(processor5())
+            .writer(writer5())
+            .build();
+    }    
 }
