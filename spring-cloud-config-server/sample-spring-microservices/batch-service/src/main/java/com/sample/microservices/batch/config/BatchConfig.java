@@ -40,6 +40,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.sample.microservices.batch.data.model.Account;
 import com.sample.microservices.batch.data.model.Coffee;
@@ -56,6 +57,7 @@ import com.sample.microservices.batch.task.MyTaskOne;
 import com.sample.microservices.batch.task.MyTaskTwo;
 
 @Configuration
+@EnableScheduling
 public class BatchConfig {
 
     @Value("${spring.datasource.driver-class-name}")

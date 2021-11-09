@@ -50,4 +50,14 @@ environment: local
 
 file:
  input:  coffee-list.csv
+ 
+schedule:
+ cron:
+  expression: 0 15 10 15 * ?
+ fixedRate:
+  in:
+   milliseconds: 1000
+ fixedDelay:
+  in:
+   milliseconds: 1000 
    
