@@ -1,8 +1,6 @@
 package com.sample.microservices.batch.config;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -33,6 +31,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -46,6 +46,7 @@ import com.sample.microservices.batch.data.model.Coffee;
 import com.sample.microservices.batch.data.model.ManagerEntity;
 import com.sample.microservices.batch.data.model.Person;
 import com.sample.microservices.batch.listener.JobCompletionNotificationListener;
+import com.sample.microservices.batch.listener.MyStepExecutionListener;
 import com.sample.microservices.batch.processor.CoffeeItemProcessor;
 import com.sample.microservices.batch.processor.MyItemProcessor;
 import com.sample.microservices.batch.processor.MyJpaItemProcessor;
@@ -110,65 +111,43 @@ public class BatchConfig {
                .build();
    }
 
-    
-    @Bean
-    public Job demoJob(	@Qualifier("stepOne") Step stepOne, 
+   
+   @Bean
+   public Job demoJob(	@Qualifier("stepOne") Step stepOne, 
 						@Qualifier("stepTwo") Step stepTwo,
 						@Qualifier("stepThree") Step stepThree
-    				  ){
-        return jobs.get("demoJob")
-                .incrementer(new RunIdIncrementer())
-                .listener(new JobCompletionNotificationListener(jdbcTemplate, meRepo))
-                .start(stepOne)
-                .next(stepTwo)
-                .next(stepThree)
-                .next(stepFour())
-                .next(stepFive())
-                .build();
-    }
+   				  ){
+       return jobs.get("demoJob")
+               .incrementer(new RunIdIncrementer())
+               .listener(new JobCompletionNotificationListener(jdbcTemplate, meRepo))
+               .start(stepOne)
+               .next(stepTwo)
+               .next(stepThree)
+               .next(stepFour())
+               .next(stepFive())
+               .build();
+   }
 
-/*    
-    /////
-    // This method declare the steps that the batch has to follow
-    //
-    // @param jobs
-    // @param s1
-    // @return
-    ///
+
+   ///////Conditional Steps///////////////////
+/*   
    @Bean
-   public Job importPerson(JobBuilderFactory jobs, Step s1) {
-
-       return jobs.get("import")
-               .incrementer(new RunIdIncrementer()) // because a spring config bug, this incrementer is not really useful
-               .flow(s1)
+   public Job demoJob(	@Qualifier("stepOne") Step stepOne, 
+						@Qualifier("stepTwo") Step stepTwo,
+						@Qualifier("stepThree") Step stepThree
+   				  ){
+       return jobs.get("demoJob")
+               .incrementer(new RunIdIncrementer())
+               .listener(new JobCompletionNotificationListener(jdbcTemplate, meRepo))
+               .start(stepOne)
+               .on("*").to(stepTwo)
+               .from(stepOne).on("FAILED").to(stepThree)
+               .from(stepTwo).on("*").to(stepFour())
+               .from(stepThree).on("*").to(stepFive())
                .end()
                .build();
    }
-   
-    /////
-     // Step
-     // We declare that every 1000 lines processed the data has to be committed
-     //
-     // @param stepBuilderFactory
-     // @param reader
-     // @param writer
-     // @param processor
-     // @return
-     ///
-
-    @Bean
-    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<Account> reader,
-                      ItemWriter<Person> writer, ItemProcessor<Account, Person> processor) {
-        return stepBuilderFactory.get("step1")
-                .<Account, Person>chunk(1000)
-                .reader(reader)
-                .processor(processor)
-                .writer(writer)
-                .build();
-    }
-
-   
-*/
+*/   
 
     @Bean
     public ItemReader<Account> reader() throws Exception {
@@ -209,13 +188,15 @@ public class BatchConfig {
     }
 
 
-
-    /////
-     // As data source we use an external database
-     //
-     // @return
-     ///
-
+///////////////////////////////////////////////////////////////////////////////
+    
+    
+    @Bean
+    public TaskExecutor taskExecutor() {
+        return new SimpleAsyncTaskExecutor("spring_batch");
+    }
+    
+    ///////////DataSource beans//////////////////////////////////
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -251,7 +232,7 @@ public class BatchConfig {
         return jpaVendorAdapter;
     }
 
-/////////Coffee Job/////////
+/////////FlatFileItemReader Example/////////
     
     @Value("${file.input}")
     private String fileInput;
@@ -291,7 +272,7 @@ public class BatchConfig {
             .build();
     }
 
-////////////////////////////////////////////////////////////////////
+////////////////////////RepositoryItemReader Example////////////////////////////////////////////
     
     @Bean
     public RepositoryItemReader<ManagerEntity> reader5() {
@@ -326,6 +307,50 @@ public class BatchConfig {
             .reader(reader5())
             .processor(processor5())
             .writer(writer5())
+            .listener(new MyStepExecutionListener())
+			.taskExecutor(taskExecutor())
+			.throttleLimit(20)
             .build();
     }    
+ 
+    ////////Parallel Steps////////////////
+/*
+
+	@Bean
+	public Job job() {
+	    return jobBuilderFactory.get("job")
+	        .start(splitFlow())
+	        .next(step4())
+	        .build()        //builds FlowJobBuilder instance
+	        .build();       //builds Job instance
+	}
+	
+	@Bean
+	public Flow splitFlow() {
+	    return new FlowBuilder<SimpleFlow>("splitFlow")
+	        .split(taskExecutor())
+	        .add(flow1(), flow2())
+	        .build();
+	}
+	
+	@Bean
+	public Flow flow1() {
+	    return new FlowBuilder<SimpleFlow>("flow1")
+	        .start(step1())
+	        .next(step2())
+	        .build();
+	}
+	
+	@Bean
+	public Flow flow2() {
+	    return new FlowBuilder<SimpleFlow>("flow2")
+	        .start(step3())
+	        .build();
+	}
+	
+	@Bean
+	public TaskExecutor taskExecutor() {
+	    return new SimpleAsyncTaskExecutor("spring_batch");
+	}     
+ */
 }

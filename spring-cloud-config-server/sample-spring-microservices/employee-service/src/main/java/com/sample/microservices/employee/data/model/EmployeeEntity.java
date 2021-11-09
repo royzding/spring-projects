@@ -1,16 +1,10 @@
 package com.sample.microservices.employee.data.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.sample.microservices.common.data.model.BaseEntity;
 
@@ -31,6 +25,12 @@ public class EmployeeEntity extends BaseEntity {
 	
 	@Column(name="dep_id")
 	private Long depId;
+
+/*	
+	@Column(name="dep_type")
+	@Enumerated(EnumType.STRING)
+	private DepartmentType departmentType;
+*/
 	
 	@OneToOne
 	@JoinColumn(name="manager_id")
