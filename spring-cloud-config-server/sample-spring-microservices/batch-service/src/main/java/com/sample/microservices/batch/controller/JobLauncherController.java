@@ -15,13 +15,15 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.batch.data.model.Person;
 import com.sample.microservices.batch.repository.PersonRepository;
 
 @RestController
-public class JobInvokerController {
+@RequestMapping("/job-launcher")
+public class JobLauncherController {
  
     @Autowired
     JobLauncher jobLauncher;
