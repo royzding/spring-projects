@@ -32,4 +32,10 @@ public interface ManagerService {
     
     void updateManager(final Long id, final ManagerDto managerDto)  throws Exception;
     
+    String getManagerMaxSalary(String name);
+    
+    void zeroInParamPr();
+    void insertManagerBk(Long id);
+    void twoInParamPr(Long id, Double salaryInc);
+    
 }

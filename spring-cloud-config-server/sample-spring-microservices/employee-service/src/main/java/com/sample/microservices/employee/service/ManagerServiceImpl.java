@@ -152,4 +152,34 @@ public class ManagerServiceImpl implements ManagerService {
 		this.repository.save(entity);
 	}
 
+	@Override
+	public String getManagerMaxSalary(String name) {
+		
+		//String s1 = "\ts1:" + this.repository.get_salary_by_name(name);
+		//String s2 = "\ts2:" + this.repository.getSalaryByName(name);
+		//String s3 = "\ts3:" + this.repository.getSalaryByPName(name);
+		//String s4 = "\ts4:" + this.repository.getSalaryByVName(name);
+		
+		Double salary2 = this.repository.getSalaryByName(name);
+		
+		
+		return "s2:" + salary2;
+	}
+
+	@Override
+	public void insertManagerBk(Long id) {
+		
+		this.repository.insertManagerBk(id);		
+	}
+
+	@Override
+	public void zeroInParamPr() {
+		this.repository.zeroInParamPr();		
+	}
+
+	@Override
+	public void twoInParamPr(Long id, Double salaryInc) {
+		this.repository.twoInParamPr(id, salaryInc);		
+	}
+
 }

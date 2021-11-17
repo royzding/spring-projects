@@ -46,6 +46,62 @@ public class ManagerController {
 		this.managerService = managerService;		
 	}
 	
+	@Operation(summary="insert manager_bk using zeroInParamPr stored procedure")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. Returns an Manager",
+					content= {@Content(mediaType="text/plain", schema=@Schema(implementation=String.class)) }),
+			@ApiResponse(responseCode="404",description="Manager does not exist for the given id"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@GetMapping("/zeroInParamPr")
+	public void zeroInParamPr() {
+		this.managerService.zeroInParamPr();
+	}
+	
+	
+	@Operation(summary="insert manager_bk using twoInParamPr stored procedure")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. Returns an Manager",
+					content= {@Content(mediaType="text/plain", schema=@Schema(implementation=String.class)) }),
+			@ApiResponse(responseCode="404",description="Manager does not exist for the given id"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@GetMapping("/twoInParamPr/{id}/{inc}")
+	public void twoInParamPr(@PathVariable("id") Long id, @PathVariable("inc") Double inc) {
+		this.managerService.twoInParamPr(id, inc);
+	}
+	
+	
+	@Operation(summary="insert manager_bk using insertManagerBk stored procedure")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. Returns an Manager",
+					content= {@Content(mediaType="text/plain", schema=@Schema(implementation=String.class)) }),
+			@ApiResponse(responseCode="404",description="Manager does not exist for the given id"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@GetMapping("/manager_bk/{id}")
+	public void insertManagerBk(@PathVariable("id") Long id) {
+		this.managerService.insertManagerBk(id);
+	}
+	
+	
+	@Operation(summary="get salary by manager name using stored procedure")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. Returns an Manager",
+					content= {@Content(mediaType="text/plain", schema=@Schema(implementation=String.class)) }),
+			@ApiResponse(responseCode="404",description="Manager does not exist for the given id"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@GetMapping("/name/{name}")
+	public String getManagerMaxSalaryByName(@PathVariable("name") String name) {
+		return this.managerService.getManagerMaxSalary(name);
+	}
+	
+	
 	@Operation(summary="get an manager by id")
 	@ApiResponses(value= {
 			@ApiResponse(responseCode="200",description="Success. Returns an Manager",

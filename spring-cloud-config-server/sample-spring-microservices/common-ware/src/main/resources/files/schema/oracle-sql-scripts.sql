@@ -1,5 +1,6 @@
 
-
+---case insensitive unique constraint on column NAME
+create unique index un_name on employee ( upper(name) );
 
 ---offset and fetch 
 select * from employee order by salary offset 2 rows fetch next 4 rows only;

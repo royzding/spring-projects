@@ -43,6 +43,16 @@ CREATE TABLE manager (
      modified_date  TIMESTAMP(0)
 );
 
+DROP TABLE manager_bk; 
+CREATE TABLE manager_bk (
+     id 			INTEGER,
+     name  			VARCHAR2(50) NOT NULL,
+     salary 		NUMBER(10,2),
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
+);
+
 CREATE TABLE department (
      id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
      name  			VARCHAR2(50) NOT NULL,
