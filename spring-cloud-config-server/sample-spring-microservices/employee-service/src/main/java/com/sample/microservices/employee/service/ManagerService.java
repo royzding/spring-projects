@@ -37,5 +37,6 @@ public interface ManagerService {
     void zeroInParamPr();
     void insertManagerBk(Long id);
     void twoInParamPr(Long id, Double salaryInc);
+    String getSalaryById(Long id);
     
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,8 @@ public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Lo
 	
     @Procedure(procedureName = "two_in_param_pr")
     void twoInParamPr(@Param("in_manager_id") Long id, @Param("in_salary_inc") Double salaryInc);
-	
+    
+    //calling an oracle function get_salary_by_id(in_id IN NUMBER)
+    @Query(nativeQuery = true, value = "SELECT get_salary_by_id(:id) FROM dual")
+    Double getSalaryById(@Param("id") Long id);
 }

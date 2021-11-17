@@ -182,4 +182,9 @@ public class ManagerServiceImpl implements ManagerService {
 		this.repository.twoInParamPr(id, salaryInc);		
 	}
 
+	@Override
+	public String getSalaryById(Long id) {
+		return ""+this.repository.getSalaryById(id);
+	}
+
 }

@@ -45,6 +45,20 @@ public class ManagerController {
 	ManagerController(ManagerService managerService) {
 		this.managerService = managerService;		
 	}
+
+	@Operation(summary="get salary by manager name using stored procedure")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. Returns an Manager",
+					content= {@Content(mediaType="text/plain", schema=@Schema(implementation=String.class)) }),
+			@ApiResponse(responseCode="404",description="Manager does not exist for the given id"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@GetMapping("/id/{id}")
+	public String getManagerMaxSalaryByName(@PathVariable("id") Long id) {
+		return this.managerService.getSalaryById(id);
+	}
+	
 	
 	@Operation(summary="insert manager_bk using zeroInParamPr stored procedure")
 	@ApiResponses(value= {
