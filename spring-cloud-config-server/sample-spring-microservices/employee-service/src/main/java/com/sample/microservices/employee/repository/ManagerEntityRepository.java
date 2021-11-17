@@ -25,7 +25,7 @@ public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Lo
     @Procedure(procedureName = "get_salary_by_name", outputParameterName = "out_salary")
     Double getSalaryByName(@Param("in_name") String name);
     
-    @Procedure(procedureName = "zero_in_param_pr")
+    @Procedure(procedureName = "zero_in_param_prx")
     void zeroInParamPr();
 	
     @Procedure(procedureName = "insert_manager_bk")

@@ -174,7 +174,14 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public void zeroInParamPr() {
-		this.repository.zeroInParamPr();		
+		
+		try {
+			
+			this.repository.zeroInParamPr();		
+			
+		} catch (Exception e) {
+			System.out.println("&&&&&&&&&&&&&&" + e.getMessage());
+		}
 	}
 
 	@Override
