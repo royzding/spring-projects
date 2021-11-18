@@ -4,6 +4,9 @@ server:
     context-path: /employee
 
 spring:
+  cloud:
+    config:
+      enabled: false
   application:
     name: employee-service
     

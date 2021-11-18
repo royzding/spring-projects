@@ -21,6 +21,7 @@ import com.sample.microservices.common.model.Department;
 import com.sample.microservices.common.model.Employee;
 import com.sample.microservices.employee.service.EmployeeService;
 import com.sample.microservices.model.dto.EmployeeDto;
+import com.sample.microservices.model.dto.ValidEmployee;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -152,23 +153,21 @@ public class EmployeeController {
 		this.employeeService.deleteAllEmployees();
 	}
 	
-/*	
-	@Operation(summary="get a list of employee of the department")
+	@Operation(summary="Create a ValidEmployee")
 	@ApiResponses(value= {
-		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
-					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Employee.class))) }),
-		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
+			@ApiResponse(responseCode="201",description="ValidEmployee created",
+					content= {@Content(mediaType="application/json", schema=@Schema(implementation=ValidEmployee.class)) }),
+			@ApiResponse(responseCode="400",description="Bad request"), 
+			@ApiResponse(responseCode="409",description="ValidEmployee with the same name already exists"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
 	})
-	@GetMapping("/department/{departmentId}")
-	public List<Employee> findByDepartment(@PathVariable("departmentId") Long departmentId) {
-		LOGGER.info("Employee find: departmentId={}", departmentId);
-		return repository.findByDepartment(departmentId);
+	@PostMapping("/validEmployee")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ValidEmployee createValidEmployee(@Valid @RequestBody ValidEmployee validEmployee) {
+
+		return validEmployee;
 	}
 	
-	@GetMapping("/organization/{organizationId}")
-	public List<Employee> findByOrganization(@PathVariable("organizationId") Long organizationId) {
-		LOGGER.info("Employee find: organizationId={}", organizationId);
-		return repository.findByOrganization(organizationId);
-	}
-*/	
+
 }
