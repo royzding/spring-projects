@@ -1,0 +1,61 @@
+
+
+chapter 2: Java Building Blocks.
+1.  B,E,G
+2.  D,F,G 
+3.  B,D,E,H
+4.  A,B,D,E
+5.  A,D
+6.  C,E
+7.  G
+8.  B,F [BE]
+9.  E,F [CEF]
+10. C
+11. A,D,E,
+12. H [AEF]
+13. B,D,H
+14. B,C,F
+15. A,C,F,G  [CFG]
+16. A,C,D
+17. A,E,F,G
+18. F,G
+19. F
+20. D
+21. A,D,F
+22. C,D,E [H]
+
+chapter 3: Operators.
+1.	ad[adg]
+2.	abd
+3.	bcdf
+4.	b
+5.	a[ac]
+6.	f
+7.	g[d]
+8.	c[a]
+9.	ade
+10.	g
+11.	d
+12.	d
+13.	f
+14.	beg
+15.	d
+16.	c[b]
+17.	cf
+18.	c
+19.	bf
+20.	ad[ade]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
