@@ -232,10 +232,10 @@ public class Chapter8_ClassDesign {
 /*
 		1.	e
 		2.	bc
-		3.	b
+		3.	b(f)
 		4.	e
-		5.	g
-		6.	bce
+		5.	g(a)
+		6.	bce(be)
 		7.	ac
 		8.	c
 		9.	bf
