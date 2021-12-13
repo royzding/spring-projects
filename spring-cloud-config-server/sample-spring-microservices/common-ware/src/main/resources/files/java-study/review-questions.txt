@@ -46,9 +46,27 @@ chapter 3: Operators.
 19.	bf
 20.	ad[ade]
 
-
-
-
+chapter 4:
+1.	abcefg
+2.	b
+3.	f[e]
+4.	ce
+5.	bd
+6.	b[bce]
+7.	e
+8.	c
+9.	d[g]
+10.	bdf
+11.	f
+12.	abd
+13.	bd[be]
+14.	e
+15.	 [ae]
+16.	e
+17.	f
+18.	ade
+19.	d
+20.	f
 
 
 
