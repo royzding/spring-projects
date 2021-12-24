@@ -28,4 +28,9 @@ public class Employee {
 	message = "name must be the following characters [a-zA-Z0-9@#%&:;,~`_\"'\s!$^*()+_={}|[]<>.?/\\]")
 	private String name;
 	
+	@NotBlank(message = "Name must not be blank.")
+	@Pattern(regexp="[\s-~]+", 
+	message = "name must be the following characters [a-zA-Z0-9@#%&:;,~`_\"'\s!$^*()+_={}|[]<>.?/\\]")
+	private String simplename;
+	
 }
