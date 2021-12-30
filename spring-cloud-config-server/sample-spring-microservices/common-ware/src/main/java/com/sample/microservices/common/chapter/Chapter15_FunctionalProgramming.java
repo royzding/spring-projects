@@ -9,9 +9,11 @@ import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -855,8 +857,251 @@ public class Chapter15_FunctionalProgramming {
 		//ObjDoubleConsumer<T> 			2(T,double)			void				accept
 		//ObjIntConsumer<T> 			2(T,int)			void				accept
 		//ObjLongConsumer<T>  			2(T,long)			void				accept
+		
+		//Working with advanced stream pipeline concepts
+		//linking streams to the underlying data
+		
+		//chaining Optionals
 
-	
+		//checked Exceptions and Functional interfaces.
+		//there is one drawback to functional interfaces. 
+		//None of the them as currently defined in Java 8 declare any checked exceptions.
+		
+		//1.	one is to catch the exception and turn it into an unchecked exception
+		//2.	another alternative is to create a wrapper method with the try/catch.
+		
+		//collecting results
+		
+		//Collector 										Return value			Description 
+		//--------------------------------------------------------------------------------------------------------------------------
+		
+		//averagingDouble(ToDoubleFunction f) 
+		//averagingInt(ToIntFunction f) 
+		//averagingLong(ToLongFunction f)  					Double					Calculates the average for our three core primitive types   
+
+		//counting()  										Long					Counts the number of elements   
+		
+		//groupingBy(Function f) 
+		//groupingBy(Function f, Collector dc) 
+		//groupingBy(Function f, Supplier s, Collector dc)  Map<K, List<T>>			Creates a map grouping by the specified function with the optional map type supplier and optional downstream collector   
+		
+		//joining(CharSequence cs)  						String					Creates a single String using cs as a delimiter between elements if one is specified 
+
+		//maxBy(Comparator c) 
+		//minBy(Comparator c)  								Optional<T>				Finds the largest/smallest elements   
+		
+		//mapping(Function f, Collector dc)  				Collector				Adds another level of collectors   
+		
+		//partitioningBy(Predicate p) 		
+		//partitioningBy(Predicate p, Collector dc)  		Map<Boolean, List<T>>	Creates a map grouping by the specified predicate with the optional further downstream collector   
+		
+		//summarizingDouble(ToDoubleFunction f) 			DoubleSummaryStatistics
+		//summarizingInt(ToIntFunction f) 					IntSummaryStatistics
+		//summarizingLong(ToLongFunction f)  				LongSummaryStatistics	Calculates average, min, max, and so on     
+		
+		//summingDouble(ToDoubleFunction f) 				Double
+		//summingInt(ToIntFunction f) 						Integer
+		//summingLong(ToLongFunction f)  					Long					Calculates the sum for our three core primitive types  
+
+		//toList() 											List
+		//toSet()  											Set						Creates an arbitrary type of list or set 
+		//toCollection(Supplier s)  						Collection				Creates a Collection of the specified type 
+		
+		//toMap(Function k, Function v) 
+		//toMap(Function k, Function v, BinaryOperator m) 
+		//toMap(Function k, Function v, BinaryOperator m, Supplier s)  Map			Creates a map using functions to map the keys, values, an optional merge function, and an optional map type supplier
+
+		//joining
+		
+		var strList1 = Stream.of("lions", "tigers", "bears");
+		String result1 = strList1.collect(Collectors.joining(", "));
+		System.out.println(result1); // lions, tigers, bears
+
+		var strList2 = Stream.of(1, 2, 3);
+		String result2 = strList2.map(x->x+"").collect(Collectors.joining(", "));
+		System.out.println(result2); // lions, tigers, bears
+		
+		//averagingInt
+		
+		var strList3 = Stream.of("lions", "tigers", "bears");
+		Double result3 = strList3.collect(Collectors.averagingInt(String::length));
+		System.out.println(result3); // 5.333333333333333
+
+		var strList4 = Stream.of("lions", "tigers", "bears");
+		Double result4 = strList4.collect(Collectors.averagingInt(x->x.length()));
+		System.out.println(result4); // 5.333333333333333
+		
+		//toCollection
+		
+		var strList5 = Stream.of("two", "lions", "tigers", "bears", "tee");
+		List<String> result5 = strList5.filter(s -> s.startsWith("t")).collect(Collectors.toCollection(ArrayList::new));
+		System.out.println(result5); // [two, tigers, tee]
+
+		var strList6 = Stream.of("two", "lions", "tigers", "bears", "tee");
+		TreeSet<String> result6 = strList6.filter(s -> s.startsWith("t")).collect(Collectors.toCollection(TreeSet::new));
+		System.out.println(result6); // [tee, tigers, two]
+		
+		//toMap
+		
+		var strList7 = Stream.of("lions", "tigers", "bears");
+		Map<String, Integer> map7 = strList7.collect(Collectors.toMap(s -> s, String::length));
+		System.out.println(map7); // {lions=5, bears=5, tigers=6}
+
+		var strList8 = Stream.of("lions", "tigers", "bears");
+		Map<String, Integer> map8 = strList8.collect(Collectors.toMap(s->s, s->s.length()));
+		System.out.println(map8); // {lions=5, bears=5, tigers=6}
+
+		var strList9 = Stream.of("lions", "tigers", "bears");
+		Map<String, Integer> map9 = strList9.collect(Collectors.toMap(s->s, t->t.length()));
+		System.out.println(map9); // {lions=5, bears=5, tigers=6}
+
+		var strList10 = Stream.of("lions", "tigers", "bears", "lions");
+		Map<String, Integer> map10 = strList10.collect(Collectors.toMap(s->s, t->t.length(), (s10, s20)-> s10 + s20));
+		System.out.println(map10); // {lions=5+5, bears=5, tigers=6}
+
+		var strList11 = Stream.of("lions", "tigers", "bears", "lions");
+		Map<Integer, String> map11 = strList11.collect(Collectors.toMap(s->s.length(), t->t, (s11, s21)-> s11 + "," + s21));
+		System.out.println(map11); // {5=lions,bears,lions, 6=tigers}
+
+		var strList12 = Stream.of("lions", "tigers", "bears", "lions","a", "abc", "ab", "abcd");
+		Map<Integer, String> map12 = strList12.collect(
+				Collectors.toMap(s->s.length(), t->t, (s12, s22)-> s12 + "," + s22, TreeMap::new));
+		System.out.println(map12); // {1=a, 2=ab, 3=abc, 4=abcd, 5=lions,bears,lions, 6=tigers}
+		System.out.println(map12.getClass()); // class java.util.TreeMap
+
+		//groupingBy
+		var strList13 = Stream.of("lions", "tigers", "bears", "lions","a", "abc", "ab", "abcd");
+		Map<Integer, List<String>> map13 = strList13.collect(Collectors.groupingBy(String::length));
+		System.out.println(map13); // {1=[a], 2=[ab], 3=[abc], 4=[abcd], 5=[lions, bears, lions], 6=[tigers]}
+		System.out.println(map13.getClass()); // class java.util.HashMap
+
+		var strList14 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Integer, Set<String>> map14 = strList14.collect(Collectors.groupingBy(String::length,Collectors.toSet()));
+		System.out.println(map14); // {2=[ab, ba], 4=[abcd], 5=[lions, bears], 6=[tigers]}
+		System.out.println(map14.getClass()); // class java.util.HashMap
+
+		var strList15 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Integer, Set<String>> map15 = strList15.collect(
+				Collectors.groupingBy(String::length,TreeMap::new, Collectors.toSet()));
+		System.out.println(map15); // {2=[ab, ba], 4=[abcd], 5=[lions, bears], 6=[tigers]}
+		System.out.println(map15.getClass()); // class java.util.TreeMap
+
+		var strList16 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Integer, Set<String>> map16 = strList16.collect(
+				Collectors.groupingBy(String::length,TreeMap::new, Collectors.toCollection(TreeSet::new)));
+		System.out.println(map16); // {2=[ab, ba], 4=[abcd], 5=[bears, lions], 6=[tigers]}
+		System.out.println(map16.getClass()); // class java.util.TreeMap
+
+		//Boolean 
+		
+		var strList17 = Stream.of("lions", "tigers", "bears", "lions","a", "abc", "ab", "abcd");
+		Map<Boolean, List<String>> map17 = strList17.collect(Collectors.groupingBy(s17->s17.length()>3));
+		System.out.println(map17); // {false=[a, abc, ab], true=[lions, tigers, bears, lions, abcd]}
+		System.out.println(map17.getClass()); // class java.util.HashMap
+
+		var strList18 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> map18 = strList18.collect(Collectors.groupingBy(s17->s17.length()>3,Collectors.toSet()));
+		System.out.println(map18); // {false=[ab, ba], true=[lions, bears, tigers, abcd]}
+		System.out.println(map18.getClass()); // class java.util.HashMap
+
+		var strList19 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> map19 = strList19.collect(
+				Collectors.groupingBy(s17->s17.length()>3,TreeMap::new, Collectors.toSet()));
+		System.out.println(map19); // {false=[ab, ba], true=[lions, bears, tigers, abcd]}
+		System.out.println(map19.getClass()); // class java.util.TreeMap
+
+		var strList20 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> map20 = strList20.collect(
+				Collectors.groupingBy(s17->s17.length()>3,TreeMap::new, Collectors.toCollection(TreeSet::new)));
+		System.out.println(map20); // {false=[ab, ba], true=[abcd, bears, lions, tigers]}
+		System.out.println(map20.getClass()); // class java.util.TreeMap
+
+		var strList21 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> map21 = strList21.collect(
+				Collectors.groupingBy(s17->s17.length()>1,TreeMap::new, Collectors.toCollection(TreeSet::new)));
+		System.out.println(map21.size());
+		System.out.println(map21); // {true=[ab, abcd, ba, bears, lions, tigers]}
+		System.out.println(map21.getClass()); // class java.util.TreeMap
+
+		var strList21x = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> map21x = strList21x.collect(
+				Collectors.groupingBy(s17->s17.length()>1,TreeMap::new, 
+						Collectors.toCollection(()->new TreeSet(Comparator.reverseOrder()))));
+		System.out.println(map21x.size());
+		System.out.println(map21x); // {true=[tigers, lions, bears, ba, abcd, ab]}
+		System.out.println(map21x.getClass()); // class java.util.TreeMap
+
+		//partitioningBy
+		
+		System.out.println("//partitioningBy");
+		
+		var strListP17 = Stream.of("lions", "tigers", "bears", "lions","a", "abc", "ab", "abcd");
+		Map<Boolean, List<String>> mapP17 = strListP17.collect(Collectors.partitioningBy(s17->s17.length()>3));
+		System.out.println(mapP17); // {false=[a, abc, ab], true=[lions, tigers, bears, lions, abcd]}
+		System.out.println(mapP17.getClass()); // java.util.stream.Collectors$Partition
+
+		var strListP18 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> mapP18 = strListP18.collect(Collectors.partitioningBy(s17->s17.length()>3,Collectors.toSet()));
+		System.out.println(mapP18); // {false=[ab, ba], true=[lions, bears, tigers, abcd]}
+		System.out.println(mapP18.getClass()); // java.util.stream.Collectors$Partition
+
+		var strListP20 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> mapP20 = strListP20.collect(
+				Collectors.partitioningBy(s17->s17.length()>3,Collectors.toCollection(TreeSet::new)));
+		System.out.println(mapP20); // {false=[ab, ba], true=[abcd, bears, lions, tigers]}
+		System.out.println(mapP20.getClass()); // java.util.stream.Collectors$Partition
+
+		var strListP21 = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> mapP21 = strListP21.collect(
+				Collectors.partitioningBy(s17->s17.length()>1, Collectors.toCollection(TreeSet::new)));
+		System.out.println(mapP21.size());
+		System.out.println(mapP21); // {false=[], true=[ab, abcd, ba, bears, lions, tigers]}
+		System.out.println(mapP21.getClass()); // java.util.stream.Collectors$Partition
+
+		var strListP21x = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Boolean, Set<String>> mapP21x = strListP21x.collect(
+				Collectors.partitioningBy(s17->s17.length()>1, 
+						Collectors.toCollection(()->new TreeSet(Comparator.reverseOrder()))));
+		System.out.println(mapP21x.size());
+		System.out.println(mapP21x); // {false=[], true=[tigers, lions, bears, ba, abcd, ab]}
+		System.out.println(mapP21x.getClass()); // java.util.stream.Collectors$Partition
+
+
+		//counting
+		var strList22 = Stream.of("lions", "tigers", "bears", "lions","a", "abc", "ab", "abcd");
+		Map<Integer, Long> map22 = strList22.collect(Collectors.groupingBy(String::length,Collectors.counting()));
+		System.out.println(map22); // {1=1, 2=1, 3=1, 4=1, 5=3, 6=1}
+		System.out.println(map22.getClass()); // class java.util.HashMap
+		
+		//mapping
+		
+
+		var strList23y = Stream.of("lions", "tigers", "bears", "lions","ba", "abcd", "ab", "abcd");
+		Map<Integer, Optional<Character>> map23y = strList23y.collect(Collectors.groupingBy(String::length,
+				Collectors.mapping(s13->s13.charAt(0), Collectors.minBy((a,b)->a-b))));
+		System.out.println(map23y); // {2=Optional[a], 4=Optional[a], 5=Optional[b], 6=Optional[t]}
+		System.out.println(map23y.getClass()); // class java.util.HashMap
+		
+		var strList23x = Stream.of("a","b","c", "two", "abc", "dwc", "abcd", "wxyz", "twit", "lions", "tigers", "bears", "lions","foxes");
+		Map<Integer, Set<String>> map23x = strList23x.collect(
+				Collectors.groupingBy(String::length,TreeMap::new, Collectors.toCollection(TreeSet::new)));
+		System.out.println(map23x); // {1=[a, b, c], 3=[abc, dwc, two], 4=[abcd, twit, wxyz], 5=[bears, foxes, lions], 6=[tigers]}
+		System.out.println(map23x.getClass()); // class java.util.TreeMap
+
+		var strList24 = Stream.of("a","b","c", "two", "abc", "dwc", "abcd", "wxyz", "twit", "lions", "tigers", "bears", "lions","foxes");
+		Map<Integer, Optional<String>> map24 = strList24.collect(Collectors.groupingBy(String::length,
+				Collectors.mapping(s13->s13, Collectors.minBy((a,b)->a.compareTo(b)))));
+		System.out.println(map24); // {1=Optional[a], 3=Optional[abc], 4=Optional[abcd], 5=Optional[bears], 6=Optional[tigers]}
+		System.out.println(map24.getClass()); // class java.util.HashMap
+		
+		var strList25 = Stream.of("a","b","c", "two", "abc", "dwc", "abcd", "wxyz", "twit", "lions", "tigers", "bears", "lions","foxes");
+		Map<Integer, Optional<String>> map25 = strList25.collect(Collectors.groupingBy(String::length,
+				Collectors.mapping(s13->s13, Collectors.maxBy((a,b)->a.compareTo(b)))));
+		System.out.println(map25); // {1=Optional[c], 3=Optional[two], 4=Optional[wxyz], 5=Optional[lions], 6=Optional[tigers]}
+		System.out.println(map25.getClass()); // class java.util.HashMap
+		
+
+		
 	}
 	
 	public static Optional<Double> average(int... scores) {
@@ -874,35 +1119,35 @@ public class Chapter15_FunctionalProgramming {
 
 
 /*
-		1.	b
-		2.	e(d)
-		3.	cg
-		4.	f(d)
-		5.	bdf(bf)
-		6.	b
-		7.	ac(ad)
-		8.	b(bf)
-		9.	e
-		10.	a
-		11.	a
-		12.	bd(abd)
-		13.	be
-		14.	c
-		15.	a
-		16.	bdf
-		17.	bd
-		18.	ab
-		19.	ad
-		20.	e
-		21.	d(ae)
-		22.	b
-		23.	be
-		24.	f
-		25.	f
-
-		
+		1.	d
+		2.	f
+		3.	b(e)
+		4.	b(ab)
+		5.	ad(cf)
+		6.	f(a)
+		7.	f
+		8.	de
+		9.	bd
+		10.	f
+		11.	bce
+		12.	efg
+		13.	f
+		14.	bd
+		15.	bd
+		16.	bc
+		17.	e
+		18.	d
+		19.	a
+		20.	e(ace)
+		21.	b
+		22.	cdef(cef)
 
 */
+
+		var s = DoubleStream.of(1.2, 2.4);
+	    s.peek(System.out::println).filter(x -> x> 2).count();
+	    
+	    Optional.empty().orElseThrow(()->new RuntimeException());
 
 		
 	
