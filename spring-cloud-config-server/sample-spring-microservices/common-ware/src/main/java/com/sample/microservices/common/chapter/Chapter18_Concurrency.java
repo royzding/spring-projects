@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Chapter18_Concurrency {
@@ -38,8 +39,10 @@ public class Chapter18_Concurrency {
 
 	public static void main(String[] args) throws Exception {
 
-		testTemplet();
-		TestConcurrency();
+		//testTemplet();
+		//TestConcurrency();
+		testTest();
+		
 			
 	}
 
@@ -699,13 +702,58 @@ public class Chapter18_Concurrency {
     	return input;    	
     }
     	
-	private static void testTest() {
+	private static void testTest() throws InterruptedException, ExecutionException {
 		
-//		out.println("--------------testTest-----------");
+		out.println("--------------testTest-----------");
+		
+		Bank.test();
 
 /*
-		1.	
+		1.	cf(df)
+		2.	d(ad)
+		3.	c(acdf)
+		4.	bc
+		5.	c
+		6.	ce
+		7.	d
+		8.	d(a)
+		9.	c
+		10.	a
+		11.	f
+		12.	be(b)
+		13	c
+		14.	e(ce)
+		15.	f(a)
+		16.	e(f)
+		17.	b(d)
+		18.	ceg
+		19.	b(fh)
+		20.	c(f)
+		21.	a(ad)
+		22.	c(b)
+		23.	f
+		24.	af
+		25.	ad
+		26.	c(cd)
 
+*/
+		
+		ScheduledExecutorService service =   // w1
+			       Executors.newSingleThreadScheduledExecutor();
+			    service.scheduleWithFixedDelay(() -> {
+			       System.out.println("Open Zoo");
+			       //return null;   // w2
+			    }, 0, 1, TimeUnit.MINUTES);
+			    var result = service.submit(() ->   // w3
+			       System.out.println("Wake Staff"));
+			    System.out.println(result.get());   // w4
+
+/*			    
+			    System.out.print(List.of("duck","flamingo","pelican")
+			    	       .parallelStream().parallel()   // q1
+			    	       .reduce(0,
+			    	          (c1, c2) -> c1.length() + c2.length(),   // q2
+			    	          (s1, s2) -> s1 + s2));   // q3
 */
 		
 	}
@@ -830,8 +878,28 @@ class LionPenManager_CB {
 }
 	
 	
-	
-	
+class Bank {
+    private Lock vault = new ReentrantLock();
+    private int total = 0;
+    public void deposit(int value) {
+    	
+	    if(vault.tryLock()) {
+	        try {
+	            total += value;
+	         } finally {
+	            vault.unlock();
+	         }
+	    	
+	    }
+    }
+    
+    public static void test() {
+		var bank = new Bank();
+        IntStream.range(1, 10).parallel()
+           .forEach(s -> bank.deposit(s));        
+        System.out.println(bank.total);
+    }
+}	
 	
 	
 	
