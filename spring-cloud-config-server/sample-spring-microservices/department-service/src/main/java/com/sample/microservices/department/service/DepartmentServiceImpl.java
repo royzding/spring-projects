@@ -23,7 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	private final DepartmentRepository repository;
 	private final EmployeeService employeeService;
 		
-	DepartmentServiceImpl(DepartmentMapper mapper, DepartmentRepository repository, EmployeeService employeeService) {
+	public DepartmentServiceImpl(DepartmentMapper mapper, DepartmentRepository repository, EmployeeService employeeService) {
 		this.mapper = Mappers.getMapper(DepartmentMapper.class);
 		this.repository = repository;
 		this.employeeService = employeeService;

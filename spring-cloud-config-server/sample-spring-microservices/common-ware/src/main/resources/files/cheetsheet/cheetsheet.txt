@@ -22,6 +22,11 @@ X-USER-INFO    {"userName":"roy"}
 //swagger url
 localhost:8085/context-path/swagger-ui.html
 
+//employee, department swagger url
+localhost:8083/employee/v3/swagger-ui.html
+localhost:8084/department/v3/swagger-ui.html
+
+
 
 //free uuid generator
 https://www.guidgenerator.com/
