@@ -28,7 +28,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Department Service", description = "REST API for Department Service.")
 @RestController
 @RequestMapping("/department-controller")
 public class DepartmentController {
