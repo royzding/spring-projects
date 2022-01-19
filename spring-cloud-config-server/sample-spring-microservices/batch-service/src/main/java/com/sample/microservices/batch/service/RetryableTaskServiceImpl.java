@@ -1,6 +1,7 @@
 package com.sample.microservices.batch.service;
 
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,15 @@ public class RetryableTaskServiceImpl implements RetryableTaskService{
 	
 	@Override
 	@Retryable(value=ValidationFailureException.class, maxAttempts = 5, backoff= @Backoff(delay = 1))
+	public void executeTaskWithRecover() {
+				
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$ executeTask: count=" + ++count);
+		throw new ValidationFailureException("try times: count = " + count);
+
+	}
+	
+	@Override
+	@Retryable(value=ValidationFailureException.class, maxAttempts = 5, backoff= @Backoff(delay = 1))
 	public Integer executeTaskWithSuccess(Integer times) {
 				
 		if(times <= count) {			
@@ -43,6 +53,11 @@ public class RetryableTaskServiceImpl implements RetryableTaskService{
 			throw new ValidationFailureException("try times: count = " + count);
 		}
 		
+	}
+	
+	@Recover
+	void recover(ValidationFailureException e) {
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$ recover with exception:" + e.getMessage());
 	}
 	
 }

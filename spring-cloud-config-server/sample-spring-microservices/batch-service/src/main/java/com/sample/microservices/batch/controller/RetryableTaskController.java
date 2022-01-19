@@ -16,7 +16,14 @@ public class RetryableTaskController {
 	RetryableTaskController(RetryableTaskService taskService) {
 		this.taskService = taskService;		
 	}
- 
+		
+    @GetMapping("/recover")
+    public void executeTaskWithRecover() {
+    	
+    	this.taskService.executeTaskWithRecover();
+    }
+
+
     @GetMapping("/success/{times}")
     public Integer executeTaskWithSuccess(@PathVariable("times") Integer times) {
     	
