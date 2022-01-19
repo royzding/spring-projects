@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@SpringBootApplication(scanBasePackages= {"com.sample.microservices"})
+@SpringBootApplication(scanBasePackages= {"com.sample.microservices.department","com.sample.microservices.common"})
 @EnableDiscoveryClient
 @EnableFeignClients
 
