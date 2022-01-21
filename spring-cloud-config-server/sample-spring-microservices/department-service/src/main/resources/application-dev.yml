@@ -24,7 +24,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${app.eureka-username}:${app.eureka-password}@localhost:8761/eureka/
   instance:
     hostname: localhost
           
@@ -52,3 +52,8 @@ feign:
           X-SVC-KEY: emp-1234-5678
   
 environment: dev   
+
+app:
+  eureka-username: u
+  eureka-password: p
+ 

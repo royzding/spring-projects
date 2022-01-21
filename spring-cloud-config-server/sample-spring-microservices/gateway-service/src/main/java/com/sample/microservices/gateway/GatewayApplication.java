@@ -22,7 +22,8 @@ import org.springframework.security.web.server.util.matcher.PathPatternParserSer
 
 import io.netty.handler.codec.http.HttpMethod;
 
-@SpringBootApplication(exclude= {ReactiveUserDetailsServiceAutoConfiguration.class},scanBasePackages= {"com.sample.microservices"})
+@SpringBootApplication(exclude= {ReactiveUserDetailsServiceAutoConfiguration.class},
+	scanBasePackages= {"com.sample.microservices.gateway","com.sample.microservices.common"})
 @EnableDiscoveryClient
 @EnableWebFluxSecurity
 public class GatewayApplication {
