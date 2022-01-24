@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /wf-mongodb
+
+spring:
+  application:
+    name: wf-mongodb-service
+
+  data:
+    mongodb:
+      database: myMongoDb
+      port: 27017    
+    
+
+auth:
+  svcKey: wf-mongo-1234-5678  
+  
+environment: local 
+   
+springdoc:
+  api-docs:
+   path: /v3/api-docs
+  swagger-ui:
+   path: /v3/swagger-ui.html  
+  open-api:
+    name: openApi Test
+    email: roy@example.com
+    license.name: my license 3.0

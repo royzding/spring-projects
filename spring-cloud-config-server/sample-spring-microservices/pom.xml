@@ -23,6 +23,7 @@
 		<module>batch-scheduled-service</module>
 		<module>asyncaop-service</module>
 		<module>mvc-mongodb-service</module>
+		<module>webflux-mongodb-service</module>
 		<module>common-ware</module>		
 		<module>organization-service</module>
 		<module>proxy-service</module>
