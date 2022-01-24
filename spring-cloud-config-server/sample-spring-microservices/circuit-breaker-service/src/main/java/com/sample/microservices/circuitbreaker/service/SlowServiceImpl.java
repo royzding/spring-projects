@@ -9,7 +9,7 @@ public class SlowServiceImpl implements SlowService{
 	
 	@Override
 	public Mono<String> slowMethod(long delay) {
-/*		
+		
 		try {
 			
 			Thread.sleep(delay*1000);
@@ -17,7 +17,7 @@ public class SlowServiceImpl implements SlowService{
 		} catch (InterruptedException e) {
 
 		}
-*/		
+		
 		return Mono.just("OK" + delay);
 		
 	}

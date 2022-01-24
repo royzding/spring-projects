@@ -57,7 +57,7 @@ public class Resilience4jController {
   @GetMapping("/slow/{slow}")
   @CircuitBreaker(name = RESILIENCE4J_INSTANCE_NAME, fallbackMethod = FALLBACK_METHOD)
   public Mono<String> slowMethod(@PathVariable long slow) {
-	  return slowService.slowMethod(slow).delayElement(Duration.ofSeconds(slow));
+	  return slowService.slowMethod(slow);
   }
   
   @GetMapping(

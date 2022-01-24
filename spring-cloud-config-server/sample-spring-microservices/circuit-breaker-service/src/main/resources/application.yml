@@ -21,7 +21,7 @@ resilience4j:
         permitted-number-of-calls-in-half-open-state: 1
         max-wait-duration-in-half-open-state: 10s
         wait-duration-in-open-state:  10s
-        slow-call-duration-threshold: 4s
+        slow-call-duration-threshold: 3s
         writable-stack-trace-enabled: true
         automatic-transition-from-open-to-half-open-enabled:  true
     
