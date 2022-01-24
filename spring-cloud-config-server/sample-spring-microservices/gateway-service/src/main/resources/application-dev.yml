@@ -63,6 +63,14 @@ spring:
         filters:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+      - id: webfluxmongodb-swagger
+        uri: lb://webfluxmongodb-service
+        predicates:
+        - Path=/v3/api-docs/webfluxmongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, webfluxmongo-1234-5678
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
         
 eureka:
   client:

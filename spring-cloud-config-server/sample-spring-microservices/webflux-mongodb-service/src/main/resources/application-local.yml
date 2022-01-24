@@ -1,5 +1,7 @@
 server:
-  port: 8080
+  port: 8085
+  servlet:
+    context-path: /webfluxmongodb
 
 spring:
   application:
@@ -28,4 +30,11 @@ auth:
   svcKey: wf-mongo-1234-5678  
   
 environment: local 
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /webfluxmongodb/
+
    
