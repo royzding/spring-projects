@@ -1,11 +1,9 @@
 server:
   port: 8080
-  servlet:
-    context-path: /wf-mongodb
 
 spring:
   application:
-    name: wf-mongodb-service
+    name: webfluxmongodb-service
 
   data:
     mongodb:

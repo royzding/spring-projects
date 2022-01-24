@@ -21,36 +21,36 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/webfluxmongodb")
 public class EmployeeController {
     @Autowired
     private EmployeeServiceImpl employeeServiceImpl;
 
-    @GetMapping("/all")
+    @GetMapping("/employee/all")
     @ResponseBody
     public Flux<Employee> findAll() {
         return employeeServiceImpl.findAllEmp();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/employee/{id}")
     public ResponseEntity<Mono<Employee>> findEmpById(@PathVariable("id") String id) {
         Mono<Employee> employee = employeeServiceImpl.findByEmpId(id);
         return new ResponseEntity<Mono<Employee>>(employee, employee != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/employee/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createEmp(@RequestBody Employee employee) {
         employeeServiceImpl.createEmp(employee);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/employee/update")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Employee> update(@RequestBody Employee employee) {
         return employeeServiceImpl.updateEmp(employee);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/employee/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") String id) {
         employeeServiceImpl.deleteEmp(id).subscribe();

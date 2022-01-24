@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
@@ -19,9 +20,10 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @Tag(name = "Test APIs", description = "Test APIs for demo purpose")
+@RequestMapping("/webfluxmongodb")
 public class TestController {
 
-    @GetMapping("test")
+    @GetMapping("/test")
     @Operation(description = "Get a test model demo", parameters = {
             @Parameter(name = "name", in = ParameterIn.QUERY, required = true, description = "name parameter")
     })
@@ -34,7 +36,7 @@ public class TestController {
         return Mono.just(testDto);
     }
 
-    @PostMapping("test")
+    @PostMapping("/test")
     @Operation(description = "Create a test model demo", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody())
     public Mono<TestDto> postTestDto(@Valid @RequestBody final TestDto testDto,
                                      final ServerWebExchange exchange) {

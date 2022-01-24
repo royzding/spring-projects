@@ -24,7 +24,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    this.username = username;
 	    this.password = password;
 	  }
-
+/*
 	@Override
 	@SuppressWarnings("deprecation")
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,7 +33,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		    .withUser(username).password(password)
 		    .authorities("USER");
 	}
-	
+*/	
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -46,14 +46,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http
 			.csrf().disable();
-		
+/*		
 	    http
 		    .authorizeRequests()
 		    .anyRequest()
 		    .authenticated()
 		    .and()
 		    .httpBasic();
-
+*/
 	}
 
 }

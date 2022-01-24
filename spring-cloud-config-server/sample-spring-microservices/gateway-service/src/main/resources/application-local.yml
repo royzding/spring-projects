@@ -83,6 +83,7 @@ springdoc:
     
 auth:
   check-url: false
+  check-auth: false
   token:
     header: authorization
     header-url: URL
