@@ -28,6 +28,7 @@
 		<module>organization-service</module>
 		<module>proxy-service</module>
 		<module>circuit-breaker-service</module>
+		<module>upload-files-service</module>
 	</modules>
 	
 </project>
