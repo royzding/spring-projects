@@ -29,6 +29,9 @@
 		<module>proxy-service</module>
 		<module>circuit-breaker-service</module>
 		<module>upload-files-service</module>
+		<module>authorization-server-service</module>
+		<module>authorization-client-service</module>
+		<module>authorization-resource-service</module>
 	</modules>
 	
 </project>
