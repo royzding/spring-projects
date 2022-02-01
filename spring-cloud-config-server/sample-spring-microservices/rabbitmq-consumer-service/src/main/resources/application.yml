@@ -1,0 +1,34 @@
+server:
+ port: 8092
+
+spring:
+ rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+
+  queue-consumer-service:
+   direct-exchange-name: direct-exchange
+   queue-a-name: queue-A
+   queue-b-name: queue-B
+   routing-a-name: direct-A
+   routing-b-name: direct-B
+
+   topic-exchange-name: topic-exchange
+   queue-c-name: queue-C
+   queue-d-name: queue-D
+   routing-c-name: rabbitmq.#
+   routing-d-name: rabbitmq.spring.#
+
+   fanout-exchange-name: fanout-exchange
+   queue-e-name: queue-E
+   queue-f-name: queue-F
+   
+rest:
+ template:
+  url: http://localhost:8081/api/producer/
+  
+threadpool:
+ corepoolsize: 6
+ maxpoolsize: 12  

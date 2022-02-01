@@ -32,6 +32,8 @@
 		<module>authorization-server-service</module>
 		<module>authorization-client-service</module>
 		<module>authorization-resource-service</module>
+		<module>rabbitmq-consumer-service</module>
+		<module>rabbitmq-producer-service</module>
 	</modules>
 	
 </project>
