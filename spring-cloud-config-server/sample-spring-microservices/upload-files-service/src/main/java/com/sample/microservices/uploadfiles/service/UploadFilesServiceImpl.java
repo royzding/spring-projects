@@ -6,8 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang.SystemUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -19,20 +24,28 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadFilesServiceImpl implements UploadFilesService {
 
   @Value("${uploadfiles.topath}")
-  private String uploadTopath;
+  private String uploadDirePath;
 
   @Override
   public void save(MultipartFile file) {
 	
-	Path path = Paths.get(uploadTopath);
+	Path direPath = Paths.get(uploadDirePath);
 	
 	try {
 		
-		if(!Files.exists(path)) {
-	    	Files.createDirectories(Paths.get(uploadTopath));		
+		if(!Files.exists(direPath)) {
+	    	Files.createDirectories(direPath);		
 		}		
  
-	    Files.copy(file.getInputStream(), path.resolve(file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+		Path filePath = direPath.resolve(file.getOriginalFilename());
+		
+	    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+	    
+	    if(!SystemUtils.OS_NAME.toLowerCase().contains("windows")) {
+	    	Set<PosixFilePermission> perms = new HashSet<>(Arrays.asList(PosixFilePermission.values()));
+		    Files.setPosixFilePermissions(direPath, perms);	    	
+		    Files.setPosixFilePermissions(filePath, perms);	    	
+	    }
 
     } catch (IOException e) {
     	throw new RuntimeException("Could not initialize folder for upload!");
@@ -44,7 +57,7 @@ public class UploadFilesServiceImpl implements UploadFilesService {
   @Override
   public Resource load(String filename) {
 	  
-	Path filepath = Paths.get(uploadTopath);
+	Path filepath = Paths.get(uploadDirePath);
 
 	try {
       Path file = filepath.resolve(filename);
@@ -62,14 +75,14 @@ public class UploadFilesServiceImpl implements UploadFilesService {
 
   @Override
   public void deleteAll() {
-	Path filepath = Paths.get(uploadTopath);
+	Path filepath = Paths.get(uploadDirePath);
     FileSystemUtils.deleteRecursively(filepath.toFile());
   }
 
   @Override
   public Stream<Path> loadAll() {
 		
-	Path filepath = Paths.get(uploadTopath);
+	Path filepath = Paths.get(uploadDirePath);
 
 	try {
       return Files.walk(filepath, 1).filter(path -> !path.equals(filepath)).map(filepath::relativize);
