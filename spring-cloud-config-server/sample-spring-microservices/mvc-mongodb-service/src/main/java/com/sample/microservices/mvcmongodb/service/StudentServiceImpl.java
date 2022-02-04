@@ -4,16 +4,19 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import com.sample.microservices.mvcmongodb.map.StudentMapper;
 import com.sample.microservices.mvcmongodb.model.StudentEntity;
-import com.sample.microservices.mvcmongodb.model.dto.Student;
+import com.sample.microservices.mvcmongodb.model.dto.StudentDto;
 import com.sample.microservices.mvcmongodb.repository.StudentRepository;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
 	  private final StudentRepository studentRepository;
+	  private final StudentMapper studentMapper = Mappers.getMapper(StudentMapper.class);
 	  
 	  StudentServiceImpl(StudentRepository studentRepository) {
 		  this.studentRepository = studentRepository;		  
@@ -25,9 +28,9 @@ public class StudentServiceImpl implements StudentService {
 	  }
 
 	  @Override
-	  public List<StudentEntity> getStudentsByFirstName(final String firstName) {
+	  public List<StudentDto> getStudentsByFirstName(final String firstName) {
 		  
-	      return studentRepository.findByFirstName(firstName);
+	      return this.studentMapper.entityToStudentDto(this.studentRepository.findByFirstName(firstName));
 	  }
 
 	  @Override
@@ -37,16 +40,10 @@ public class StudentServiceImpl implements StudentService {
 	  }
 
 	  @Override
-	  public StudentEntity createStudent(final Student student) {
-	      StudentEntity nStudent = new StudentEntity();
-	      nStudent.setFirstName(student.getFirstName());
-	      nStudent.setLastName(student.getLastName());
-	      nStudent.setActive(student.isActive());
-	      nStudent.setCourses(student.getCourses());
+	  public StudentEntity createStudent(final StudentDto student) {
+		  
+	      StudentEntity nStudent = this.studentMapper.studentDtoToEntity(student);
 	      nStudent.setCreated(LocalTime.now());
-	      nStudent.setGender(student.getGender());
-	      nStudent.setEmail(student.getEmail());
-	      nStudent.setAddress(student.getAddress());
 	      	      
 	      return studentRepository.save(nStudent);
 

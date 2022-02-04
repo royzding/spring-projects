@@ -8,7 +8,7 @@ import com.sample.microservices.mvcmongodb.enums.Gender;
 import lombok.Data;
 
 @Data
-public class Student {
+public class StudentDto {
 
 	private String firstName;
 	private String lastName;

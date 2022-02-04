@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.mvcmongodb.model.StudentEntity;
-import com.sample.microservices.mvcmongodb.model.dto.Student;
+import com.sample.microservices.mvcmongodb.model.dto.StudentDto;
 import com.sample.microservices.mvcmongodb.service.StudentService;
 
 @RestController
@@ -35,8 +35,13 @@ public class StudentController {
 	  return this.studentService.getStudentById(id);
   }
 
+  @GetMapping("/first-name/{firstName}")
+  public List<StudentDto> getStudentsByFirstName(@PathVariable("firstName") String firstName) {
+	  return this.studentService.getStudentsByFirstName(firstName);
+  }
+
   @PostMapping
-  public StudentEntity createStudent(@RequestBody Student student) {
+  public StudentEntity createStudent(@RequestBody StudentDto student) {
 	  return this.studentService.createStudent(student);
   }
 
