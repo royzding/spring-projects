@@ -45,6 +45,8 @@ public class StudentServiceImpl implements StudentService {
 	      nStudent.setCourses(student.getCourses());
 	      nStudent.setCreated(LocalTime.now());
 	      nStudent.setGender(student.getGender());
+	      nStudent.setEmail(student.getEmail());
+	      nStudent.setAddress(student.getAddress());
 	      	      
 	      return studentRepository.save(nStudent);
 

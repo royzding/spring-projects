@@ -14,6 +14,8 @@ public class Student {
 	private String lastName;
 	private boolean isActive;
 	private Gender gender;
+	private String email;
+	private Address address;
 	private List<String> courses;
 	private BigDecimal salary;
 

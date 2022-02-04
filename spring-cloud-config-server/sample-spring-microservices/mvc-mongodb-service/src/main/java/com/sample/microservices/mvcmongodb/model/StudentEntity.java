@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.sample.microservices.mvcmongodb.enums.Gender;
+import com.sample.microservices.mvcmongodb.model.dto.Address;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,8 @@ public class StudentEntity {
 	private String lastName;
 	private boolean isActive;
 	private Gender gender;
+	private String email;
+	private Address address;
 	private List<String> courses;
 	private BigDecimal salary;
 	private LocalTime created;
