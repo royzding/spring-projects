@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sample.microservices.mvcmongodb.model.StudentEntity;
-import com.sample.microservices.mvcmongodb.model.dto.StudentDto;
+import com.sample.microservices.common.data.model.StudentEntity;
+import com.sample.microservices.common.model.dto.StudentDto;
 import com.sample.microservices.mvcmongodb.service.StudentService;
 
 @RestController

@@ -1,10 +1,9 @@
-package com.sample.microservices.mvcmongodb.model.dto;
+package com.sample.microservices.common.model.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import com.sample.microservices.common.enums.Gender;
-import com.sample.microservices.common.model.dto.Address;
 
 import lombok.Data;
 

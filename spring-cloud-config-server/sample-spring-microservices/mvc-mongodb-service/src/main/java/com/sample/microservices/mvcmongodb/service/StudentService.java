@@ -2,8 +2,8 @@ package com.sample.microservices.mvcmongodb.service;
 
 import java.util.List;
 
-import com.sample.microservices.mvcmongodb.model.StudentEntity;
-import com.sample.microservices.mvcmongodb.model.dto.StudentDto;
+import com.sample.microservices.common.data.model.StudentEntity;
+import com.sample.microservices.common.model.dto.StudentDto;
 
 public interface StudentService {
 

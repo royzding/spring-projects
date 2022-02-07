@@ -1,4 +1,4 @@
-package com.sample.microservices.mvcmongodb.model.dto;
+package com.sample.microservices.common.model.dto;
 
 import lombok.Data;
 

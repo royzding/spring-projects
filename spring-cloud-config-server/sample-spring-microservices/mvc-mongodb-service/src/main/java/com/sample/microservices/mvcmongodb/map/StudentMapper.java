@@ -6,8 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 
-import com.sample.microservices.mvcmongodb.model.StudentEntity;
-import com.sample.microservices.mvcmongodb.model.dto.StudentDto;
+import com.sample.microservices.common.data.model.StudentEntity;
+import com.sample.microservices.common.model.dto.StudentDto;
 
 @Component
 @Mapper(componentModel="spring", nullValuePropertyMappingStrategy=NullValuePropertyMappingStrategy.IGNORE)

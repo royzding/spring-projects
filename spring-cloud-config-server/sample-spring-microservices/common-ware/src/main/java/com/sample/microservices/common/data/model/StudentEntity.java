@@ -1,4 +1,4 @@
-package com.sample.microservices.mvcmongodb.model;
+package com.sample.microservices.common.data.model;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.sample.microservices.mvcmongodb.enums.Gender;
-import com.sample.microservices.mvcmongodb.model.dto.Address;
+import com.sample.microservices.common.enums.Gender;
+import com.sample.microservices.common.model.Address;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
