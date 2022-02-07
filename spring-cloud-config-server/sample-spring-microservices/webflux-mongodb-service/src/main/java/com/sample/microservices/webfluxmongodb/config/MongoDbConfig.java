@@ -9,7 +9,9 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
- 
+
+public class MongoDbConfig {}
+/*
 @Configuration
 @EnableReactiveMongoRepositories(basePackages = "com.sample.microservices.webfluxmongodb.repository")
 public class MongoDbConfig extends AbstractReactiveMongoConfiguration
@@ -35,3 +37,4 @@ public class MongoDbConfig extends AbstractReactiveMongoConfiguration
         return new ReactiveMongoTemplate(reactiveMongoClient(), getDatabaseName());
     }
 }
+*/

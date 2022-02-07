@@ -8,8 +8,8 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import com.sample.microservices.common.data.model.StudentEntity;
+import com.sample.microservices.common.map.StudentMapper;
 import com.sample.microservices.common.model.dto.StudentDto;
-import com.sample.microservices.mvcmongodb.map.StudentMapper;
 import com.sample.microservices.mvcmongodb.repository.StudentRepository;
 
 @Service
