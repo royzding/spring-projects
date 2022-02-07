@@ -14,3 +14,6 @@ public class WebFluxMongoDbApplication {
         SpringApplication.run(WebFluxMongoDbApplication.class, args);
     }
 }
+
+//swagger url
+//http://localhost:8085/webfluxmongodb/

@@ -17,40 +17,42 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sample.microservices.webfluxmongodb.model.Employee;
 import com.sample.microservices.webfluxmongodb.service.EmployeeServiceImpl;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/webfluxmongodb")
+@RequestMapping("/employee")
+@Tag(name = "Employee APIs", description = "APIs for Emplyee CRUD operations")
 public class EmployeeController {
     @Autowired
     private EmployeeServiceImpl employeeServiceImpl;
 
-    @GetMapping("/employee/all")
+    @GetMapping("/all")
     @ResponseBody
     public Flux<Employee> findAll() {
         return employeeServiceImpl.findAllEmp();
     }
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Mono<Employee>> findEmpById(@PathVariable("id") String id) {
         Mono<Employee> employee = employeeServiceImpl.findByEmpId(id);
         return new ResponseEntity<Mono<Employee>>(employee, employee != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/employee/create")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createEmp(@RequestBody Employee employee) {
         employeeServiceImpl.createEmp(employee);
     }
 
-    @PutMapping("/employee/update")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Employee> update(@RequestBody Employee employee) {
         return employeeServiceImpl.updateEmp(employee);
     }
 
-    @DeleteMapping("/employee/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") String id) {
         employeeServiceImpl.deleteEmp(id).subscribe();
