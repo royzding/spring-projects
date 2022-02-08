@@ -1,5 +1,9 @@
 package com.sample.microservices.webfluxmongodb.controller;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +33,15 @@ public class StudentController {
     @Autowired
     private StudentServiceImpl studentServiceImpl;
 
+    @GetMapping("/greeting")
+    public String greet() {
+	    List<String> greetings = Arrays.asList("Hi there", "Greetings", "Salutations");
+	    Random rand = new Random();
+	
+	    int randomNum = rand.nextInt(greetings.size());
+	    return greetings.get(randomNum);
+    }
+    
     @GetMapping("/last/{name}")
     @ResponseBody
     public Flux<StudentEntity> findByLastName(@PathVariable("name") String name) {
@@ -45,6 +58,12 @@ public class StudentController {
     @ResponseBody
     public Flux<StudentEntity> findAllStudentEntity() {
         return studentServiceImpl.findAllStudentEntity();
+    }
+
+    @GetMapping("/all-entities-list")
+    @ResponseBody
+    public List<StudentEntity> findAllStudentEntityList() {
+        return studentServiceImpl.findAllStudentEntityList();
     }
 
     @GetMapping("/all-dtos")

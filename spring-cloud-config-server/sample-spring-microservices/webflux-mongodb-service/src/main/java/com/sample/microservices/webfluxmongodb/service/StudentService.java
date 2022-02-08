@@ -1,5 +1,7 @@
 package com.sample.microservices.webfluxmongodb.service;
 
+import java.util.List;
+
 import com.sample.microservices.common.data.model.StudentEntity;
 import com.sample.microservices.common.model.dto.StudentDto;
 
@@ -17,6 +19,8 @@ public interface StudentService
     Flux<StudentEntity> findByFirstNameContains(String firstName);
     
     Flux<StudentEntity> findAllStudentEntity();
+    
+    List<StudentEntity> findAllStudentEntityList();
     
     Flux<StudentDto> findAllStudent();
     

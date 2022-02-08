@@ -35,5 +35,9 @@ public interface StudentMapper {
     	});
     }    
 	
+    default List<StudentEntity> fluxToList(Flux<StudentEntity> studentEntity){    	
+    	return studentEntity.collectList().block();
+    }    
+	
 
 }

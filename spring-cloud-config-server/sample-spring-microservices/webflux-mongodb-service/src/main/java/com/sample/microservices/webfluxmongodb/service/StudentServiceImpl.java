@@ -1,5 +1,7 @@
 package com.sample.microservices.webfluxmongodb.service;
 
+import java.util.List;
+
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,11 @@ public class StudentServiceImpl implements StudentService {
 	@Override
     public Flux<StudentEntity> findAllStudentEntity() {
     	return this.studentRepo.findAll();
+    }
+
+	@Override
+    public List<StudentEntity> findAllStudentEntityList() {
+    	return this.studentMapper.fluxToList(this.studentRepo.findAll());
     }
 
 	@Override
