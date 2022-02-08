@@ -9,6 +9,9 @@
 //discovery
 -Dspring.profiles.active=dev,api-security
 
+//webflux-mongodb-service
+//-Dspring.profiles.active=local,flux-security
+
 //other services
 -Dspring.profiles.active=local,api-security,user-info
 -Dspring.profiles.active=dev,api-security,user-info
@@ -36,6 +39,8 @@ https://www.guidgenerator.com/
 https://sonarcloud.io
 https://www.sonarlint.org/eclipse
 
+//reactive programming guide
+https://projectreactor.io/docs/core/release/reference/#about-doc
 
 https://piotrminkowski.com/2020/02/20/microservices-api-documentation-with-springdoc-openapi/
 
