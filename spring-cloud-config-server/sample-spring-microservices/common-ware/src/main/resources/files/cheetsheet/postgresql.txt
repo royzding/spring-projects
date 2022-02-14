@@ -1,0 +1,9 @@
+1. go to the service to start the postgresql db service
+2. start the pgAdmin UI to login to the DB.
+3. DB: myDB; username: postgres; password: abc123; port: 5432
+
+spring:
+	r2dbc:
+   		url: r2dbc:postgresql://127.0.0.1:5432/myDB
+   		username: postgres
+   		password: abc123
