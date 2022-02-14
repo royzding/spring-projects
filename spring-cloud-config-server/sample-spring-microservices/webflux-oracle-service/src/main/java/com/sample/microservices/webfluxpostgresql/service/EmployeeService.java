@@ -1,19 +1,21 @@
-package com.sample.microservices.webfluxoracledb.service;
+package com.sample.microservices.webfluxpostgresql.service;
 
-import com.sample.microservices.webfluxoracledb.model.Employee;
+import com.sample.microservices.webfluxpostgresql.model.Employee;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
  
 public interface EmployeeService
 {
+    Flux<Employee> findAllEmp();
+/*
     void createEmp(Employee e);
      
     Mono<Employee> findByEmpId(String id);
  
-    Flux<Employee> findAllEmp();
  
     Mono<Employee> updateEmp(Employee e);
  
     Mono<Void> deleteEmp(String id);
+    */
 }

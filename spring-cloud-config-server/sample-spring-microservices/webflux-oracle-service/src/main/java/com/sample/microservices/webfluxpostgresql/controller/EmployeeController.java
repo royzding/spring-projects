@@ -1,4 +1,8 @@
-package com.sample.microservices.webfluxoracledb.controller;
+package com.sample.microservices.webfluxpostgresql.controller;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sample.microservices.webfluxoracledb.model.Employee;
-import com.sample.microservices.webfluxoracledb.service.EmployeeServiceImpl;
+import com.sample.microservices.webfluxpostgresql.model.Employee;
+import com.sample.microservices.webfluxpostgresql.service.EmployeeServiceImpl;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import reactor.core.publisher.Flux;
@@ -28,12 +32,21 @@ public class EmployeeController {
     @Autowired
     private EmployeeServiceImpl employeeServiceImpl;
 
+    @GetMapping("/greeting")
+    public String greet() {
+	    List<String> greetings = Arrays.asList("Hi there", "Greetings", "Salutations");
+	    Random rand = new Random();
+	
+	    int randomNum = rand.nextInt(greetings.size());
+	    return greetings.get(randomNum);
+    }
+
     @GetMapping("/all")
     @ResponseBody
     public Flux<Employee> findAll() {
         return employeeServiceImpl.findAllEmp();
     }
-
+/*
     @GetMapping("/{id}")
     public ResponseEntity<Mono<Employee>> findEmpById(@PathVariable("id") String id) {
         Mono<Employee> employee = employeeServiceImpl.findByEmpId(id);
@@ -57,5 +70,5 @@ public class EmployeeController {
     public void delete(@PathVariable("id") String id) {
         employeeServiceImpl.deleteEmp(id).subscribe();
     }
-
+*/
 }

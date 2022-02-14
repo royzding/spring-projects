@@ -1,13 +1,12 @@
-package com.sample.microservices.webfluxoracledb.service;
+package com.sample.microservices.webfluxpostgresql.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sample.microservices.webfluxoracledb.model.Employee;
-import com.sample.microservices.webfluxoracledb.repository.EmployeeRepository;
+import com.sample.microservices.webfluxpostgresql.model.Employee;
+import com.sample.microservices.webfluxpostgresql.repository.EmployeeRepository;
 
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -15,6 +14,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepository employeeRepo;
 
+    public Flux<Employee> findAllEmp() {
+    	Flux<Employee> emps = employeeRepo.findAll();
+    	return emps;
+    }
+
+/*    
     public void createEmp(Employee employee) {
         employeeRepo.save(employee).subscribe();
     }
@@ -23,10 +28,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepo.findById(id);
     }
 
-    public Flux<Employee> findAllEmp() {
-    	Flux<Employee> emps = employeeRepo.findAll();
-    	return emps;
-    }
 
     public Mono<Employee> updateEmp(Employee employee) {
         return employeeRepo.save(employee);
@@ -35,5 +36,5 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Mono<Void> deleteEmp(String id) {
         return employeeRepo.deleteById(id);
     }
-
+*/
 }

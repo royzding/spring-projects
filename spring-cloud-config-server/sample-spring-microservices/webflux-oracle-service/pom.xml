@@ -75,7 +75,7 @@
         </dependency>       
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId> 
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId> 
         </dependency>
 
         <dependency>
@@ -84,12 +84,18 @@
             <optional>true</optional>
         </dependency>
 
- 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-			<version>1.4.197</version>
-		</dependency>
+    
+         <dependency>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <scope>runtime</scope>
+		</dependency>        
  
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -97,11 +103,6 @@
             <scope>test</scope>
         </dependency>
 		
-        <dependency>
-            <groupId>com.sample.microservices</groupId>
-            <artifactId>common-ware</artifactId>
-			<version>1.0</version>
-        </dependency>
                 
     </dependencies>
 

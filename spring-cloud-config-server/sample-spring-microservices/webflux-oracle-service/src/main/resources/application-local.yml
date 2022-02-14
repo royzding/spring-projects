@@ -1,16 +1,14 @@
 server:
   port: 8087
-  servlet:
-    context-path: /webfluxoracledb
 
 spring:
   application:
-    name: webfluxoracledb-service
+    name: webfluxpostgresqldb-service
 
-  data:
-    mongodb:
-      database: myMongoDb
-      port: 27017    
+  r2dbc:
+    url: r2dbc:postgresql://127.0.0.1:5432/myDB
+    username: postgres
+    password: abc123
     
 eureka:
   client:
@@ -27,7 +25,7 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
 auth:
-  svcKey: wf-mongo-1234-5678  
+  svcKey: wf-postgresql-1234-5678  
   
 environment: local 
 
@@ -35,6 +33,6 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
-    path: /webfluxoracledb/
+    path: /webfluxpostgresqldb/
 
    
