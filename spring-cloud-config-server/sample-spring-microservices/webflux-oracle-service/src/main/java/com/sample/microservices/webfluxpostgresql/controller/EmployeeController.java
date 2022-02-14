@@ -41,22 +41,22 @@ public class EmployeeController {
 	    return greetings.get(randomNum);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Mono<Employee>> findEmpById(@PathVariable("id") Long id) {
+        Mono<Employee> employee = employeeServiceImpl.findByEmpId(id);
+        return new ResponseEntity<Mono<Employee>>(employee, employee != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/all")
     @ResponseBody
     public Flux<Employee> findAll() {
         return employeeServiceImpl.findAllEmp();
     }
-/*
-    @GetMapping("/{id}")
-    public ResponseEntity<Mono<Employee>> findEmpById(@PathVariable("id") String id) {
-        Mono<Employee> employee = employeeServiceImpl.findByEmpId(id);
-        return new ResponseEntity<Mono<Employee>>(employee, employee != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
-    }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createEmp(@RequestBody Employee employee) {
-        employeeServiceImpl.createEmp(employee);
+    public Mono<Employee> createEmp(@RequestBody Employee employee) {
+        return employeeServiceImpl.createEmp(employee);
     }
 
     @PutMapping("/update")
@@ -67,8 +67,8 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") Long id) {
         employeeServiceImpl.deleteEmp(id).subscribe();
     }
-*/
+
 }

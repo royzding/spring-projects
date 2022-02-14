@@ -7,15 +7,14 @@ import reactor.core.publisher.Mono;
  
 public interface EmployeeService
 {
+    Mono<Employee> findByEmpId(Long id);
+
     Flux<Employee> findAllEmp();
-/*
-    void createEmp(Employee e);
-     
-    Mono<Employee> findByEmpId(String id);
- 
+
+    Mono<Employee> createEmp(Employee e);
  
     Mono<Employee> updateEmp(Employee e);
  
-    Mono<Void> deleteEmp(String id);
-    */
+    Mono<Void> deleteEmp(Long id);
+    
 }
