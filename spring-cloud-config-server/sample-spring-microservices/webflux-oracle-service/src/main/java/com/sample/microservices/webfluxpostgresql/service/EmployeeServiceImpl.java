@@ -23,6 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     	return employeeRepo.findAll();
     }
    
+    public Flux<Employee> findByName(String name) {
+    	return employeeRepo.findByName(name);
+    }
+   
 	//The employee ID needs to be null to indicate that the employee is new to create a new Employee
     public Mono<Employee> createEmp(Employee employee) {
         return employeeRepo.save(employee);

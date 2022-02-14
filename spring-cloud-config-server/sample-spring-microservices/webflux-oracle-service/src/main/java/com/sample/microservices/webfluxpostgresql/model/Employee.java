@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table     //@Table annotation is not necessary 
 public class Employee {
     @Id
     private Long id;

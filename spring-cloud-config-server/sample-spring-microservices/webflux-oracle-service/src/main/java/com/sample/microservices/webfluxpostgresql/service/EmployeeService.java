@@ -9,6 +9,8 @@ public interface EmployeeService
 {
     Mono<Employee> findByEmpId(Long id);
 
+    Flux<Employee> findByName(String name);
+    
     Flux<Employee> findAllEmp();
 
     Mono<Employee> createEmp(Employee e);

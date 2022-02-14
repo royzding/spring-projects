@@ -47,6 +47,12 @@ public class EmployeeController {
         return new ResponseEntity<Mono<Employee>>(employee, employee != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Flux<Employee>> findEmpById(@PathVariable("name") String name) {
+        Flux<Employee> employee = employeeServiceImpl.findByName(name);
+        return new ResponseEntity<Flux<Employee>>(employee, employee != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/all")
     @ResponseBody
     public Flux<Employee> findAll() {
