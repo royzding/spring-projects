@@ -10,10 +10,10 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
  
-    <artifactId>webflux-oracle-service</artifactId>
+    <artifactId>webflux-postgresql-service</artifactId>
     <groupId>com.sample.microservices</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>webflux-oracle-service</name>
+    <name>webflux-postgresql-service</name>
 
     <properties>
 		<java.version>1.8</java.version>
