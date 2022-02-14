@@ -2,8 +2,10 @@ server:
   port: 8087
 
 spring:
+  webflux:
+    base-path: webfluxpostgresql
   application:
-    name: webfluxpostgresqldb-service
+    name: webfluxpostgresql-service
 
   r2dbc:
     url: r2dbc:postgresql://127.0.0.1:5432/myDB
@@ -33,6 +35,6 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
-    path: /webfluxpostgresqldb/
+    path: /
 
    

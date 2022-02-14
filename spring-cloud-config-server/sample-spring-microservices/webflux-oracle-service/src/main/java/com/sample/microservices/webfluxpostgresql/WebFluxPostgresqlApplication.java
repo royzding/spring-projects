@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages= {"com.sample.microservices.webfluxpostgresql","com.sample.microservices.common"})
 @OpenAPIDefinition(info = @Info(title = "APIs", version = "1.0", description = "Documentation APIs v1.0"))
 @EnableDiscoveryClient
 public class WebFluxPostgresqlApplication {
@@ -22,4 +22,4 @@ public class WebFluxPostgresqlApplication {
 //-Dspring.profiles.active=local,flux-security
 
 //swagger url
-//http://localhost:8085/webfluxmongodb/
+//http://localhost:8087/webfluxpostgresql/

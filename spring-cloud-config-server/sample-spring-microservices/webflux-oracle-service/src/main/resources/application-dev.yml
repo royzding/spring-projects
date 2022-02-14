@@ -1,22 +1,22 @@
 server:
-  port: 8085
+  port: 8087
 
 spring:
   webflux:
-    base-path: webfluxmongodb
+    base-path: webfluxpostgresql
   application:
-    name: webfluxmongodb-service
+    name: webfluxpostgresql-service
 
-  data:
-    mongodb:
-      database: myMongoDb
-      port: 27017    
+  r2dbc:
+    url: r2dbc:postgresql://127.0.0.1:5432/myDB
+    username: postgres
+    password: abc123
     
 eureka:
   client:
-    enabled: false
-    registerWithEureka: false
-    fetchRegistry: false
+    enabled: true
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
@@ -27,7 +27,7 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
 auth:
-  svcKey: wf-mongo-1234-5678  
+  svcKey: wf-postgresql-1234-5678  
   
 environment: local 
 
