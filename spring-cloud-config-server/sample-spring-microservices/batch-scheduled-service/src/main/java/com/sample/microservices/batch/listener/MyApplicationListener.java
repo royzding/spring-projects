@@ -11,9 +11,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import com.sample.microservices.batch.data.model.Person;
-import com.sample.microservices.batch.repository.PersonRepository;
 import com.sample.microservices.batch.service.ScheduleTaskService;
-import com.sample.microservices.batch.task.RunnableTaskTwo;
 
 @Component
 public class MyApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
