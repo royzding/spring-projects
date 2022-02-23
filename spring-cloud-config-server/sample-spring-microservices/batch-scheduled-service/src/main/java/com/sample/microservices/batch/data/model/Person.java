@@ -30,4 +30,10 @@ public class Person  implements Serializable {
 
 	@Column(name="modified_by")
 	private String modifiedBy = "Base-Dummy";
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", modifiedBy=" + modifiedBy + "]";
+	}
+	
 }

@@ -3,9 +3,13 @@ package com.sample.microservices.batch.service;
 import java.util.Date;
 import java.util.List;
 
+import com.sample.microservices.batch.data.model.Person;
+
 public interface ScheduleTaskService {
 
+	List<Person> findAll();
     void scheduleRunnableWithDate(Date date);	
+    void scheduleRunnableWithTaskAndDate(String message, Long oldid, Long newid, Date date);	
     void scheduleRunnableWithFixedDelay(Integer fixedDelay);
     void scheduleRunnableWithDateAndFixedDelay(Date date, Integer fixedDelay);
     void scheduleRunnableWithDateAtFixedRate(Date date, Integer fixedRate);

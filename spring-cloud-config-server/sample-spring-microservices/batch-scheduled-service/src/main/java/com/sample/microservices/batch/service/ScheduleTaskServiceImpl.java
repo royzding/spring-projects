@@ -17,7 +17,10 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Service;
 
+import com.sample.microservices.batch.data.model.Person;
+import com.sample.microservices.batch.repository.PersonRepository;
 import com.sample.microservices.batch.task.RunnableTask;
+import com.sample.microservices.batch.task.RunnableTaskTwo;
 
 @Service
 public class ScheduleTaskServiceImpl implements ScheduleTaskService {
@@ -38,12 +41,15 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
 	
 	Map<String, ScheduledFuture<?>> namedJobsMap = new HashMap<>();
 	
+    private final PersonRepository personRepository;
+	
 	public ScheduleTaskServiceImpl(TaskScheduler taskScheduler, ThreadPoolTaskScheduler tpTaskscheduler,
-			CronTrigger cronTrigger,PeriodicTrigger periodicTrigger) {
+			CronTrigger cronTrigger,PeriodicTrigger periodicTrigger, PersonRepository personRepository) {
 		this.taskScheduler = taskScheduler;
 		this.tpTaskscheduler = tpTaskscheduler;
 		this.cronTrigger = cronTrigger;
 		this.periodicTrigger = periodicTrigger;
+		this.personRepository = personRepository;
 	}
 	
 	@Override
@@ -121,5 +127,18 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
 	@Override
 	public List<String> getAllScheduledTasks() {
 		return new ArrayList<>(this.namedJobsMap.keySet());
+	}
+
+	@Override
+	public void scheduleRunnableWithTaskAndDate(String message, Long oldid, Long newid, Date date) {
+
+		RunnableTaskTwo task = new RunnableTaskTwo(this.personRepository, message, oldid, newid);
+		
+		tpTaskscheduler.schedule(task, date);		
+	}
+
+	@Override
+	public List<Person> findAll() {
+		return this.personRepository.findAll();
 	}
 }
