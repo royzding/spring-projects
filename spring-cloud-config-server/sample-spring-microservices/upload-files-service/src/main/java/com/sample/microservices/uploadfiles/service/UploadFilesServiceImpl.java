@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -26,6 +25,15 @@ public class UploadFilesServiceImpl implements UploadFilesService {
   @Value("${uploadfiles.topath}")
   private String uploadDirePath;
 
+  @Value("${uploadfiles.ownerPermission}")
+  private String ownerPermission;
+
+  @Value("${uploadfiles.groupPermission}")
+  private String groupPermission;
+
+  @Value("${uploadfiles.othersPermission}")
+  private String othersPermission;
+
   @Override
   public void save(MultipartFile file) {
 	
@@ -41,12 +49,8 @@ public class UploadFilesServiceImpl implements UploadFilesService {
 		
 	    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 	    
-	    if(!SystemUtils.OS_NAME.toLowerCase().contains("windows")) {
-	    	Set<PosixFilePermission> perms = new HashSet<>(Arrays.asList(PosixFilePermission.values()));
-		    Files.setPosixFilePermissions(direPath, perms);	    	
-		    Files.setPosixFilePermissions(filePath, perms);	    	
-	    }
-
+	    setPathsPermission(direPath, filePath);
+	    
     } catch (IOException e) {
     	throw new RuntimeException("Could not initialize folder for upload!");
     } catch (Exception e) {
@@ -89,6 +93,58 @@ public class UploadFilesServiceImpl implements UploadFilesService {
     } catch (IOException e) {
       throw new RuntimeException("Could not load the files!");
     }
+  }
+  
+  private static final String READ = "READ";
+  private static final String WRITE = "WRITE";
+  private static final String EXECUTE = "EXECUTE";
+    
+  private void setPathsPermission(Path... paths) throws IOException {
+
+	  if(SystemUtils.OS_NAME != null && !SystemUtils.OS_NAME.toLowerCase().contains("windows")) {
+		  
+		  //Set<PosixFilePermission> perms = new HashSet<>(Arrays.asList(PosixFilePermission.values()));
+		  
+		  Set<PosixFilePermission> perms = new HashSet<>();
+
+		  //add owner permissions
+		  if(ownerPermission.toUpperCase().contains(READ)) {
+		      perms.add(PosixFilePermission.OWNER_READ);		  		
+		  }
+		  if(ownerPermission.toUpperCase().contains(WRITE)) {
+		      perms.add(PosixFilePermission.OWNER_WRITE);		  		
+		  }
+		  if(ownerPermission.toUpperCase().contains(EXECUTE)) {
+		      perms.add(PosixFilePermission.OWNER_EXECUTE);		  		
+		  }
+		  	
+	      //add group permissions
+		  if(groupPermission.toUpperCase().contains(READ)) {
+		      perms.add(PosixFilePermission.GROUP_READ);		  		
+		  }
+		  if(groupPermission.toUpperCase().contains(WRITE)) {
+		      perms.add(PosixFilePermission.GROUP_WRITE);		  		
+		  }
+		  if(groupPermission.toUpperCase().contains(EXECUTE)) {
+		      perms.add(PosixFilePermission.GROUP_EXECUTE);		  		
+		  }
+	        
+	      //add others permissions
+		  if(othersPermission.toUpperCase().contains(READ)) {
+		      perms.add(PosixFilePermission.OTHERS_READ);		  		
+		  }
+		  if(othersPermission.toUpperCase().contains(WRITE)) {
+		      perms.add(PosixFilePermission.OTHERS_WRITE);		  		
+		  }
+		  if(othersPermission.toUpperCase().contains(EXECUTE)) {
+		      perms.add(PosixFilePermission.OTHERS_EXECUTE);		  		
+		  }
+		  		  
+		  for(Path path : paths) {
+			  Files.setPosixFilePermissions(path, perms);	    				  
+		  }
+	  }
+	  
   }
 
 }

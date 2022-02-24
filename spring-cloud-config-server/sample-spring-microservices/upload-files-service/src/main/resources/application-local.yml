@@ -50,6 +50,9 @@ springdoc:
 
 uploadfiles:
   topath: C:/tmp/tmp2
+  ownerPermission: READ:WRITE:EXECUTE
+  groupPermission: READ:WRITE:EXECUTE
+  othersPermission: READ:WRITE:EXECUTE
    
 auth:
   svcKey: upload-1234-5678   
