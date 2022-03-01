@@ -114,7 +114,7 @@ public class ManagerServiceImpl implements ManagerService {
 		ManagerEntity entity = this.mapper.managerDtoToEntity(managerDto);
 		entity.setId(null);
 		
-		entity.setName(this.userInfoStore.getUserName());
+		//entity.setName(this.userInfoStore.getUserName());
 		
 		this.repository.save(entity);
 		
