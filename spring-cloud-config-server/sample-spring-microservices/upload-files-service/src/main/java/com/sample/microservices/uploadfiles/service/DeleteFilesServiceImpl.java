@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
@@ -68,6 +69,35 @@ public class DeleteFilesServiceImpl implements DeleteFilesService {
 
 		}
 		
-	}	
+	}
 
+	@Override
+	public void deleteDirs(String dir) throws IOException {
+		
+		try(Stream<Path> walk = Files.walk(Path.of(dir))) {
+
+			  walk.filter(path-> {
+				  
+				  if(Files.isDirectory(path)) {
+					  					  
+				        try (Stream<Path> entries = Files.list(path)) {
+				        		
+				        	return 	entries.filter(Files::isRegularFile)
+				        			.map(Path::toFile)
+				        			.collect(Collectors.toList())
+				        			.isEmpty();
+				        	
+				        } catch (IOException e) {
+							e.printStackTrace();
+						}					
+				  } 				  					  
+				  return false;		
+			  	})	
+			  	.sorted(Comparator.reverseOrder())			  
+			  	.map(Path::toFile)
+			  	.forEach(File::delete);
+	  
+		}		
+	}
+	
 }

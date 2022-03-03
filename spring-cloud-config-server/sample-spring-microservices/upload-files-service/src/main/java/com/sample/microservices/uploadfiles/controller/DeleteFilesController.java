@@ -23,6 +23,15 @@ public class DeleteFilesController {
   @Autowired
   DeleteFilesService deleteFilesService;
 
+  @PostMapping(value="/delete-dir")
+  public ResponseEntity<ResponseMessage> deleteDirs(@RequestBody String dir) throws IOException {
+	    String message = "deleteDirs succeeded!";
+
+	    deleteFilesService.deleteDirs(dir);
+        
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+  }
+  
   @PostMapping(value="/file-list")
   public ResponseEntity<ResponseMessage> deleteFileList(@RequestBody List<String> files) throws IOException {
 	    String message = "deleteFileList succeeded!";
