@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -17,6 +19,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -45,7 +48,9 @@ public class UploadFilesServiceImpl implements UploadFilesService {
 	    	Files.createDirectories(direPath);		
 		}		
  
-		Path filePath = direPath.resolve(file.getOriginalFilename());
+		System.out.println(file.getName() + ":" + this.getNewFileName(file.getOriginalFilename()));
+		
+		Path filePath = direPath.resolve(this.getNewFileName(file.getOriginalFilename()));
 		
 	    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 	    
@@ -144,6 +149,23 @@ public class UploadFilesServiceImpl implements UploadFilesService {
 			  Files.setPosixFilePermissions(path, perms);	    				  
 		  }
 	  }
+	  
+  }
+  
+  private String getNewFileName(String originalFileName) {
+	  
+      String timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSSS"));
+
+	  String fileName = originalFileName;	  
+	  String fileExt =  "";
+	  
+	  if(originalFileName != null && originalFileName.lastIndexOf(".") >= 0 ) {
+		  int pIndex = originalFileName.lastIndexOf(".");		  
+		  fileName = originalFileName.substring(0, pIndex);	  
+		  fileExt =  originalFileName.substring(pIndex);
+	  }
+	  	  
+	  return fileName + "_" + timeStamp + fileExt;
 	  
   }
 
