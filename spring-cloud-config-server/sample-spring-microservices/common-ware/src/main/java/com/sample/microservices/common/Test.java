@@ -1,5 +1,11 @@
 package com.sample.microservices.common;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import com.sample.microservices.common.util.UtilFuns;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -21,7 +27,9 @@ public class Test {
 		
 		boolean bx = (boolean)a;
 		
+		LocalDate ld = LocalDate.now();
 		
+		UtilFuns.printLocalDateTime();
 
 
 	}

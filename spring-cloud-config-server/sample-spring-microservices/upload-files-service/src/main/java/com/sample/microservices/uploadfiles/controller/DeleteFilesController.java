@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.uploadfiles.message.ResponseMessage;
+import com.sample.microservices.uploadfiles.model.FileFormat;
 import com.sample.microservices.uploadfiles.service.DeleteFilesService;
 
 @RestController
@@ -24,18 +25,18 @@ public class DeleteFilesController {
 
   @PostMapping(value="/file-list")
   public ResponseEntity<ResponseMessage> deleteFileList(@RequestBody List<String> files) throws IOException {
-	    String message = "";
+	    String message = "deleteFileList succeeded!";
 
-	    deleteFilesService.deleteFiles(files);
+	    deleteFilesService.deleteFileList(files);
         
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
   }
   
   @PostMapping(value="/files")
-  public ResponseEntity<ResponseMessage> deleteFiles(@RequestParam("files") List<String> files) throws IOException {
-	    String message = "";
+  public ResponseEntity<ResponseMessage> deleteFiles(@RequestBody FileFormat fileFormat) throws IOException {
+	    String message = "deleteFiles succeeded!";
 
-	    deleteFilesService.deleteFiles(files);
+	    deleteFilesService.deleteFiles(fileFormat);
         
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
   }
