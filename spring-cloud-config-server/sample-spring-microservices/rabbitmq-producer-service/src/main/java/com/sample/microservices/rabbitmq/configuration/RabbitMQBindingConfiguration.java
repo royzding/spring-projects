@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQBindingConfiguration {
-
+/*
     @Value("${spring.rabbitmq.queue-producer-service.routing-a-name}")
     private String direct1RoutingKey;
 
@@ -49,5 +49,5 @@ public class RabbitMQBindingConfiguration {
     public Binding bindingFanoutExchangeQueueFFanout(FanoutExchange fanoutExchange, Queue queueF) {
         return BindingBuilder.bind(queueF).to(fanoutExchange);
     }
-
+*/
 }

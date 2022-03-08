@@ -24,3 +24,14 @@ spring:
    fanout-exchange-name: fanout-exchange
    queue-e-name: queue-E
    queue-f-name: queue-F
+   
+springdoc:
+  api-docs:
+   path: /v3/api-docs
+  swagger-ui:
+   path: /v3/swagger-ui.html  
+  open-api:
+    name: openApi Test
+    email: roy@example.com
+    license.name: my license 3.0
+   

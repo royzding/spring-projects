@@ -1,5 +1,6 @@
 package com.sample.microservices.rabbitmq.service;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,8 @@ public class ProducerServiceImpl implements ProducerService {
     private String fanoutExchange;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    //private RabbitTemplate rabbitTemplate;
+    private AmqpTemplate rabbitTemplate;
 
     @Override
     public void sendToDirectExchange(Payload payload, String routingKey) {

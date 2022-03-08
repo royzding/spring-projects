@@ -21,34 +21,34 @@ public class ConsumerService {
  
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-a-name}")
     public void receiveQueueAMessage(Payload payLoad) {
-        LOGGER.info("Message received in Queue A : " + payLoad);
+        System.out.println("ConsumerService:  Message received in Queue A : " + payLoad);
         
-        LOGGER.info("execute : " + this.restTemplateService.execute(payLoad));
+        //System.out.println("execute : " + this.restTemplateService.execute(payLoad));
     }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-b-name}")
     public void receiveQueueBMessage(Payload payLoad) {
-        LOGGER.info("Message received in Queue B : " + payLoad);
+        System.out.println("ConsumerService:  Message received in Queue B : " + payLoad);
     }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-c-name}")
     public void receiveQueueCMessage(Payload payLoad) {
-        LOGGER.info("Message received in Queue C : " + payLoad);
+        System.out.println("ConsumerService:  Message received in Queue C : " + payLoad);
     }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-d-name}")
     public void receiveQueueDMessage(Payload payLoad) {
-        LOGGER.info("Message received in Queue D : " + payLoad);
+        System.out.println("ConsumerService:  Message received in Queue D : " + payLoad);
     }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-e-name}")
     public void receiveQueueEMessage(Payload payLoad) {
-        LOGGER.info("Message received in Queue E : " + payLoad);
+        System.out.println("ConsumerService:  Message received in Queue E : " + payLoad);
     }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-f-name}")
     public void receiveQueueFMessage(Payload payLoad) {
-        LOGGER.info("Message received in Queue F : " + payLoad);
+        System.out.println("ConsumerService:  Message received in Queue F : " + payLoad);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.sample.microservices.rabbitmq.configuration;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -19,7 +20,8 @@ public class RabbitMQProducerConfiguration {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory rabbitConnectionFactory) {
+    //public RabbitTemplate rabbitTemplate(ConnectionFactory rabbitConnectionFactory) {
+    public AmqpTemplate template(ConnectionFactory rabbitConnectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(rabbitConnectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;

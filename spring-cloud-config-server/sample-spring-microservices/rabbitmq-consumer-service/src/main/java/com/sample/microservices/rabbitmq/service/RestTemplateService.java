@@ -15,7 +15,7 @@ import com.sample.microservices.rabbitmq.model.Payload;
 
 @Service
 public class RestTemplateService {
-	
+/*	
     @Value("${rest.template.url}")
     private String URL;
     
@@ -63,5 +63,5 @@ public class RestTemplateService {
 		
 		return statusStr;
 	}
-
+*/
 }

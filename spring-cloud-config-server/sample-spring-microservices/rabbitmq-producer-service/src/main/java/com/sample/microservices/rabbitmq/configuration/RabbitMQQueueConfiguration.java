@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQQueueConfiguration {
-	
+/*	
     @Value("${spring.rabbitmq.queue-producer-service.queue-a-name}")
     private String queueA;
 
@@ -55,4 +55,5 @@ public class RabbitMQQueueConfiguration {
     public Queue queueF() {
         return new Queue(queueF);
     }
+*/    
 }

@@ -1,28 +1,20 @@
 package com.sample.microservices.rabbitmq.configuration;
 
-import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.converter.MessageConverter;
-import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
-import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
-public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
+public class RabbitMQConsumerConfiguration { //implements RabbitListenerConfigurer {
+
 	
+    @Bean
+    public MessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+/*    
     @Value("${threadpool.corepoolsize}")
     int corePoolSize;
      
@@ -40,7 +32,7 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
    
     @Value("${spring.rabbitmq.password}")
     String password;
-   
+
     @Bean
     public ObjectMapper objectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
@@ -52,6 +44,7 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
         return new MappingJackson2MessageConverter();
     }
 
+   
     @Bean
     public MessageHandlerMethodFactory messageHandlerMethodFactory() {
         DefaultMessageHandlerMethodFactory defaultMessageHandlerMethodFactory = new DefaultMessageHandlerMethodFactory();
@@ -98,4 +91,6 @@ public class RabbitMQConsumerConfiguration implements RabbitListenerConfigurer {
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
     }
+    
+*/    
 }

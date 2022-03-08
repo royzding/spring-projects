@@ -27,8 +27,19 @@ spring:
    
 rest:
  template:
-  url: http://localhost:8081/api/producer/
+  url: http://localhost:8091/api/producer/
   
 threadpool:
  corepoolsize: 6
  maxpoolsize: 12  
+ 
+springdoc:
+  api-docs:
+   path: /v3/api-docs
+  swagger-ui:
+   path: /v3/swagger-ui.html  
+  open-api:
+    name: openApi Test
+    email: roy@example.com
+    license.name: my license 3.0
+    
