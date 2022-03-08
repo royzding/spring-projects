@@ -11,6 +11,7 @@ import com.sample.microservices.rabbitmq.model.Payload;
 @Service
 public class ConsumerService {
 
+/*	
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerService.class);
     
     private final RestTemplateService restTemplateService;
@@ -18,7 +19,7 @@ public class ConsumerService {
     public ConsumerService(RestTemplateService restTemplateService) {
     	this.restTemplateService = restTemplateService;
     }
- 
+*/ 
     @RabbitListener(queues = "${spring.rabbitmq.queue-consumer-service.queue-a-name}")
     public void receiveQueueAMessage(Payload payLoad) {
         System.out.println("ConsumerService:  Message received in Queue A : " + payLoad);

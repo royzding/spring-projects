@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQExchangeConfiguration {
-/*
+
     @Value("${spring.rabbitmq.queue-producer-service.direct-exchange-name}")
     private String directExchange;
 
@@ -33,5 +33,5 @@ public class RabbitMQExchangeConfiguration {
     public FanoutExchange fanoutExchange() {
         return new FanoutExchange(fanoutExchange);
     }
-*/    
+  
 }

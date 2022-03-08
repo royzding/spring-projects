@@ -9,13 +9,39 @@ import com.sample.microservices.rabbitmq.model.Payload;
 public class ConsumerServiceImpl implements ConsumerService {
 
 	@Override
-	@RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-a-name}")
-	public void handleMessage(Payload payload) {
-		
-		System.out.println(payload);
-		
-		
-	}
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-a-name}")
+    public void receiveQueueAMessage(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue A : " + payLoad);
+    }
+
+	@Override
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-b-name}")
+    public void receiveQueueBMessage(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue B : " + payLoad);
+    }
 	
+	@Override	 
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-c-name}")
+    public void receiveQueueCMessage(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue C : " + payLoad);
+    }
+
+	@Override	 
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-d-name}")
+    public void receiveQueueDMessage(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue D : " + payLoad);
+    }
+
+	@Override	 
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-e-name}")
+    public void receiveQueueEMessage(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue E : " + payLoad);
+    }
+
+	@Override	 
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-f-name}")
+    public void receiveQueueFMessage(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue F : " + payLoad);
+    }
     
 }
