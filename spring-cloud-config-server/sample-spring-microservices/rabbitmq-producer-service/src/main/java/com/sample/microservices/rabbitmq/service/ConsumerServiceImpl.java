@@ -10,8 +10,14 @@ public class ConsumerServiceImpl implements ConsumerService {
 
 	@Override
     @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-a-name}")
-    public void receiveQueueAMessage(Payload payLoad) {
-        System.out.println("ProducerService:  Message received in Queue A : " + payLoad);
+    public void receiveQueueAMessage1(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue A1 : " + payLoad);
+    }
+
+	@Override
+    @RabbitListener(queues = "${spring.rabbitmq.queue-producer-service.queue-a-name}")
+    public void receiveQueueAMessage2(Payload payLoad) {
+        System.out.println("ProducerService:  Message received in Queue A2 : " + payLoad);
     }
 
 	@Override

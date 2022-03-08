@@ -4,7 +4,8 @@ import com.sample.microservices.rabbitmq.model.Payload;
 
 public interface ConsumerService {
 	
-    void receiveQueueAMessage(Payload payLoad);
+    void receiveQueueAMessage1(Payload payLoad);
+    void receiveQueueAMessage2(Payload payLoad);
     void receiveQueueBMessage(Payload payLoad);
     void receiveQueueCMessage(Payload payLoad);
     void receiveQueueDMessage(Payload payLoad);
