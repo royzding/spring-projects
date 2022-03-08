@@ -50,4 +50,9 @@ public class RabbitMQBindingConfiguration {
         return BindingBuilder.bind(queueF).to(fanoutExchange);
     }
 
+    @Bean
+    public Binding bindingFanoutExchangeQueueGFanout(FanoutExchange fanoutExchange, Queue queueG) {
+        return BindingBuilder.bind(queueG).to(fanoutExchange);
+    }
+
 }

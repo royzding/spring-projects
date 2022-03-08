@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQQueueConfiguration {
 	
-// no need creating queues/exchange and binding them since it is only listening on queues.	
+// no need creating queues/exchange and binding them since it is only listening on existing queues.	
 	
 /*	
     @Value("${spring.rabbitmq.queue-consumer-service.direct-exchange-name}")

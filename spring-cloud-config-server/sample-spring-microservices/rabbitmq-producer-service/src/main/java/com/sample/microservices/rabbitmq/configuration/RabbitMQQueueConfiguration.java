@@ -26,6 +26,9 @@ public class RabbitMQQueueConfiguration {
     @Value("${spring.rabbitmq.queue-producer-service.queue-f-name}")
     private String queueF;
 
+    @Value("${spring.rabbitmq.queue-producer-service.queue-g-name}")
+    private String queueG;
+
     @Bean
     public Queue queueA() {
         return new Queue(queueA);
@@ -54,6 +57,11 @@ public class RabbitMQQueueConfiguration {
     @Bean
     public Queue queueF() {
         return new Queue(queueF);
+    }
+    
+    @Bean
+    public Queue queueG() {
+        return new Queue(queueG);
     }
     
 }

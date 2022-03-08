@@ -24,6 +24,7 @@ spring:
    fanout-exchange-name: fanout-exchange
    queue-e-name: queue-E
    queue-f-name: queue-F
+   queue-g-name: queue-G
    
 rest:
  template:
