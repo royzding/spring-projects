@@ -18,7 +18,7 @@ log.dirs=C:/Applications/kafka_2.13-2.8.0/kafka-logs
 
 b. start the kafka:
 
-C:\Applications\kafka\kafka_2.13-2.8.0
+C:\Applications\kafka_2.13-2.8.0
 
 .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
 .\bin\windows\zookeeper-server-stop.bat .\config\zookeeper.properties
@@ -39,6 +39,8 @@ taskkill /PID <PID> /F
 
 netstat -ano | findstr :9092
 
+debug:
+if kafka-server-start failed deleting the logs in the log folder.
 
 
 ---------does not work on windows apps-----------------
