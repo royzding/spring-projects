@@ -23,6 +23,28 @@ public class ProducerRestController {
     	return "Welcome from producer";
     }
 
+    @PutMapping(
+            value = "/direct/{routingKey}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity sendToDirectExchangeUsingPut(@PathVariable(value = "routingKey") String routingKey,
+                                               @RequestBody Payload payload) {
+        producerService.sendToDirectExchange(payload, routingKey);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(
+            value = "/direct/{routingKey}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity sendToDirectExchangeUsingDelete(@PathVariable(value = "routingKey") String routingKey,
+                                               @RequestBody Payload payload) {
+        producerService.sendToDirectExchange(payload, routingKey);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @PostMapping(
             value = "/direct/{routingKey}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
