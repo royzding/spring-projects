@@ -1,0 +1,3 @@
+
+
+http://localhost:8888/config-client/rabbitmq-producer-service.yml

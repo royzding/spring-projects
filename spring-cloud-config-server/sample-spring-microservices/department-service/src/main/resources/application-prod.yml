@@ -1,5 +1,9 @@
 spring:
   application:
     name: department-service
+  cloud:
+    config:
+      name: department-service.yml
+      
   config:
     import: optional:configserver:http://localhost:8888      
