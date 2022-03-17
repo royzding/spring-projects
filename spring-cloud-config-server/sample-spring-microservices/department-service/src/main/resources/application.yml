@@ -1,8 +1,7 @@
 spring:
   application:
-    name: discovery-service-prod
-  cloud:
-    config:
-      name: discovery-service-prod.yml
+    name: department-service
+  profiles:
+    active: api-security,user-info
   config:
     import: optional:configserver:http://localhost:8888      

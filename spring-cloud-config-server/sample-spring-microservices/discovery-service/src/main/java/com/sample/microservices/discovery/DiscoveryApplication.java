@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
-@SpringBootApplication(scanBasePackages= {"com.sample.microservices"})
+@SpringBootApplication(scanBasePackages= {"com.sample.microservices","com.sample.microservices.common"})
 @EnableEurekaServer
 public class DiscoveryApplication {
 
