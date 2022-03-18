@@ -13,9 +13,6 @@ spring:
     username: c##ding
     password: peardoor807x
 
-  main:
-    allow-circular-references: true
-  
 jpa:
   hibernate:
     database-platform: org.hibernate.dialect.Oracle12cDialect
