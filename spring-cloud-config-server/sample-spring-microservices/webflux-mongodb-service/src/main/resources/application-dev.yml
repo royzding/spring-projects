@@ -1,6 +1,8 @@
 server:
   port: 8085
-
+  servlet:
+    context-path: /
+    
 spring:
   application:
     name: webfluxmongodb-service
@@ -30,9 +32,8 @@ auth:
 environment: local 
 
 springdoc:
-  api-docs:
-    path: /v3/api-docs
+  version: '@springdoc.version@'
   swagger-ui:
-    path: /webfluxmongodb/
+    use-root-path: true  
 
    

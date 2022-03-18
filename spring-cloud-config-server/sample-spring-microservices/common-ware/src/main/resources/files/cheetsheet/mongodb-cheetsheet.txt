@@ -8,3 +8,6 @@ mongo
 //start up mongoCompass
 mongodb://127.0.0.1:27017/
 
+//swagger-ui
+http://localhost:8085/webfluxmongodb/
+
