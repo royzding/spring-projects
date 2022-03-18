@@ -1,4 +1,4 @@
-# Microservices with Spring Cloud Advanced Demo Project [![Twitter](https://img.shields.io/twitter/follow/piotr_minkowski.svg?style=social&logo=twitter&label=Follow%20Me)](https://twitter.com/piotr_minkowski)
+# Microservices with Spring Cloud Advanced Demo Project 
 
 [![CircleCI](https://circleci.com/gh/piomin/sample-spring-microservices-new.svg?style=svg)](https://circleci.com/gh/piomin/sample-spring-microservices-new)
 
