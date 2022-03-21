@@ -32,6 +32,10 @@ auth:
 environment: local 
 
 springdoc:
+  open-api:
+    name: webflux-ui
+    email: s@a.com
+    version: '@springdoc.version@'
   api-docs:
     path: /v3/api-docs
   swagger-ui:

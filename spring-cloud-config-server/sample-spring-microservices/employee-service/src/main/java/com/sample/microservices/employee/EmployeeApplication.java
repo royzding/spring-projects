@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 		version = "v3", 
 		description = "Employee-Service APIs", 
 		license = @License(name = "Apache 2.0", url = "http://foo.bar"), 
-		contact = @Contact(url = "http://gigantic-server.com", 
+		contact = @Contact(url = "http://employee-server.com", 
 		name = "Roy", 
 		email = "Roy@example.com"))
 )

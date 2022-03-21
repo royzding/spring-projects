@@ -35,6 +35,6 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
-    path: /
+   path: /v3/swagger-ui.html  
 
    

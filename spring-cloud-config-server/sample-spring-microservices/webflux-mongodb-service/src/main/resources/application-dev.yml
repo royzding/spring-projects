@@ -1,9 +1,9 @@
 server:
   port: 8085
-  servlet:
-    context-path: /
-    
+
 spring:
+  webflux:
+    base-path: webfluxmongodb
   application:
     name: webfluxmongodb-service
 
@@ -11,7 +11,7 @@ spring:
     mongodb:
       database: myMongoDb
       port: 27017    
-
+    
 eureka:
   client:
     enabled: true
@@ -32,7 +32,13 @@ auth:
 environment: local 
 
 springdoc:
-  version: '@springdoc.version@'
+  open-api:
+    name: webflux-ui
+    email: s@a.com
+    version: '@springdoc.version@'
+    license.name: license-name
+  api-docs:
+    path: /v3/api-docs
   swagger-ui:
     use-root-path: true  
 

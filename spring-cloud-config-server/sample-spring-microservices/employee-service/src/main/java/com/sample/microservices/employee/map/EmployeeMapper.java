@@ -23,6 +23,7 @@ public interface EmployeeMapper {
 	
 	@Mapping(target="managerId", source="managerEntity.id")		
 	@Mapping(target="managerName", source="managerEntity.name")		
+	@Mapping(target="salary", expression="java(source.getSalary() != null ? source.getSalary() : 100000.00)")
 	Employee entityToEmployee(EmployeeEntity source);
 
 	List<Employee> entityToEmployee(List<EmployeeEntity> source);

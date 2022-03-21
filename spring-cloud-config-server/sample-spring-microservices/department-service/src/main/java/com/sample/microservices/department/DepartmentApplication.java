@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 		version = "v3", 
 		description = "Department-Service APIs", 
 		license = @License(name = "${springdoc.open-api.license.name}", url = "http://foo.bar"), 
-		contact = @Contact(url = "http://gigantic-server.com", 
+		contact = @Contact(url = "http://department-server.com", 
 		name = "${springdoc.open-api.name}", 
 		email = "${springdoc.open-api.email}"))
 )
