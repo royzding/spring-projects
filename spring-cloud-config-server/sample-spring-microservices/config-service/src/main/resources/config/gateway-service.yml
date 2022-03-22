@@ -38,6 +38,26 @@ spring:
           args:
            groups: Admin, Roy2
 
+      - id: mvc-mongodb-service
+        uri: lb://mvc-mongodb-service
+        predicates:
+        - Path=/mvc-mongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, mvc-mongo-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
+
+      - id: webflux-mongodb-service
+        uri: lb://webflux-mongodb-service
+        predicates:
+        - Path=/webflux-mongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, webfluxmongo-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
+
       - id: department-swagger
         uri: lb://department-service
         predicates:
@@ -52,6 +72,22 @@ spring:
         - Path=/v3/api-docs/employee/**
         filters:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+      - id: mvc-mongodb-swagger
+        uri: lb://mvc-mongodb-service
+        predicates:
+        - Path=/v3/api-docs/mvc-mongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, mvc-mongodb-1234-5678
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+      - id: webflux-mongodb-swagger
+        uri: lb://webflux-mongodb-service
+        predicates:
+        - Path=/v3/api-docs/webflux-mongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, webflux-mongodb-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
         
 eureka:
@@ -76,4 +112,7 @@ auth:
     header-url: URL
     header-url-value: http://localhost
     user-info-header: user-info
-        
+   
+app:
+  eureka-username: u
+  eureka-password: p        

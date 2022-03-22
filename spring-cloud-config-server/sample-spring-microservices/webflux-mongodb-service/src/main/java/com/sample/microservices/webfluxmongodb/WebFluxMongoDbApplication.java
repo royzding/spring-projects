@@ -14,14 +14,14 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @EnableDiscoveryClient
 @OpenAPIDefinition(
 		servers = { 
-			@Server(url = "http://localhost:8082/webfluxmongodb"),
-			@Server(url = "http://localhost:8085/webfluxmongodb") 
+			@Server(url = "http://localhost:8082/webflux-mongodb"),
+			@Server(url = "http://localhost:8085/webflux-mongodb") 
 		}, 
-		info = @Info(title = "webfluxmongodb-service", 
+		info = @Info(title = "webflux-mongodb-service", 
 		version = "${springdoc.open-api.version}", 
-		description = "webfluxmongodb-Service APIs", 
+		description = "webflux-mongodb-Service APIs", 
 		license = @License(name = "${springdoc.open-api.license.name}", url = "http://foo.bar"), 
-		contact = @Contact(url = "http://webfluxmongodb-server.com", 
+		contact = @Contact(url = "http://webflux-mongodb-server.com", 
 		name = "${springdoc.open-api.name}", 
 		email = "${springdoc.open-api.email}"))
 )
@@ -35,4 +35,4 @@ public class WebFluxMongoDbApplication {
 //-Dspring.profiles.active=local,flux-security
 
 //swagger url
-//http://localhost:8085/webfluxmongodb/
+//http://localhost:8085/webflux-mongodb/

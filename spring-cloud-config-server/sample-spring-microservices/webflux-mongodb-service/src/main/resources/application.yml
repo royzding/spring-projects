@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: webflux-mongodb-service
+  profiles:
+    active: flux-security
+  config:
+    import: optional:configserver:http://localhost:8888      
