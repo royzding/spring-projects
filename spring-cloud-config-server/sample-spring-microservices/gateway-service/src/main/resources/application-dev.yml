@@ -38,6 +38,16 @@ spring:
           args:
            groups: Admin, Roy2
 
+      - id: mvc-mongodb-service
+        uri: lb://mvc-mongodb-service
+        predicates:
+        - Path=/mvc-mongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, mvc-mongo-1234-5678
+        - name: AuthorizationPreFilter
+          args:
+           groups: Admin, Roy2
+
       - id: webfluxmongodb-service
         uri: lb://webfluxmongodb-service
         predicates:
@@ -62,6 +72,14 @@ spring:
         - Path=/v3/api-docs/employee/**
         filters:
         - AddRequestHeader=X-SVC-KEY, emp-1234-5678
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+      - id: mvc-mongodb-swagger
+        uri: lb://mvc-mongodb-service
+        predicates:
+        - Path=/v3/api-docs/mvc-mongodb/**
+        filters:
+        - AddRequestHeader=X-SVC-KEY, mvc-mongodb-1234-5678
         - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
 
       - id: webfluxmongodb-swagger

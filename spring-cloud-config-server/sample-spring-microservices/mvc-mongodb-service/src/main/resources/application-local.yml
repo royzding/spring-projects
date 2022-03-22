@@ -6,6 +6,7 @@ server:
 spring:
   application:
     name: mvc-mongodb-service
+  cloud.config.enabled: false    
 
   data:
     mongodb:
@@ -38,7 +39,7 @@ springdoc:
     
    
 auth:
-  svcKey: mongo-1234-5678  
+  svcKey: mvc-mongodb-1234-5678  
   
 environment: local 
 
