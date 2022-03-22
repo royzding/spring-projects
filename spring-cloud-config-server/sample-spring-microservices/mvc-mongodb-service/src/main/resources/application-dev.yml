@@ -44,6 +44,6 @@ auth:
 environment: dev
 
 inter-microservice:
-  webfluxmongodb-service: http://webfluxmongodb-service/student/
+  webflux-mongodb-service: http://webflux-mongodb-service/student/
   employee-service: http://employee-service/employee/
    

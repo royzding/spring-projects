@@ -5,3 +5,5 @@ spring:
     active: api-security,user-info
   config:
     import: optional:configserver:http://localhost:8888      
+    
+    

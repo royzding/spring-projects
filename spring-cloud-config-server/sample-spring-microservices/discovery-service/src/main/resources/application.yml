@@ -1,5 +1,7 @@
 spring:
   application:
     name: discovery-service
+  profiles:
+    active: api-security
   config:
     import: optional:configserver:http://localhost:8888      

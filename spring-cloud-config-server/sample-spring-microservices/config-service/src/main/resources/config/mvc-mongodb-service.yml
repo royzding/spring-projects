@@ -6,7 +6,6 @@ server:
 spring:
   application:
     name: mvc-mongodb-service
-  cloud.config.enabled: false    
 
   data:
     mongodb:
@@ -44,6 +43,6 @@ auth:
 environment: prod
 
 inter-microservice:
-  webfluxmongodb-service: http://webfluxmongodb-service/student/
+  webflux-mongodb-service: http://webfluxmongodb-service/student/
   employee-service: http://employee-service/employee/
    

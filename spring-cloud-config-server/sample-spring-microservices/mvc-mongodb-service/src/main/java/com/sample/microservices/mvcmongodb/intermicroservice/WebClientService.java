@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class WebClientService {
 
-	@Value("${inter-microservice.webfluxmongodb-service}")
+	@Value("${inter-microservice.webflux-mongodb-service}")
 	private String webfluxmongodbService;
 	
 	@Value("${inter-microservice.employee-service}")
