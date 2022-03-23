@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.6</version>
+        <version>2.6.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sample.microservices</groupId>
@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-    	<spring.clound.version>2020.0.4</spring.clound.version>
+    	<spring.clound.version>2021.0.1</spring.clound.version>
 		<java.version>1.8</java.version>
     	<project.basedir>C:/workspace/spring-projects</project.basedir>
     	<org.projectlombok.version>1.18.16</org.projectlombok.version>
@@ -55,12 +55,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.2.32</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
-			<version>1.2.32</version>
+			<version>1.6.4</version>
 		</dependency>
         
     </dependencies>
