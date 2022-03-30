@@ -23,7 +23,9 @@ public class MarkDownToHtmlController {
   @GetMapping(value="/{filename}")
   public String deleteDirs(@PathVariable("filename") String filename) throws IOException {
         
-	  File file = ResourceUtils.getFile("classpath:" + filename);
+	  File file = ResourceUtils.getFile("classpath:release" + File.separator + filename);
+	  
+	  System.out.println("File Path:" + file.toPath());
         
 	  return markDownToHtmlService.markdownToHtml(new String(Files.readAllBytes(file.toPath())));
   }
