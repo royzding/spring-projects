@@ -1,3 +1,13 @@
+---update with case end
+update employee set name = CASE
+WHEN name is not null THEN 'name'
+WHEN name is null     THEN 'name null'
+END,
+salary = CASE
+WHEN salary is not null THEN 10000
+WHEN salary is null     THEN 20000
+END
+;
 
 ---case insensitive unique constraint on column NAME
 create unique index un_name on employee ( upper(name) );
