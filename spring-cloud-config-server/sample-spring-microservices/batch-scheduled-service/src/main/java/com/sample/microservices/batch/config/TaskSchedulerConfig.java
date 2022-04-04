@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.scheduling.support.PeriodicTrigger;
@@ -12,13 +13,18 @@ import org.springframework.scheduling.support.PeriodicTrigger;
 public class TaskSchedulerConfig {
 
     @Bean
-    public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
+    public TaskScheduler threadPoolTaskScheduler() {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setPoolSize(5);
         threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
         return threadPoolTaskScheduler;
     }
-
+    
+/*
+	It's simply enough to set the spring.task.scheduling.pool.size property for spring boot:
+	spring.task.scheduling.pool.size=5
+*/
+    
     @Bean
     public CronTrigger cronTrigger() {
         return new CronTrigger("10 * * * * ?");
