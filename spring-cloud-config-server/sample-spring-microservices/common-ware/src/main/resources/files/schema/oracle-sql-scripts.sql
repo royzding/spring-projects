@@ -1,3 +1,9 @@
+
+---find out the index. when drop unique constraint sometime there is still an index with this unique key.
+select * from user_indexes where index_name = 'CONSTRAINT_NMAE';
+drop index  CONSTRAINT_NMAE;
+
+
 ---update with case end
 update employee set name = CASE
 WHEN name is not null THEN 'name'
