@@ -54,8 +54,9 @@ public class GatewayApplication {
 	}	
 
 */
-	
-	//new springdoc-openapi-webflux-ui version 1.6.4
+
+
+	//new springdoc-openapi-webflux-ui version 1.6.4/6
 	
 	@Bean
 	@Lazy(false)
@@ -65,11 +66,17 @@ public class GatewayApplication {
 		for (RouteDefinition definition : definitions) {
 			System.out.println("id: " + definition.getId()+ "  "+definition.getUri().toString());
 		}
-		definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches(".*-service")).forEach(routeDefinition -> {
-			String name = routeDefinition.getId().replaceAll("-service", "");
-			swaggerUiConfigParameters.addGroup(name);
-			GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
-		});
+		
+		if(null != definitions) {
+			
+			definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches(".*-service")).forEach(routeDefinition -> {
+				String name = routeDefinition.getId().replace("-service", "");
+				swaggerUiConfigParameters.addGroup(name);
+				GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
+			});
+			
+		}
+		
 		return groups;
 	}
 	
