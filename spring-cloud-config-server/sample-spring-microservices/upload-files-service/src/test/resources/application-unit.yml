@@ -1,0 +1,44 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: uploadfiles-service
+    
+eureka:
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+          
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+springdoc:
+  api-docs:
+   path: /v3/api-docs
+  swagger-ui:
+   path: /v3/swagger-ui.html  
+  open-api:
+    name: openApi Test
+    email: roy@example.com
+    license.name: my license 3.0
+
+uploadfiles:
+  topath: C:/tmp/tmp2
+  ownerPermission: READ:WRITE:EXECUTE
+  groupPermission: READ:WRITE:EXECUTE
+  othersPermission: READ:WRITE:EXECUTE
+   
+auth:
+  svcKey: upload-1234-5678   
+  
+environment: local  
+
+
+   

@@ -70,16 +70,16 @@ public class AuthorizationPreFilter extends AbstractGatewayFilterFactory<Authori
             		return AuthorizationFilterUtil.unauthorizedAccess(exchange,cause);	        		
                 }
                           	
-                UserInfoStore userInfoStore = new UserInfoStore();
-                
-                userInfoStore.setUserName(headers.get(userInfoHeader).get(0));
-                
-                System.out.println("===============UserInfoStore=========" + userInfoStore);
-
                 request.mutate().header("secret", "123").build();
-                request.mutate().header(USER_INFO_HEADER, userInfoStore.getUserName());
            }
 
+            UserInfoStore userInfoStore = new UserInfoStore();
+            
+            userInfoStore.setUserName(headers.get(userInfoHeader).get(0));
+            
+            System.out.println("===============UserInfoStore=========" + userInfoStore);
+
+            request.mutate().header(USER_INFO_HEADER, userInfoStore.getUserName()).build();
 
             return chain.filter(exchange.mutate().request(request).build());
         };

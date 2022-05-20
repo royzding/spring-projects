@@ -1,5 +1,6 @@
 package com.sample.microservices.uploadfiles.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,8 +32,14 @@ public class UploadFilesController {
   @Autowired
   UploadFilesService uploadFilesService;
 
+  @PostMapping(consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
+  public void uploadFilex(@RequestParam("textdefault") MultipartFile file) throws IOException{
+ 
+        uploadFilesService.save(file);
+  }
+
   @PostMapping(value="/file", consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("textdefault") MultipartFile file) {
     String message = "";
     try {
  
