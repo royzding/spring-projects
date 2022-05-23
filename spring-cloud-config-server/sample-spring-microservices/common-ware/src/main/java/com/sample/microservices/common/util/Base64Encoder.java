@@ -2,6 +2,8 @@ package com.sample.microservices.common.util;
 
 import java.util.Base64;
 
+import com.sample.microservices.common.model.Person;
+
 public class Base64Encoder {
 	
 	public static void main(String[] args) {
@@ -11,7 +13,17 @@ public class Base64Encoder {
 		System.out.println(testStr);
 		System.out.println(encodeToBase64Str(testStr));
 		System.out.println(encodeStrToBase64Str(testStr));
-		System.out.println(decodeBase64StrToStr(encodeToBase64Str(testStr)));		
+		System.out.println(decodeBase64StrToStr(encodeToBase64Str(testStr)));	
+		
+		Person p = new Person();
+		String pStr = JsonConversions.objectToJsonPrettyStr(p);
+		
+		System.out.println(p);
+		System.out.println(pStr);
+		System.out.println(encodeToBase64Str(pStr));
+		System.out.println(encodeStrToBase64Str(pStr));
+		System.out.println(decodeBase64StrToStr(encodeStrToBase64Str(pStr)));
+		
 		
 	}
 	
