@@ -6,6 +6,8 @@ import com.sample.microservices.common.model.Person;
 public class CommonWare {
 
 	public static void main(String[] args) {
+		
+		System.out.println("x".equalsIgnoreCase(null));
 
 		Person person = new Person();
 		person.setId(1L);
