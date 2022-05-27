@@ -75,6 +75,10 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 F24XVLM@LFDCBR9N733 MSYS /c/rding/workspace/rules-svc-middleware (feature/2225-put-deactivate-rule|MERGING)
 
+1) resolve the conflict in the STS.
+2) then goto Team -> Ignore
+3) check in the changes
+4) conflict should be resolved.
 
 https://support.atlassian.com/bitbucket-cloud/docs/resolve-merge-conflicts/
 

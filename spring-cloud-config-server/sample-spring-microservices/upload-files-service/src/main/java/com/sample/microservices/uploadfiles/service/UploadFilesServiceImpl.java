@@ -38,7 +38,7 @@ public class UploadFilesServiceImpl implements UploadFilesService {
   private String othersPermission;
 
   @Override
-  public void save(MultipartFile file) {
+  public void save(String fileType, MultipartFile file) {
 	
 	Path direPath = Paths.get(uploadDirePath);
 	

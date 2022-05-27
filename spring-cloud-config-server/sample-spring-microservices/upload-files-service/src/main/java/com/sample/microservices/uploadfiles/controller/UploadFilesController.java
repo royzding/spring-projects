@@ -32,18 +32,18 @@ public class UploadFilesController {
   @Autowired
   UploadFilesService uploadFilesService;
 
-  @PostMapping(consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
-  public void uploadFilex(@RequestParam("textdefault") MultipartFile file) throws IOException{
+  @PostMapping(value="/{fileType}", consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
+  public void uploadFilex(@PathVariable String fileType, @RequestParam("textdefault") MultipartFile file) throws IOException{
  
-        uploadFilesService.save(file);
+        uploadFilesService.save(fileType, file);
   }
 
-  @PostMapping(value="/file", consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("textdefault") MultipartFile file) {
+  @PostMapping(value="/file/{fileType}", consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
+  public ResponseEntity<ResponseMessage> uploadFile(@PathVariable String fileType, @RequestParam("textdefault") MultipartFile file) {
     String message = "";
     try {
  
-        uploadFilesService.save(file);
+        uploadFilesService.save(fileType, file);
         message = "Uploaded the files successfully: " + file + " fileName=" + file.getOriginalFilename();
         
       return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
@@ -53,14 +53,14 @@ public class UploadFilesController {
     }
   }
 
-  @PostMapping(value="/files", consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<ResponseMessage> uploadFiles(@RequestParam("files") MultipartFile[] files) {
+  @PostMapping(value="/files/{fileType}", consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
+  public ResponseEntity<ResponseMessage> uploadFiles(@PathVariable String fileType, @RequestParam("files") MultipartFile[] files) {
     String message = "";
     try {
       List<String> fileNames = new ArrayList<>();
 
       Arrays.asList(files).stream().forEach(file -> {
-        uploadFilesService.save(file);
+        uploadFilesService.save(fileType, file);
         fileNames.add(file.getOriginalFilename());
       });
 
