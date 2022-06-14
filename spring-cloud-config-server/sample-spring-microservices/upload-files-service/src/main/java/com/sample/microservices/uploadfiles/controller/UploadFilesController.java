@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -91,4 +93,27 @@ public class UploadFilesController {
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
   }
+  
+  @GetMapping(value = {"/PvAndRp/", "/PvAndRp/{pv}"})
+  public String getPathVariableAndRequestParam(
+		  @PathVariable(required=false) String pv,
+		  @RequestParam(required=false) String name,
+		  @RequestParam(value="pageNum", defaultValue = "12") int pageNum
+		 ) 
+  {
+	  return "pv:[" + pv + "]; name:[" + name + "]; pageNum:[" + pageNum + "]";
+
+  }
+
+  @GetMapping(value = {"/PvAndRp2/", "/PvAndRp2/{pv}"})
+  public String getPathVariableAndRequestParam2(
+		  @PathVariable Optional<String> pv,
+		  @RequestParam Optional<String> name,
+		  @RequestParam(value="pageNum", defaultValue = "12") int pageNum
+		 ) 
+  {
+	  return "pv:[" + pv + "]; name:[" + name + "]; pageNum:[" + pageNum + "]";
+
+  }
+
 }
