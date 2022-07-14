@@ -10,6 +10,7 @@ import org.springframework.util.StopWatch;
 
 import com.sample.microservices.common.model.Department;
 import com.sample.microservices.common.model.Employee;
+import com.sample.microservices.common.model.EmployeeInfo;
 import com.sample.microservices.employee.data.model.EmployeeEntity;
 import com.sample.microservices.employee.department.DepartmentService;
 import com.sample.microservices.employee.map.EmployeeMapper;
@@ -132,5 +133,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return employees;
 	}
+	
+	@Override
+    public List<EmployeeInfo> getEmployeesByManagerId(Long mId) {
+    	return this.repository.getEmployeesByManagerId(mId);
+    }
+
+	@Override
+    public List<EmployeeInfo> getEmployeesByManagerIdAndDeptId(Long mId, Long dId) {
+    	return this.repository.getEmployeesByManagerIdAndDeptId(mId, dId);
+    }
 
 }

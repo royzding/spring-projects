@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.employee.data.model.ManagerEntity;
 
 @Repository
@@ -45,13 +46,14 @@ public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Lo
     @Query("SELECT m FROM ManagerEntity m where m.name = ?1")
     List<ManagerEntity> getManagersByName2(String name);
     
+    @Query("SELECT new com.sample.microservices.common.model.Manager(m.name, m.salary) FROM ManagerEntity m where m.name = :name")
+    List<Manager> getManagersByName3(@Param("name") String name);
     
     @Query("SELECT m FROM ManagerEntity m where m.name in :names")
     List<ManagerEntity> getManagersByNameIn1(@Param("names") List<String> names);
     
     @Query("SELECT m FROM ManagerEntity m where m.name in ?1")
-    List<ManagerEntity> getManagersByNameIn2(List<String> name);
-    
+    List<ManagerEntity> getManagersByNameIn2(List<String> names);
     
     
 }

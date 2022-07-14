@@ -13,4 +13,9 @@ public class Manager {
 	private String name;
 	private Double salary;
 	private String modifiedBy;
+	
+	public Manager(String name, Double salary) {
+		this.name = name;
+		this.salary = salary;
+	}
 }

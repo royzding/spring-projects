@@ -205,6 +205,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 	
 	@Override
+    public List<Manager> getManagersByName3(String name) {
+    	return this.repository.getManagersByName3(name);
+    }
+	
+	@Override
     public List<Manager> getManagersByNameIn1(List<String> names) {
     	return this.mapper.entityToManager(this.repository.getManagersByNameIn1(names));
     }

@@ -257,6 +257,11 @@ public class ManagerController {
 		return this.managerService.getManagersByName2(name);
 	}
 
+	@GetMapping("/getManagersByName3/{name}")
+	public List<Manager> getManagersByName3(@PathVariable("name") String name) {
+		return this.managerService.getManagersByName3(name);
+	}
+
 	@GetMapping("/getManagersByNameIn1/{names}")
 	public List<Manager> getManagersByNameIn1(@PathVariable("names") List<String> names) {
 		return this.managerService.getManagersByNameIn1(names);

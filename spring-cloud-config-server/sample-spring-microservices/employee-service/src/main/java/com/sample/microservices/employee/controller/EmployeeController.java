@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sample.microservices.common.model.Department;
 import com.sample.microservices.common.model.Employee;
+import com.sample.microservices.common.model.EmployeeInfo;
 import com.sample.microservices.employee.service.EmployeeService;
 import com.sample.microservices.model.dto.EmployeeDto;
 import com.sample.microservices.model.dto.ValidEmployee;
@@ -169,5 +170,15 @@ public class EmployeeController {
 		return validEmployee;
 	}
 	
+	@GetMapping("/getEmployeesByManagerId/{mId}")
+	public List<EmployeeInfo> getEmployeesByManagerId(@PathVariable("mId") Long mId) {
+		return this.employeeService.getEmployeesByManagerId(mId);
+	}
+
+	@GetMapping("/getEmployeesByManagerIdAndDeptId/{mId}/{dId}")
+	public List<EmployeeInfo> getEmployeesByManagerIdAndDeptId(@PathVariable("mId") Long mId, @PathVariable("dId") Long dId) {
+		return this.employeeService.getEmployeesByManagerIdAndDeptId(mId, dId);
+	}
+
 
 }

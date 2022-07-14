@@ -2,8 +2,11 @@ package com.sample.microservices.employee.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.sample.microservices.common.model.Department;
 import com.sample.microservices.common.model.Employee;
+import com.sample.microservices.common.model.EmployeeInfo;
 import com.sample.microservices.model.dto.EmployeeDto;
 
 public interface EmployeeService {
@@ -27,4 +30,10 @@ public interface EmployeeService {
     Long getCacheableTime();
     
     List<Department> getAllDepartments();
+    
+    List<EmployeeInfo> getEmployeesByManagerId(Long mId);
+    
+    List<EmployeeInfo> getEmployeesByManagerIdAndDeptId(Long mId, Long dId);
+    
+    
 }

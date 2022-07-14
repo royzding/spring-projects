@@ -43,6 +43,7 @@ public interface ManagerService {
     
     List<Manager> getManagersByName1(String name);
     List<Manager> getManagersByName2(String name);
+    List<Manager> getManagersByName3(String name);
     
     List<Manager> getManagersByNameIn1(List<String> names);
     List<Manager> getManagersByNameIn2(List<String> names);
