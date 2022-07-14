@@ -1,0 +1,4 @@
+
+//to generate jar using mvn Goals as the following
+
+mvn package
