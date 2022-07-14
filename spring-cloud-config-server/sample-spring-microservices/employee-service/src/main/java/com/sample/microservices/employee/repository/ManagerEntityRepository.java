@@ -37,4 +37,21 @@ public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Lo
     //calling an oracle function get_salary_by_id(in_id IN NUMBER)
     @Query(nativeQuery = true, value = "SELECT get_salary_by_id(:id) FROM dual")
     Double getSalaryById(@Param("id") Long id);
+    
+    
+    @Query("SELECT m FROM ManagerEntity m where m.name = :name")
+    List<ManagerEntity> getManagersByName1(@Param("name") String name);
+    
+    @Query("SELECT m FROM ManagerEntity m where m.name = ?1")
+    List<ManagerEntity> getManagersByName2(String name);
+    
+    
+    @Query("SELECT m FROM ManagerEntity m where m.name in :names")
+    List<ManagerEntity> getManagersByNameIn1(@Param("names") List<String> names);
+    
+    @Query("SELECT m FROM ManagerEntity m where m.name in ?1")
+    List<ManagerEntity> getManagersByNameIn2(List<String> name);
+    
+    
+    
 }

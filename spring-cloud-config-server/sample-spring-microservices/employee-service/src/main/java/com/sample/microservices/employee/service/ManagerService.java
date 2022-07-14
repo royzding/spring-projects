@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 
 import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.common.pagination.PageLayout;
+import com.sample.microservices.employee.data.model.ManagerEntity;
 import com.sample.microservices.employee.enums.ManagerSortType;
 import com.sample.microservices.model.dto.ManagerDto;
 
@@ -38,5 +40,12 @@ public interface ManagerService {
     void insertManagerBk(Long id);
     void twoInParamPr(Long id, Double salaryInc);
     String getSalaryById(Long id);
+    
+    List<Manager> getManagersByName1(String name);
+    List<Manager> getManagersByName2(String name);
+    
+    List<Manager> getManagersByNameIn1(List<String> names);
+    List<Manager> getManagersByNameIn2(List<String> names);
+    
     
 }

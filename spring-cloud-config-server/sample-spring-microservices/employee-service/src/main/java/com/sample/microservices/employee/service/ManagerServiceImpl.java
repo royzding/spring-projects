@@ -193,5 +193,26 @@ public class ManagerServiceImpl implements ManagerService {
 	public String getSalaryById(Long id) {
 		return ""+this.repository.getSalaryById(id);
 	}
+	
+	@Override
+    public List<Manager> getManagersByName1(String name) {
+    	return this.mapper.entityToManager(this.repository.getManagersByName1(name));
+    }
+	
+	@Override
+    public List<Manager> getManagersByName2(String name) {
+    	return this.mapper.entityToManager(this.repository.getManagersByName2(name));
+    }
+	
+	@Override
+    public List<Manager> getManagersByNameIn1(List<String> names) {
+    	return this.mapper.entityToManager(this.repository.getManagersByNameIn1(names));
+    }
+	
+	@Override
+    public List<Manager> getManagersByNameIn2(List<String> names) {
+    	return this.mapper.entityToManager(this.repository.getManagersByNameIn2(names));
+    }
+	
 
 }

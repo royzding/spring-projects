@@ -247,4 +247,26 @@ public class ManagerController {
 		this.managerService.deleteAllManagers();
 	}
 	
+	@GetMapping("/getManagersByName1/{name}")
+	public List<Manager> getManagersByName1(@PathVariable("name") String name) {
+		return this.managerService.getManagersByName1(name);
+	}
+
+	@GetMapping("/getManagersByName2/{name}")
+	public List<Manager> getManagersByName2(@PathVariable("name") String name) {
+		return this.managerService.getManagersByName2(name);
+	}
+
+	@GetMapping("/getManagersByNameIn1/{names}")
+	public List<Manager> getManagersByNameIn1(@PathVariable("names") List<String> names) {
+		return this.managerService.getManagersByNameIn1(names);
+	}
+
+	@GetMapping("/getManagersByNameIn2/{names}")
+	public List<Manager> getManagersByNameIn2(@PathVariable("names") List<String> names) {
+		return this.managerService.getManagersByNameIn2(names);
+	}
+
+	
+	
 }
