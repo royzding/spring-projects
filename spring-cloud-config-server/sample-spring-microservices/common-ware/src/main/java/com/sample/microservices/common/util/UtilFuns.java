@@ -1,12 +1,17 @@
 package com.sample.microservices.common.util;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -56,6 +61,14 @@ public class UtilFuns {
         String formatDateTime3 = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSSSSSSS"));
         System.out.println("After3 : " + formatDateTime3);		
 
+	}
+	
+	public static String getFileInfo(ResourceLoader resourceLoader, String filePath) throws IOException {
+		
+		Path path = resourceLoader.getResource(filePath).getFile().toPath();  //"classpath:fileInfo.json"
+		
+		return Files.readAllLines(path).stream().map(Object::toString).collect(Collectors.joining("\n"));
+		
 	}
 	
 }
