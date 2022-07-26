@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Car {
 
-    @JsonField("manufacturer")
+    @JsonField("Maker")
     private String make;
 
     @JsonField("MODEL")
