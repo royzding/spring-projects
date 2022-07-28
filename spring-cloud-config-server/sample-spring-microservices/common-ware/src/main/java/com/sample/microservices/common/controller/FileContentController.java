@@ -1,4 +1,4 @@
-package com.sample.microservices.department.controller;
+package com.sample.microservices.common.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,15 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sample.microservices.common.model.Department;
-import com.sample.microservices.common.util.UtilFuns;
-import com.sample.microservices.department.service.DepartmentService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,18 +19,18 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Common Ware", description = "REST API from Common Ware.")
 @RestController
-@RequestMapping("/file-info")
-public class FileInfoController {
+@RequestMapping("/file-content")
+public class FileContentController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(FileInfoController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileContentController.class);
 	
-	@Value("classpath:fileInfo.json")
-	private Resource myResource;
+	@Value("classpath:fileContent.json")
+	Resource myResource;
 	
-	@Operation(summary="get an department by id")
+	@Operation(summary="get a file content")
 	@ApiResponses(value= {
 			@ApiResponse(responseCode="200",description="Success"),
-			@ApiResponse(responseCode="404",description="Department does not exist for the given id"), 
+			@ApiResponse(responseCode="404",description="file content does not exist"), 
 			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
 			content= @Content) 
 	})

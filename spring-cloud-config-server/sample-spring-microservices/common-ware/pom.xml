@@ -74,6 +74,12 @@
             <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId> 
         </dependency>
  
+		<!--  Swagger UI  -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+		</dependency>
+		
     </dependencies>
  
 	<build>

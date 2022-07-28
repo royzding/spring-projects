@@ -1,5 +1,5 @@
 {
 	"service": "department-service",
-	"file": "file",
+	"fileContent": "file-content",
 	"description": "test"
 }
