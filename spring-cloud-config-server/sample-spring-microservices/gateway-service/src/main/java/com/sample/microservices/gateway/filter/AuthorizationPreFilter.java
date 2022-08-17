@@ -75,7 +75,7 @@ public class AuthorizationPreFilter extends AbstractGatewayFilterFactory<Authori
 
             UserInfoStore userInfoStore = new UserInfoStore();
             
-            userInfoStore.setUserName(headers.get(userInfoHeader).get(0));
+            //userInfoStore.setUserName(headers.get(userInfoHeader).get(0));
             
             System.out.println("===============UserInfoStore=========" + userInfoStore);
 

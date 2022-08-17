@@ -25,7 +25,8 @@ public class FileContentController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileContentController.class);
 	
 	@Value("classpath:fileContent.json")
-	Resource myResource;
+	private Resource myResource;
+
 	
 	@Operation(summary="get a file content")
 	@ApiResponses(value= {
@@ -34,8 +35,11 @@ public class FileContentController {
 			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
 			content= @Content) 
 	})
+	
 	@GetMapping
 	public String getFileInfo() throws IOException {
 		return new String(Files.readAllBytes(myResource.getFile().toPath()));
 	}
 }
+
+
