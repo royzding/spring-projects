@@ -1,4 +1,6 @@
-package com.sample.microservices.common.annotation;
+package com.sample.microservices.common.annotation.test;
+
+import com.sample.microservices.common.annotation.JsonField;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

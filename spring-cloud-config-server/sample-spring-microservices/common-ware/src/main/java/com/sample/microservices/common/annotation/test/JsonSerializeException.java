@@ -1,4 +1,4 @@
-package com.sample.microservices.common.annotation;
+package com.sample.microservices.common.annotation.test;
 
 public class JsonSerializeException extends Exception {
 

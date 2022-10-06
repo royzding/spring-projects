@@ -1,9 +1,12 @@
-package com.sample.microservices.common.annotation;
+package com.sample.microservices.common.annotation.test;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.sample.microservices.common.annotation.JsonField;
+
 import static java.util.Objects.requireNonNull;
 
 public class JsonSerializer {

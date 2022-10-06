@@ -7,6 +7,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
+import com.sample.microservices.common.annotation.EventType;
+import com.sample.microservices.common.annotation.Loggable;
+import com.sample.microservices.common.annotation.Loggable.Level;
+import com.sample.microservices.common.annotation.LoggableEvents;
+import com.sample.microservices.common.annotation.LoggableType;
 import com.sample.microservices.common.model.Department;
 import com.sample.microservices.common.model.Employee;
 import com.sample.microservices.common.util.UtilFuns;
@@ -17,6 +22,7 @@ import com.sample.microservices.department.model.dto.DepartmentDto;
 import com.sample.microservices.department.repository.DepartmentRepository;
 
 @Service
+@LoggableType
 public class DepartmentServiceImpl implements DepartmentService {
 	
 	private final DepartmentMapper mapper;
@@ -37,6 +43,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	@Cacheable("all-departments")
+	@Loggable()
+	@LoggableEvents(type=EventType.READ)
 	public List<Department> getAllDepartments() {
 		
 		List<DepartmentEntity> entities = this.repository.findAll();
@@ -46,6 +54,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
+	@LoggableEvents(type=EventType.DELETE)
 	public void deleteDepartmentById(final Long id) {
         this.repository.deleteById(id);
 	}
@@ -78,6 +87,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
+	@Loggable(level=Level.WARN)
+	@LoggableEvents(type=EventType.CREATE)
 	public Department createDepartment(DepartmentDto departmentDto) {
 		DepartmentEntity entity = this.mapper.departmentDtoToEntity(departmentDto);
 		entity.setId(null);
@@ -98,6 +109,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
+	@Loggable(level=Level.INFO)
+	@LoggableEvents(type=EventType.UPDATE)
 	public void updateDepartment(Long id, DepartmentDto departmentDto) throws Exception {
 		
 		DepartmentEntity entity = this.repository.findById(id).orElseThrow(
