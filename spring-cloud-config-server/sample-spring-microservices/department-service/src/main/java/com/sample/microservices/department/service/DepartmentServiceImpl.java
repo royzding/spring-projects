@@ -42,6 +42,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
+	public List<Department> getDeptsByName(final String name) {
+		
+		return this.mapper.entityToDepartment(this.repository.getDeptsByName(name));
+	}
+
+	@Override
 	@Cacheable("all-departments")
 	@Loggable()
 	@LoggableEvents(type=EventType.READ)
@@ -50,7 +56,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		List<DepartmentEntity> entities = this.repository.findAll();
 		
 		
-		return this.mapper.departmentEntityToDepartment(entities);
+		return this.mapper.entityToDepartment(entities);
 	}
 
 	@Override
@@ -105,7 +111,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		
 		entities = this.repository.saveAll(entities);
 
-		return this.mapper.departmentEntityToDepartment(entities);
+		return this.mapper.entityToDepartment(entities);
 	}
 
 	@Override

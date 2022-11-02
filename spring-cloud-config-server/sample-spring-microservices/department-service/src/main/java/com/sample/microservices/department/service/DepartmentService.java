@@ -10,6 +10,8 @@ public interface DepartmentService {
 
     Department getDepartmentById(final Long id);
     
+    List<Department> getDeptsByName(final String name);
+    
     List<Department> getAllDepartments();
     
     Department createDepartment(final DepartmentDto departmentDto);

@@ -22,7 +22,7 @@ public interface DepartmentMapper {
 	
 	Department entityToDepartment(DepartmentEntity source);
 
-	List<Department> departmentEntityToDepartment(List<DepartmentEntity> source);
+	List<Department> entityToDepartment(List<DepartmentEntity> source);
 
 	@Mappings({
 		@Mapping(target="id", source="id")		

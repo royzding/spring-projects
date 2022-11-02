@@ -56,6 +56,17 @@ public class DepartmentController {
 		return this.departmentService.getDepartmentById(id);
 	}
 	
+	@Operation(summary="get all the departments by name")
+	@ApiResponses(value= {
+		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
+					content= {@Content(mediaType="application/json", array=@ArraySchema(schema=@Schema(implementation=Department.class))) }),
+		@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",content= @Content) 
+	})
+	@GetMapping("/depts/{name}")
+	public List<Department> getDeptsByName(String name) {
+		return this.departmentService.getDeptsByName(name);
+	}
+
 	@Operation(summary="get all the departments")
 	@ApiResponses(value= {
 		@ApiResponse(responseCode="200",description="Success. An empty list is returned when no records are found",
