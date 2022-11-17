@@ -137,10 +137,25 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteAllManagers() {
-        this.repository.deleteAll();;
+        this.repository.deleteAll();
 	}
 
+	@Override
+	@Transactional
+	public void deleteManagersByName(String name) {
+		
+		this.repository.deleteManagersByName(name);
+	}
+	
+	@Override
+	@Transactional
+	public void deleteManagersByNameLike(String name) {
+		
+		this.repository.deleteManagersByNameLike(name);
+	}
+	
 	@Override
 	public void updateManager(final Long id, final ManagerDto manager) throws Exception {
 		
@@ -217,6 +232,16 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
     public List<Manager> getManagersByNameIn2(List<String> names) {
     	return this.mapper.entityToManager(this.repository.getManagersByNameIn2(names));
+    }
+	
+	@Override
+    public List<Manager> getManagersByNameLike(String name) {
+    	return this.mapper.entityToManager(this.repository.getManagersByNameLike(name));
+    }
+	
+	@Override
+    public List<Manager> getManagersByNameLikeNative(String name) {
+    	return this.mapper.entityToManager(this.repository.getManagersByNameLikeNative(name));
     }
 	
 

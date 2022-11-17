@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
@@ -54,6 +55,20 @@ public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Lo
     
     @Query("SELECT m FROM ManagerEntity m where m.name in ?1")
     List<ManagerEntity> getManagersByNameIn2(List<String> names);
+    
+    @Query("SELECT m FROM ManagerEntity m where m.name like %?1%")
+    List<ManagerEntity> getManagersByNameLike(@Param("name") String name);
+    
+    @Query(nativeQuery = true, value = "SELECT * from manager m WHERE m.name like %:name% ")
+    List<ManagerEntity> getManagersByNameLikeNative(@Param("name") String name);
+    
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE from manager m WHERE m.name = :name ")
+    void deleteManagersByName(@Param("name") String name);
+    
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE from manager m WHERE m.name like %:name% ")
+    void deleteManagersByNameLike(@Param("name") String name);
     
     
 }

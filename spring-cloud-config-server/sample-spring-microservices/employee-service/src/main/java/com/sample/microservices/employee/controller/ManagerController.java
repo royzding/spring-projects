@@ -247,6 +247,32 @@ public class ManagerController {
 		this.managerService.deleteAllManagers();
 	}
 	
+	@Operation(summary="Delete all managers by name")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. All the Managers deleted"), 
+			@ApiResponse(responseCode="404",description="Some Manager does not exist"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@DeleteMapping("/delete/name/{name}")
+	public void deleteManagersByName(@PathVariable("name") String name) {
+
+		this.managerService.deleteManagersByName(name);
+	}
+	
+	@Operation(summary="Delete all managers by nameLike")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode="200",description="Success. All the Managers deleted"), 
+			@ApiResponse(responseCode="404",description="Some Manager does not exist"), 
+			@ApiResponse(responseCode="500",description="Internal Server Error. The server could not process the request",
+			content= @Content) 
+	})
+	@DeleteMapping("/delete/namelike/{name}")
+	public void deleteManagersByNameLike(@PathVariable("name") String name) {
+
+		this.managerService.deleteManagersByNameLike(name);
+	}
+	
 	@GetMapping("/getManagersByName1/{name}")
 	public List<Manager> getManagersByName1(@PathVariable("name") String name) {
 		return this.managerService.getManagersByName1(name);
@@ -270,6 +296,16 @@ public class ManagerController {
 	@GetMapping("/getManagersByNameIn2/{names}")
 	public List<Manager> getManagersByNameIn2(@PathVariable("names") List<String> names) {
 		return this.managerService.getManagersByNameIn2(names);
+	}
+
+	@GetMapping("/getManagersByNameLike/{name}")
+	public List<Manager> getManagersByNameLike(@PathVariable("name") String name) {
+		return this.managerService.getManagersByNameLike(name);
+	}
+
+	@GetMapping("/getManagersByNameLikeNative/{name}")
+	public List<Manager> getManagersByNameLikeNative(@PathVariable("name") String name) {
+		return this.managerService.getManagersByNameLikeNative(name);
 	}
 
 	

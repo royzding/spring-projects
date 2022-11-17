@@ -32,6 +32,9 @@ public interface ManagerService {
     
     void deleteAllManagers();
     
+	void deleteManagersByName(String name);
+    void deleteManagersByNameLike(String name);
+    
     void updateManager(final Long id, final ManagerDto managerDto)  throws Exception;
     
     String getManagerMaxSalary(String name);
@@ -48,5 +51,6 @@ public interface ManagerService {
     List<Manager> getManagersByNameIn1(List<String> names);
     List<Manager> getManagersByNameIn2(List<String> names);
     
-    
+    List<Manager> getManagersByNameLike(String name);
+    List<Manager> getManagersByNameLikeNative(String name);
 }
