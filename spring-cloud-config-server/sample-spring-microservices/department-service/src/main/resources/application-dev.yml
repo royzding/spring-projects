@@ -33,6 +33,7 @@ eureka:
       defaultZone: http://${app.eureka-username}:${app.eureka-password}@localhost:8761/eureka/
   instance:
     hostname: localhost
+    instance-id: ${spring.application.name}:${random.value}
           
 logging:
   pattern: 
