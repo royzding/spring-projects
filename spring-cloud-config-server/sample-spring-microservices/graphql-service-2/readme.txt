@@ -1,11 +1,33 @@
 http://localhost:8080/graphiql 
 
+Let's now run a query to get the data.
+
+query employeeDetails {
+  employees {
+    id
+    name
+  }
+}
+
+The output will be:
+
+{
+  "data": {
+    "employees": [
+      {
+        "id": "1",
+        "name": "Andi"
+      }
+    ]
+  }
+}
+
 Now, run the following query.
 
-mutation {
-  createVehicle(type: "car", modelCode: "XYZ0192", brandName: "XYZ", launchDate: "2016-08-16") 
-  {
+query employeeDetails {
+  employees {
     id
+    name
   }
 }
 
@@ -20,29 +42,16 @@ This will create a row in the Vehicle table. The result should be:
 }
 
 
-Let's now run a query to get the data.
-
-query {
-  vehicles(count: 1) 
-  {
-    id, 
-    type, 
-    modelCode
-}
-}
-
-
-The output will be:
-
-{
-  "data": {
-    "vehicles": [
-      {
-        "id": "1",
-        "type": "bus",
-        "modelCode": "XYZ123"
-      }
-    ]
+query employeeDetails {
+  employee(id:0) {
+    id
+    name
   }
 }
 
+query bookDetails {
+  bookById (id: "book-2") {
+    id
+    
+  }
+}

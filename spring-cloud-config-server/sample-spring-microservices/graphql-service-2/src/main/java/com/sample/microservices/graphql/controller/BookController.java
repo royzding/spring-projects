@@ -5,8 +5,8 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
-import com.sample.microservices.graphql.service.Author;
-import com.sample.microservices.graphql.service.Book;
+import com.sample.microservices.graphql.entity.Author;
+import com.sample.microservices.graphql.entity.Book;
 
 @Controller
 public class BookController {
