@@ -37,7 +37,6 @@
 		<module>rabbitmq-consumer-service</module>
 		<module>rabbitmq-producer-service</module>
 		<module>graphql-service</module>
-		<module>graphql-service-2</module>
 	</modules>
 	
 </project>
