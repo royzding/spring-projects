@@ -55,3 +55,15 @@ query bookDetails {
     
   }
 }
+
+query getGreetings {
+  greeting
+}
+
+query getGreetings {
+  greetingsMono
+}
+
+query getGreetings {
+  greetingsFlux
+}

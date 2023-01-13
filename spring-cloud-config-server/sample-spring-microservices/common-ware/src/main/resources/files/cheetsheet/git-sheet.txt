@@ -82,6 +82,14 @@ F24XVLM@LFDCBR9N733 MSYS /c/rding/workspace/rules-svc-middleware (feature/2225-p
 
 https://support.atlassian.com/bitbucket-cloud/docs/resolve-merge-conflicts/
 
+
+totally resync with remote git
+
+This will remove all uncommitted changes and then pull:
+$git reset --hard HEAD
+$git pull
+
+
 Apps Manager:
 https://escmconfluence.1dc.com/pages/viewpage.action?pageId=520483646
 

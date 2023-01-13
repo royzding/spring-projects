@@ -4,6 +4,10 @@ type Query {
     employees: [Employee]
     
     bookById(id: ID): Book
+    
+    greeting: String
+    greetingMono : String
+    greetingsFlux : [String]    
 }
 
 type Mutation {
@@ -39,4 +43,8 @@ type Author {
   id: ID
   firstName: String
   lastName: String
+}
+
+type Subscription {
+    greetings: String
 }
