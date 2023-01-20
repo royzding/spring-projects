@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles({"unit", "api-security", "user-info"})
 @SpringBootTest(webEnvironment=WebEnvironment.NONE)
-//@AutoConfigureTestDatabase
+@AutoConfigureTestDatabase
 @Transactional
 public abstract class BaseServiceTest {
 

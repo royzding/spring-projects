@@ -1,9 +1,7 @@
 package com.sample.microservices.department.data.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.sample.microservices.common.data.model.BaseEntity;
 

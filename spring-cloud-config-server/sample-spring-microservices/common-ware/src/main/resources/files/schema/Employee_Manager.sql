@@ -5,6 +5,30 @@ DROP TABLE employee;
 DROP TABLE manager;
 DROP TABLE department;
 DROP TABLE user_table;
+DROP TABLE department_holiday_date_mapping;
+DROP TABLE holiday_date;
+
+CREATE TABLE holiday_date 
+(	 id 			INTEGER GENERATED ALWAYS as Identity primary key, 
+	 name 			VARCHAR2(50 CHAR), 
+	 day 			SMALLINT NOT NULL, 
+	 month 			SMALLINT NOT NULL, 
+	 year 			SMALLINT NOT NULL, 
+     modified_by	VARCHAR2(50),
+     created_date   TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  TIMESTAMP(0)
+);
+
+CREATE TABLE department_holiday_date_mapping 
+(	 id 				INTEGER GENERATED ALWAYS as Identity primary key, 
+	 department_id		INTEGER NOT NULL, 
+	 holiday_date_id	INTEGER NOT NULL, 
+     modified_by		VARCHAR2(50),
+     created_date   	TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+     modified_date  	TIMESTAMP(0),
+     constraint FK_dhdm_department_id   FOREIGN KEY (department_id) REFERENCES department(id),
+     constraint FK_dhdm_holiday_date_id FOREIGN KEY (holiday_date_id) REFERENCES holiday_date(id)     
+);
 
 CREATE TABLE user_table (
   	 id 			INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

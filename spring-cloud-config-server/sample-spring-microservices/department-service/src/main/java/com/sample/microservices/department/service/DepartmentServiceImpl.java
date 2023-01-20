@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 
 import com.sample.microservices.common.annotation.EventType;
@@ -95,6 +96,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	@Loggable(level=Level.WARN)
 	@LoggableEvents(type=EventType.CREATE)
+	@Transactional
 	public Department createDepartment(DepartmentDto departmentDto) {
 		DepartmentEntity entity = this.mapper.departmentDtoToEntity(departmentDto);
 		entity.setId(null);

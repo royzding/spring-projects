@@ -25,6 +25,7 @@
     <common-ware.version>1.0.0</common-ware.version>    
     <validation-api.version>1.1.0.Final</validation-api.version>	
     <javax.persistence-api.version>2.2</javax.persistence-api.version>
+    <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
   </properties>
   
   <dependencyManagement>
@@ -85,6 +86,14 @@
   
 	<build>
 	    <plugins>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+	            <configuration>
+	            	<skip>true</skip>
+	            </configuration>
+	        </plugin>
 	        <plugin>
 	            <groupId>org.apache.maven.plugins</groupId>
 	            <artifactId>maven-deploy-plugin</artifactId>
