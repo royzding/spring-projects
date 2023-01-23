@@ -4,7 +4,6 @@
 		<groupId>com.sample.microservices</groupId>
 		<artifactId>microservices-pom-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../microservices-pom-parent/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>department-service</artifactId>
