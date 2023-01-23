@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sample.microservices.common.model.HolidayDate;
 import com.sample.microservices.department.model.dto.HolidayDateDto;
 import com.sample.microservices.department.service.HolidayDateService;
+import com.sample.microservices.department.validator.HolidayDateValidator;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -36,10 +37,12 @@ public class HolidayDateController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HolidayDateController.class);
 	
+	private final HolidayDateValidator holidayDateValidator;
 	private final HolidayDateService holidayDateService;
 	
-	HolidayDateController(HolidayDateService holidayDateService) {
-		this.holidayDateService = holidayDateService;		
+	HolidayDateController(HolidayDateService holidayDateService, HolidayDateValidator holidayDateValidator) {
+		this.holidayDateService = holidayDateService;	
+		this.holidayDateValidator = holidayDateValidator;
 	}
 	
 	@Operation(summary="get an holidayDate by id")
@@ -88,7 +91,9 @@ public class HolidayDateController {
 	})
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public HolidayDate createHolidayDate(@Valid @RequestBody HolidayDateDto holidayDateDto) {
+	public HolidayDate createHolidayDate(@Valid @RequestBody HolidayDateDto holidayDateDto) throws Exception {
+
+		this.holidayDateValidator.validateHolidayDateUnique(holidayDateDto);
 
 		return this.holidayDateService.createHolidayDate(holidayDateDto);
 	}
@@ -105,7 +110,7 @@ public class HolidayDateController {
 	@PostMapping("/list")
 	@ResponseStatus(HttpStatus.CREATED)
 	public List<HolidayDate> createHolidayDates(@Valid @RequestBody List<HolidayDateDto> holidayDateDtos) {
-
+		
 		return this.holidayDateService.createHolidayDates(holidayDateDtos);
 	}
 	
