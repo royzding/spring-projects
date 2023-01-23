@@ -1,6 +1,7 @@
 package com.sample.microservices.common.service;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
@@ -12,7 +13,17 @@ public class AuditLoggingServiceImpl implements AuditLoggingService {
 	@Override
 	public Object auditActivity(ProceedingJoinPoint point, ActivityType type) throws Throwable {
 		
-		StopWatch timer = new StopWatch();
+        MethodSignature methodSignature = (MethodSignature) point.getSignature();
+        
+        //Get intercepted method details
+        String className = methodSignature.getDeclaringType().getSimpleName();
+        String methodName = methodSignature.getName();
+        
+        String targetClassName = point.getTarget().getClass().getSimpleName();
+        String targetMethodName = point.getSignature().getName();
+        Object[] args = point.getArgs();       
+
+        StopWatch timer = new StopWatch();
 		
 		timer.start();
 		
@@ -30,7 +41,7 @@ public class AuditLoggingServiceImpl implements AuditLoggingService {
 			
 		} finally {
 			
-			System.out.println("AuditActivity:" + type + ":time["+ timer.getTotalTimeMillis()+"millis]");
+			System.out.println("AuditActivity:" + className +":"+ methodName + "" + type + ":time["+ timer.getTotalTimeMillis()+"millis]");
 			
 		}
 

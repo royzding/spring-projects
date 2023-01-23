@@ -41,6 +41,11 @@ public final class AuditLoggingAspect {
     @Pointcut("@annotation(org.springframework.transaction.annotation.Transactional)")
     public void transactionalMapping() {}
     
+    @Pointcut("execution(* *(..)) && within(com.sample.microservices.*.controller.*)")
+    public void withinController() {
+    	//is called by auditAllMethods
+    }
+/*
     @Pointcut("execution(* *(..)) && ("
     		+ "within(com.sample.microservices.department.controller.*) || "
     		+ "within(com.sample.microservices.employee.controller.*) " 
@@ -48,7 +53,7 @@ public final class AuditLoggingAspect {
     public void withinController() {
     	//is called by auditAllMethods
     }
-
+*/
     @Around("getMapping() && withinController()")
     public Object auditgetMappingMethods(ProceedingJoinPoint point) throws Throwable 
     {
