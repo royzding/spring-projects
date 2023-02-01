@@ -65,6 +65,8 @@ public class ScheduledSyncTasks {
      * 0 0 2 12 3 ? means that the task is executed at Sun, Mar 12, 2023 2:00 AM.
      * 0 0 2 5 11 ? means that the task is executed at Sun, Nov 5, 2023 2:00 AM.
      * 
+     * @Scheduled(cron = "0 30 15 1 2 ?", zone = "UTC")
+     * 
      */
     @Scheduled(cron = "0 30 15 1 2 ?")
     public void scheduleTaskUsingCronExpression() {
