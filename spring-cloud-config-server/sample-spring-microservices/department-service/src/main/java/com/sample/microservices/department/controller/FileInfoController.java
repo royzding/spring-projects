@@ -2,12 +2,14 @@ package com.sample.microservices.department.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,4 +46,10 @@ public class FileInfoController {
 	public String getFileInfo() throws IOException {
 		return new String(Files.readAllBytes(myResource.getFile().toPath()));
 	}
+
+	@GetMapping("/{date}")
+	public LocalDate getDateInfo(@PathVariable("date") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate date) {
+		return date;
+	}
+	
 }

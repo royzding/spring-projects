@@ -26,7 +26,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class HolidayDateEntity extends BaseEntity {
+public class HolidayDateEntity_X extends BaseEntity {
 	
 	private static final long serialVersionUID = 8436014022103292703L;
 	
