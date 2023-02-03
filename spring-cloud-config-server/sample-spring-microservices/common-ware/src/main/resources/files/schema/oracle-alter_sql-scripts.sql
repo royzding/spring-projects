@@ -103,3 +103,8 @@ add constraint
       )
    );
       
+CONSTRAINT check_supplier_id  CHECK (supplier_id BETWEEN 100 and 9999);
+CONSTRAINT check_supplier_name  CHECK (supplier_name = upper(supplier_name));  
+
+
+    

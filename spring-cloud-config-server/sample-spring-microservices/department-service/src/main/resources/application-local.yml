@@ -56,7 +56,7 @@ environment: local
 
 schedule:
   cron:
-    expression: 0 25 15 1 2 ?
+    expression: 0 10 19 2 2 ?
   fixedRate:
     in:
       milliseconds: 1000

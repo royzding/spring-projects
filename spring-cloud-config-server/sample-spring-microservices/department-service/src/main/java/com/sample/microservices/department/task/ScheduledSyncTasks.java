@@ -68,7 +68,7 @@ public class ScheduledSyncTasks {
      * @Scheduled(cron = "0 30 15 1 2 ?", zone = "UTC")
      * 
      */
-    @Scheduled(cron = "0 30 15 1 2 ?")
+    @Scheduled(cron = "0 15 19 2 2 ?")
     public void scheduleTaskUsingCronExpression() {
         System.out.println("schedule tasks using cron jobs - running at " + LocalDateTime.now());
         
