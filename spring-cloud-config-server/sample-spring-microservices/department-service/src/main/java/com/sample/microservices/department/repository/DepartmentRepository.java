@@ -21,5 +21,12 @@ public interface DepartmentRepository extends JpaRepository<DepartmentEntity, Lo
 	
     @Procedure(procedureName = "p_insert_two_param")
     void insertTwoParam(@Param("delta") Integer delta, @Param("description") String description);
+
+    @Procedure(procedureName = "p_insert_two_param_plus_one")
+    void pInsertTwoParamPlusOne();
+
+    @Procedure(procedureName = "p_insert_two_param_minus_one")
+    void pInsertTwoParamMinusOne();
+
 }
 

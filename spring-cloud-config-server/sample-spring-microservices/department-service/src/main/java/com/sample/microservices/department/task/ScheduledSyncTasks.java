@@ -51,8 +51,7 @@ public class ScheduledSyncTasks {
 	
     @Scheduled(cron = "${schedule.cron.expression}")
     public void scheduleTaskUsingExternalizedCronExpression() {
-        System.out.println("schedule tasks using externalized cron expressions - running at " + LocalDateTime.now());
-        
+        System.out.println("schedule tasks using externalized cron expressions - running at " + LocalDateTime.now());        
         this.repository.insertTwoParam(1, "scheduleTaskUsingExternalizedCronExpression");
     }
 
@@ -70,9 +69,22 @@ public class ScheduledSyncTasks {
      */
     @Scheduled(cron = "0 15 19 2 2 ?")
     public void scheduleTaskUsingCronExpression() {
-        System.out.println("schedule tasks using cron jobs - running at " + LocalDateTime.now());
-        
+        System.out.println("schedule tasks using cron jobs - running at " + LocalDateTime.now());        
         this.repository.insertTwoParam(-1, "scheduleTaskUsingCronExpression");
+
+    }
+
+    @Scheduled(cron = "0 52 9 3 2 ?")
+    public void pInsertTwoParamPlusOne() {
+        System.out.println("schedule tasks pInsertTwoParamPlusOne - running at " + LocalDateTime.now());       
+        this.repository.pInsertTwoParamPlusOne();
+
+    }
+
+    @Scheduled(cron = "0 55 9 3 2 ?")
+    public void pInsertTwoParamMinusOne() {
+        System.out.println("schedule tasks pInsertTwoParamMinusOne - running at " + LocalDateTime.now());       
+        this.repository.pInsertTwoParamMinusOne();
 
     }
 

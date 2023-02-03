@@ -70,6 +70,25 @@ INSERT INTO daylight_saving_time_update_2 (ID, NAME, A_TIME_2) VALUES (109, 'tim
 
 COMMIT;
 
+CREATE OR REPLACE PROCEDURE p_insert_two_param_plus_one
+IS
+BEGIN
+
+	p_insert_two_param(1, 'p_insert_two_param_plus_one');
+
+END;
+/
+
+CREATE OR REPLACE PROCEDURE p_insert_two_param_minus_one
+IS
+BEGIN
+
+	p_insert_two_param(-1, 'p_insert_two_param_minus_one');
+
+END;
+/
+
+
 
 CREATE OR REPLACE PROCEDURE p_insert_two_param(delta IN NUMBER, description IN VARCHAR2 )
 
@@ -85,28 +104,61 @@ BEGIN
    FOR dls_time in c_dstu
    LOOP
 
-	  IF (dls_time.A_TIME is not null) AND (TRIM(dls_time.A_TIME) is not null) THEN
-	  
-	      UPDATE daylight_saving_time_update 
+		UPDATE daylight_saving_time_update 
 	      	SET A_TIME = f_convert_daylight_time(delta, dls_time.A_TIME),
 	      	MODIFIED_DATE =  CURRENT_TIMESTAMP
-	      WHERE ID = dls_time.ID;  
-	      
-	  END IF;   
+	    WHERE ID = dls_time.ID;  
 
    END LOOP;
 
    FOR dls_time_2 in c_dstu_2
    LOOP
 
-	  IF (dls_time_2.A_TIME_2 is not null) AND (TRIM(dls_time_2.A_TIME_2) is not null) THEN
-	  
-	      UPDATE daylight_saving_time_update_2 
+		UPDATE daylight_saving_time_update_2 
 	      	SET A_TIME_2 = f_convert_daylight_time(delta, dls_time_2.A_TIME_2),
 	      	MODIFIED_DATE =  CURRENT_TIMESTAMP
-	      WHERE ID = dls_time_2.ID;  
-	      
-	  END IF;   
+	    WHERE ID = dls_time_2.ID;  
+
+   END LOOP;
+
+EXCEPTION
+
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+
+END;
+/
+
+
+
+CREATE OR REPLACE PROCEDURE p_insert_two_param(delta IN NUMBER, description IN VARCHAR2 )
+
+IS
+	CURSOR c_dstu is SELECT ID, A_TIME FROM daylight_saving_time_update;
+
+	CURSOR c_dstu_2 is SELECT ID, A_TIME_2 FROM daylight_saving_time_update_2;
+
+BEGIN
+
+   insert into daylight_saving_update (delta, description, modified_date) values (delta, description, CURRENT_TIMESTAMP);
+
+   FOR dls_time in c_dstu
+   LOOP
+
+		UPDATE daylight_saving_time_update 
+	      	SET A_TIME = f_convert_daylight_time(delta, dls_time.A_TIME),
+	      	MODIFIED_DATE =  CURRENT_TIMESTAMP
+	    WHERE ID = dls_time.ID;  
+
+   END LOOP;
+
+   FOR dls_time_2 in c_dstu_2
+   LOOP
+
+		UPDATE daylight_saving_time_update_2 
+	      	SET A_TIME_2 = f_convert_daylight_time(delta, dls_time_2.A_TIME_2),
+	      	MODIFIED_DATE =  CURRENT_TIMESTAMP
+	    WHERE ID = dls_time_2.ID;  
 
    END LOOP;
 
@@ -130,32 +182,44 @@ IS
 
 BEGIN
 
-   FOR S_TIME IN (    
-      SELECT REGEXP_SUBSTR (a_time, '[^;]+', 1, LEVEL) AS TIME_STR  
-      FROM DUAL
-      CONNECT BY REGEXP_SUBSTR (a_time, '[^;]+', 1, LEVEL) IS NOT NULL)
-   LOOP
-   
-      A_TIME_HOUR_STR := SUBSTR( TRIM(S_TIME.TIME_STR), 1, 2);
-      A_TIME_MIN_STR  := SUBSTR( TRIM(S_TIME.TIME_STR), 4, 2);
 
-      A_TIME_HOUR := TO_NUMBER( A_TIME_HOUR_STR, '99') + delta;
-      
-      IF A_TIME_HOUR = 24 THEN
-      
-      	A_TIME_HOUR := 0;
-      	
-      ELSIF A_TIME_HOUR = -1 THEN
-      
-       	A_TIME_HOUR := 23;       
-      	
-      END IF;
+	IF (a_time is not null) AND (TRIM(a_time) is not null) THEN
 
-	  C_TIME := C_TIME || ';' || TO_CHAR(A_TIME_HOUR, 'fm00') || ':' || A_TIME_MIN_STR;
-   
-   END LOOP;
 
-   RETURN SUBSTR( C_TIME, 2, LENGTH(C_TIME)-1);
+	   FOR S_TIME IN (    
+	      SELECT REGEXP_SUBSTR (a_time, '[^;]+', 1, LEVEL) AS TIME_STR  
+	      FROM DUAL
+	      CONNECT BY REGEXP_SUBSTR (a_time, '[^;]+', 1, LEVEL) IS NOT NULL)
+	   LOOP
+	   
+	      A_TIME_HOUR_STR := SUBSTR( TRIM(S_TIME.TIME_STR), 1, 2);
+	      A_TIME_MIN_STR  := SUBSTR( TRIM(S_TIME.TIME_STR), 4, 2);
+	
+	      A_TIME_HOUR := TO_NUMBER( A_TIME_HOUR_STR, '99') + delta;
+	      
+	      IF A_TIME_HOUR = 24 THEN
+	      
+	      	A_TIME_HOUR := 0;
+	      	
+	      ELSIF A_TIME_HOUR = -1 THEN
+	      
+	       	A_TIME_HOUR := 23;       
+	      	
+	      END IF;
+	
+		  C_TIME := C_TIME || ';' || TO_CHAR(A_TIME_HOUR, 'fm00') || ':' || A_TIME_MIN_STR;
+	   
+	   END LOOP;
+	   
+	   	  C_TIME := SUBSTR( C_TIME, 2, LENGTH(C_TIME)-1);
+	  
+	  ELSE
+	  
+	   	  C_TIME := a_time;
+	  	  
+	  END IF;   
+
+   RETURN C_TIME;
 
 EXCEPTION
 
@@ -169,6 +233,9 @@ END;
 
 
 ---- call P_INSERT_TWO_PARAM (1, 'test');
+call p_insert_two_param_plus_one();
+
+call p_insert_two_param_minus_one();
 
 
 INSERT INTO daylight_saving_update VALUES (23,SYSDATE,2);
