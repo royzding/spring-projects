@@ -10,7 +10,6 @@ spring:
   batch:
     job:
       enabled: false
-    initialize-schema: always
     
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
