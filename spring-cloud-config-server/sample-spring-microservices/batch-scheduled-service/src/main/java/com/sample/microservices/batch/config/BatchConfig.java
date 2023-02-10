@@ -51,6 +51,7 @@ import com.sample.microservices.batch.listener.MyStepExecutionListener;
 import com.sample.microservices.batch.processor.CoffeeItemProcessor;
 import com.sample.microservices.batch.processor.MyItemProcessor;
 import com.sample.microservices.batch.processor.MyJpaItemProcessor;
+import com.sample.microservices.batch.repository.CoffeeRepository;
 import com.sample.microservices.batch.repository.ManagerEntityRepository;
 import com.sample.microservices.batch.repository.PersonRepository;
 import com.sample.microservices.batch.task.MyTaskOne;
@@ -87,50 +88,134 @@ public class BatchConfig {
 	@Autowired
 	@Lazy
 	private PersonRepository pRepo;
+	
+	@Autowired
+	CoffeeRepository	coffeeRepo;
 
 	@Bean
     public Step stepOne(){
-        return steps.get("stepOne")
+		System.out.println("======================StepOne====================");
+       return steps.get("stepOne")
                 .tasklet(new MyTaskOne(pRepo))
                 .build();
     }
      
     @Bean
     public Step stepTwo(){
+    	System.out.println("======================StepTwo====================");
         return steps.get("stepTwo")
                 .tasklet(new MyTaskTwo())
                 .build();
     }   
 
    @Bean
-   public Step stepThree(StepBuilderFactory stepBuilderFactory, ItemReader<Account> reader,
-                     ItemWriter<Person> writer, ItemProcessor<Account, Person> processor) {
-       return stepBuilderFactory.get("stepThree")
-               .<Account, Person>chunk(1000)
-               .reader(reader)
-               .processor(processor)
-               .writer(writer)
-               .build();
-   }
-
-   
-   @Bean
-   public Job demoJob(	@Qualifier("stepOne") Step stepOne, 
-						@Qualifier("stepTwo") Step stepTwo,
-						@Qualifier("stepThree") Step stepThree
+   public Job demoJob(	@Qualifier("stepOne") Step stepOne
+						,@Qualifier("stepTwo") Step stepTwo
+						//,@Qualifier("stepThree") Step stepThree
    				  ){
        return jobs.get("demoJob")
                .incrementer(new RunIdIncrementer())
-               .listener(new JobCompletionNotificationListener(jdbcTemplate, meRepo))
+               //.listener(new JobCompletionNotificationListener(jdbcTemplate, meRepo))
                .start(stepOne)
                .next(stepTwo)
-               .next(stepThree)
+               //.next(stepThree)
                .next(stepFour())
                .next(stepFive())
                .build();
    }
 
+////////////////////////RepositoryItemReader Example////////////////////////////////////////////
+   
+	@Bean
+	public RepositoryItemReader<ManagerEntity> reader5() {
+		RepositoryItemReader<ManagerEntity> reader = new RepositoryItemReader<>();
+		reader.setRepository(meRepo);
+		reader.setMethodName("findAll");
+		
+		Map<String, Direction> sorts = new HashMap<>();
+		sorts.put("id", Direction.ASC);
+		reader.setSort(sorts);
+		
+		return reader;
+	}
 
+	@Bean
+	public RepositoryItemWriter<Person> writer5() {
+		RepositoryItemWriter<Person> writer = new RepositoryItemWriter<>();
+		writer.setRepository(pRepo);
+		writer.setMethodName("save");
+		return writer;
+	}    
+	
+	@Bean
+	public MyJpaItemProcessor processor5() {
+		return new MyJpaItemProcessor();
+	}    
+	
+	@Bean
+	public Step stepFive() {
+		
+		System.out.println("======================StepFive====================");
+
+		return steps.get("stepFive")
+		.<ManagerEntity, Person>chunk(10)
+		.reader(reader5())
+		.processor(processor5())
+		.writer(writer5())
+		.listener(new MyStepExecutionListener())
+		.taskExecutor(taskExecutor())
+		.throttleLimit(20)
+		.build();
+	}    
+
+	@Bean
+	public TaskExecutor taskExecutor() {
+	    return new SimpleAsyncTaskExecutor("spring_batch");
+	}     
+
+/////////FlatFileItemReader Example/////////
+    
+@Value("${file.input}")
+private String fileInput;
+
+@Bean
+public FlatFileItemReader<Coffee> reader4() {
+    return new FlatFileItemReaderBuilder<Coffee>().name("coffeeItemReader")
+        .resource(new ClassPathResource(fileInput))
+        .delimited()
+        .names(new String[] { "brand", "origin", "characteristics" })
+        .fieldSetMapper(new BeanWrapperFieldSetMapper<Coffee>() {{
+            setTargetType(Coffee.class);
+         }})
+        .build();
+}
+
+@Bean
+public CoffeeItemProcessor processor4() {
+    return new CoffeeItemProcessor();
+}
+
+@Bean
+public RepositoryItemWriter<Coffee> writer4() {
+	RepositoryItemWriter<Coffee> writer = new RepositoryItemWriter<>();
+	writer.setRepository(coffeeRepo);
+	writer.setMethodName("save");
+	return writer;
+}
+
+@Bean
+public Step stepFour() {
+	
+	System.out.println("======================StepFour====================");
+	
+    return steps.get("step4")
+        .<Coffee, Coffee>chunk(10)
+        .reader(reader4())
+        .processor(processor4())
+        .writer(writer4())
+        .build();
+}
+	
    ///////Conditional Steps///////////////////
 /*   
    @Bean
@@ -150,7 +235,19 @@ public class BatchConfig {
                .build();
    }
 */   
+/*
+   @Bean
+   public Step stepThree(StepBuilderFactory stepBuilderFactory, ItemReader<Account> reader,
+                     ItemWriter<Person> writer, ItemProcessor<Account, Person> processor) {
+       return stepBuilderFactory.get("stepThree")
+               .<Account, Person>chunk(1000)
+               .reader(reader)
+               .processor(processor)
+               .writer(writer)
+               .build();
+   }
 
+   
     @Bean
     public ItemReader<Account> reader() throws Exception {
         String jpqlQuery = "select a from Account a";
@@ -314,7 +411,8 @@ public class BatchConfig {
 			.throttleLimit(20)
             .build();
     }    
- 
+*/
+   
     ////////Parallel Steps////////////////
 /*
 

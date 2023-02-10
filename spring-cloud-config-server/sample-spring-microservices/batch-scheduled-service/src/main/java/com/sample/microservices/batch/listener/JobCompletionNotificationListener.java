@@ -33,8 +33,8 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
             LOGGER.info("!!! JOB FINISHED! Time to verify the results");
 
             String query = "SELECT brand, origin, characteristics FROM coffee";
-            jdbcTemplate.query(query, (rs, row) -> new Coffee(rs.getString(1), rs.getString(2), rs.getString(3)))
-                .forEach(coffee -> LOGGER.info("Found < {} > in the database.", coffee));
+            //jdbcTemplate.query(query, (rs, row) -> new Coffee(rs.getString(1), rs.getString(2), rs.getString(3)))
+           //     .forEach(coffee -> LOGGER.info("Found < {} > in the database.", coffee));
             
             this.meRepo.findAll().forEach(e->System.out.println(e.getName()));
         }

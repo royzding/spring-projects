@@ -16,7 +16,11 @@ public class CoffeeItemProcessor implements ItemProcessor<Coffee, Coffee> {
         String origin = coffee.getOrigin().toUpperCase();
         String chracteristics = coffee.getCharacteristics().toUpperCase();
 
-        Coffee transformedCoffee = new Coffee(brand, origin, chracteristics);
+        Coffee transformedCoffee = new Coffee();
+        transformedCoffee.setBrand(brand);
+        transformedCoffee.setOrigin(origin);
+        transformedCoffee.setCharacteristics(chracteristics);
+        
         LOGGER.info("Converting ( {} ) into ( {} )", coffee, transformedCoffee);
 
         return transformedCoffee;
