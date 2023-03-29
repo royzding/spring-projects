@@ -1,4 +1,4 @@
-package com.sb.jwt.config;
+package com.sb.jwt.test.config;
 
 import java.io.Serializable;
 import java.util.Date;

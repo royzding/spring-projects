@@ -1,4 +1,4 @@
-package com.sb.jwt.model;
+package com.sb.jwt.test.model;
 
 public class UserDTO {
 	private String username;

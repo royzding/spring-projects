@@ -1,4 +1,4 @@
-package com.sb.jwt.model;
+package com.sb.jwt.test.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

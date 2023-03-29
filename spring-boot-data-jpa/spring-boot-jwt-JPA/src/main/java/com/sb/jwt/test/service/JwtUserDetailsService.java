@@ -1,4 +1,4 @@
-package com.sb.jwt.service;
+package com.sb.jwt.test.service;
 
 import java.util.ArrayList;
 
@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sb.jwt.dao.UserDao;
-import com.sb.jwt.model.DAOUser;
-import com.sb.jwt.model.UserDTO;
+import com.sb.jwt.test.dao.UserDao;
+import com.sb.jwt.test.model.DAOUser;
+import com.sb.jwt.test.model.UserDTO;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {

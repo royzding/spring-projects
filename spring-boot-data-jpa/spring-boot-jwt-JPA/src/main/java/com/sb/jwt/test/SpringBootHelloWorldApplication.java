@@ -1,4 +1,4 @@
-package com.sb.jwt;
+package com.sb.jwt.test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

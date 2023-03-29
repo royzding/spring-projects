@@ -1,4 +1,4 @@
-package com.sb.jwt.controller;
+package com.sb.jwt.test.controller;
 
 import java.util.Objects;
 
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sb.jwt.config.JwtTokenUtil;
-import com.sb.jwt.model.JwtRequest;
-import com.sb.jwt.model.JwtResponse;
-import com.sb.jwt.model.UserDTO;
-import com.sb.jwt.service.JwtUserDetailsService;
+import com.sb.jwt.test.config.JwtTokenUtil;
+import com.sb.jwt.test.model.JwtRequest;
+import com.sb.jwt.test.model.JwtResponse;
+import com.sb.jwt.test.model.UserDTO;
+import com.sb.jwt.test.service.JwtUserDetailsService;
 
 @RestController
 @CrossOrigin
