@@ -1,7 +1,8 @@
 package com.axellageraldinc.rabbitmqproducer.service;
 
 import com.axellageraldinc.rabbitmqproducer.configuration.RabbitMQProducerTestConfiguration;
-import com.axellageraldinc.rabbitmqproducer.model.Payload;
+import com.sb.rabbitmqproducer.test.model.Payload;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.test.TestRabbitTemplate;

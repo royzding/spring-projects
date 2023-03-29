@@ -1,8 +1,9 @@
 package com.axellageraldinc.rabbitmqproducer.service;
 
-import com.axellageraldinc.rabbitmqproducer.model.Payload;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+
+import com.sb.rabbitmqproducer.test.model.Payload;
 
 @Component
 public class RabbitMQTestListener {
