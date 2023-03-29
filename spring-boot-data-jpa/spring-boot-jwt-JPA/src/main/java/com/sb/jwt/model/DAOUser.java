@@ -1,7 +1,20 @@
-package com.javainuse.model;
+package com.sb.jwt.model;
 
-public class UserDTO {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
+public class DAOUser {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@Column
 	private String username;
+	@Column
+	@JsonIgnore
 	private String password;
 
 	public String getUsername() {
@@ -19,4 +32,5 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 }

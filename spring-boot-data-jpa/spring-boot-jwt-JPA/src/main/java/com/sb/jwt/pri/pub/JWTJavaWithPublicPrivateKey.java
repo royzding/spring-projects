@@ -1,4 +1,4 @@
-package com.javainuse.pri.pub;
+package com.sb.jwt.pri.pub;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;
