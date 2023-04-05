@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.employee.data.model.ManagerEntity;
+import com.sample.microservices.model.dto.IManagerMini;
 import com.sample.microservices.model.dto.ManagerDto;
+import com.sample.microservices.model.dto.ManagerMini;
 
 @Component
 @Mapper(componentModel="spring", nullValuePropertyMappingStrategy=NullValuePropertyMappingStrategy.IGNORE)
@@ -25,5 +27,9 @@ public interface ManagerMapper {
 	List<Manager> entityToManager(List<ManagerEntity> source);
 
 	Manager managerDtoToManager(ManagerDto source);
+	
+	@Mapping(target="highSalary", expression="java(source.getSalary() > 999 ? true : false )")
+	ManagerMini IManagerMiniToManagerMini(IManagerMini source);
+	List<ManagerMini> IManagerMiniToManagerMini(List<IManagerMini> source);
 
 }

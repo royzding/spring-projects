@@ -11,6 +11,7 @@ import com.sample.microservices.common.pagination.PageLayout;
 import com.sample.microservices.employee.data.model.ManagerEntity;
 import com.sample.microservices.employee.enums.ManagerSortType;
 import com.sample.microservices.model.dto.ManagerDto;
+import com.sample.microservices.model.dto.ManagerMini;
 
 public interface ManagerService {
 
@@ -53,4 +54,6 @@ public interface ManagerService {
     
     List<Manager> getManagersByNameLike(String name);
     List<Manager> getManagersByNameLikeNative(String name);
+    
+    List<ManagerMini> getManagerMiniByNameLikeNative(String name);
 }

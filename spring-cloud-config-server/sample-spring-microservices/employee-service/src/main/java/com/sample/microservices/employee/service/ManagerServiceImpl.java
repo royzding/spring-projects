@@ -25,6 +25,7 @@ import com.sample.microservices.employee.enums.ManagerSortType;
 import com.sample.microservices.employee.map.ManagerMapper;
 import com.sample.microservices.employee.repository.ManagerEntityRepository;
 import com.sample.microservices.model.dto.ManagerDto;
+import com.sample.microservices.model.dto.ManagerMini;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -243,6 +244,11 @@ public class ManagerServiceImpl implements ManagerService {
     public List<Manager> getManagersByNameLikeNative(String name) {
     	return this.mapper.entityToManager(this.repository.getManagersByNameLikeNative(name));
     }
+
+	@Override
+	public List<ManagerMini> getManagerMiniByNameLikeNative(String name) {
+		return this.mapper.IManagerMiniToManagerMini(this.repository.getManagerMiniByNameLikeNative(name));
+	}
 	
 
 }

@@ -25,6 +25,7 @@ import com.sample.microservices.common.pagination.PageLayout;
 import com.sample.microservices.employee.enums.ManagerSortType;
 import com.sample.microservices.employee.service.ManagerService;
 import com.sample.microservices.model.dto.ManagerDto;
+import com.sample.microservices.model.dto.ManagerMini;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -306,6 +307,11 @@ public class ManagerController {
 	@GetMapping("/getManagersByNameLikeNative/{name}")
 	public List<Manager> getManagersByNameLikeNative(@PathVariable("name") String name) {
 		return this.managerService.getManagersByNameLikeNative(name);
+	}
+
+	@GetMapping("/getManagerMiniByNameLikeNative/{name}")
+	public List<ManagerMini> getManagerMiniByNameLikeNative(@PathVariable("name") String name) {
+		return this.managerService.getManagerMiniByNameLikeNative(name);
 	}
 
 	

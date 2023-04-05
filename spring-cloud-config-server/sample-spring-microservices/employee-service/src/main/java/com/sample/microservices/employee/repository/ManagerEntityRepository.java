@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sample.microservices.common.model.Manager;
 import com.sample.microservices.employee.data.model.ManagerEntity;
+import com.sample.microservices.model.dto.IManagerMini;
 
 @Repository
 public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Long>{
@@ -69,6 +70,9 @@ public interface ManagerEntityRepository extends JpaRepository<ManagerEntity, Lo
     @Modifying
     @Query(nativeQuery = true, value = "DELETE from manager m WHERE m.name like %:name% ")
     void deleteManagersByNameLike(@Param("name") String name);
+    
+    @Query(nativeQuery = true, value = "SELECT id, name, salary, modified_by as modifiedBy from manager m WHERE m.name like %:name% ")
+    List<IManagerMini> getManagerMiniByNameLikeNative(@Param("name") String name);
     
     
 }
