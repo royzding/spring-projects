@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
-import com.sample.microservices.common.pagination.PageLayout;
+import com.sample.microservices.common.enums.ActivityType;
 
 public class UtilFuns {
 
@@ -69,6 +69,35 @@ public class UtilFuns {
 		
 		return Files.readAllLines(path).stream().map(Object::toString).collect(Collectors.joining("\n"));
 		
+	}
+	
+	//Comma separated String to List
+	static String str01 = "01,02,05,12,39";
+	public static List<Integer> convertStrToList() {
+		if(str01 == null) { return Collections.emptyList(); }
+		return Stream.of(str01.split(",", -1)).map(e->Integer.valueOf(e.trim())).collect(Collectors.toList());
+	}
+	
+	//int list to string
+	static List<Integer> intList = List.of(1,2,5,12);
+	public static String convertListToStr01() {
+		return intList.stream().map(Object::toString).collect(Collectors.joining(","));
+	}
+	
+	//int list to string
+	public static String convertListToStr02() {
+		return intList.stream().map(e->String.format("%02d", e)).collect(Collectors.joining(","));
+	}
+	
+	//list to string
+	static List<String> str03 = List.of("x1","x2","x5","x12");
+	public static String convertListToStr03() {
+		return String.join(",", str03);
+	}
+
+	//string to string through enum
+	public static String convertStr01ToStr02() {
+		return ActivityType.valueOf("GET").toString();
 	}
 	
 }
