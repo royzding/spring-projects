@@ -5,19 +5,19 @@ public enum ActivityType {
 	POST("post"),
 	DELETE("delete");
 	
-	private String value;
+	private final String value;
 	
 	ActivityType(final String value) {
 		this.value = value;
 	}
 	
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 	
 	@Override
 	public String toString() {
-		return value;
+		return this.value;
 	}
 
 }
