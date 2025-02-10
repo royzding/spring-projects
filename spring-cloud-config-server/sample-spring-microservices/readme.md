@@ -4,7 +4,7 @@ In this project I'm demonstrating you the most interesting features of [Spring C
 
 ### Usage
 
-In the most cases you need to have Maven and JDK8+. In the fourth example with OpenShift you will have to run **Minishift** on your machine. The best way to run the sample applications is with IDEs like IntelliJ IDEA or Eclipse.  
+In the most cases you need to have Maven and JDK 8/17/21. The best way to run the sample applications is with IDEs like Spring Tool Suite, IntelliJ IDEA or Eclipse.  
 
 ## Architecture
 
