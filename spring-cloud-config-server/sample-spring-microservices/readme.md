@@ -1,6 +1,6 @@
 # Microservices with Spring Cloud Advanced Demo Project 
 
-In this project I'm demonstrating you the most interesting features of [Spring Cloud Project](https://spring.io/projects/spring-cloud) for building microservice-based architecture.
+In this project I'm demonstrating you the most interesting features of  [Spring Boot](https://spring.io/projects/spring-boot) / [Spring Cloud](https://spring.io/projects/spring-cloud) for building microservice-based architecture.
 
 ### Usage
 
