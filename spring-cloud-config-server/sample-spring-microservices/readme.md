@@ -14,9 +14,4 @@ Our sample microservices-based system consists of the following modules:
 - **discovery-service** - a module that depending on the example it uses Spring Cloud Netflix Eureka.
 - **employee-service** - a module containing the first of our sample microservices that allows to perform CRUD operation on in-memory repository of employees
 - **department-service** - a module containing the second of our sample microservices that allows to perform CRUD operation on in-memory repository of departments. It communicates with employee-service. 
-- **organization-service** - a module containing the third of our sample microservices that allows to perform CRUD operation on in-memory repository of organizations. It communicates with both employee-service and organization-service.
-
-The following picture illustrates the architecture described above.
-
-<img src="./spring-cloud-1.png" title="Architecture"><br/>
-
+- **organization-service** - a module containing the third of our sample microservices that allows to perform CRUD operation on in-memory repository of organizations. It communicates with both employee-service and department-service.
